@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>碎碎念 · 校园合伙人计划</title>
+<style>
+  :root {
+    --pink: #ff6b9d;
+    --pink-light: #fff0f5;
+    --pink-dark: #e8457a;
+    --orange: #ff8c42;
+    --green: #4ecdc4;
+    --blue: #45b7d1;
+    --purple: #a06cd5;
+    --bg: #fefefe;
+    --text: #2d2d2d;
+    --text-light: #666;
+    --border: #eee;
+    --shadow: 0 2px 12px rgba(255,107,157,0.1);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.8;
+    padding: 0;
+  }
+  .hero {
+    background: linear-gradient(135deg, #ff6b9d 0%, #ff8c42 50%, #ffa751 100%);
+    padding: 60px 40px;
+    text-align: center;
+    color: #fff;
+  }
+  .hero h1 {
+    font-size: 2.4em;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.15);
+  }
+  .hero .subtitle {
+    font-size: 1.2em;
+    opacity: 0.92;
+    font-weight: 300;
+  }
+  .hero .emoji-row {
+    font-size: 2em;
+    margin-top: 16px;
+    letter-spacing: 12px;
+  }
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 24px;
+  }
+  .chapter {
+    margin-bottom: 48px;
+  }
+  .chapter-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 1.5em;
+    font-weight: 700;
+    color: var(--pink-dark);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 3px solid var(--pink);
+  }
+  .chapter-title .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--pink);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 0.6em;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-size: 1.15em;
+    font-weight: 700;
+    color: var(--pink-dark);
+    margin: 24px 0 12px;
+    padding-left: 14px;
+    border-left: 4px solid var(--pink);
+  }
+  p {
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .highlight-box {
+    background: var(--pink-light);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin: 16px 0;
+    border-left: 4px solid var(--pink);
+  }
+  .highlight-box.orange {
+    background: #fff8f0;
+    border-left-color: var(--orange);
+  }
+  .highlight-box.green {
+    background: #f0faf9;
+    border-left-color: var(--green);
+  }
+  .highlight-box.blue {
+    background: #f0f8ff;
+    border-left-color: var(--blue);
+  }
+  .highlight-box.purple {
+    background: #f8f0ff;
+    border-left-color: var(--purple);
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 0.95em;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  thead th {
+    background: var(--pink);
+    color: #fff;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+  }
+  tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:hover {
+    background: var(--pink-light);
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 0.85em;
+    font-weight: 600;
+    margin: 2px;
+  }
+  .tag-pink { background: var(--pink-light); color: var(--pink-dark); }
+  .tag-orange { background: #fff3e0; color: #e65100; }
+  .tag-green { background: #e8f5e9; color: #2e7d32; }
+  .tag-blue { background: #e3f2fd; color: #1565c0; }
+  .tag-purple { background: #f3e5f5; color: #7b1fa2; }
+  .timeline {
+    position: relative;
+    padding-left: 36px;
+    margin: 20px 0;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 14px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, var(--pink), var(--orange));
+    border-radius: 2px;
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 24px;
+    padding: 16px 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.06);
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -30px;
+    top: 20px;
+    width: 12px;
+    height: 12px;
+    background: var(--pink);
+    border-radius: 50%;
+    border: 3px solid #fff;
+    box-shadow: 0 0 0 2px var(--pink);
+  }
+  .timeline-item .day {
+    font-weight: 700;
+    color: var(--pink-dark);
+    font-size: 1.05em;
+  }
+  .timeline-item .task {
+    margin-top: 6px;
+    color: var(--text);
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin: 16px 0;
+  }
+  .card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-top: 4px solid var(--pink);
+  }
+  .card.orange { border-top-color: var(--orange); }
+  .card.green { border-top-color: var(--green); }
+  .card.blue { border-top-color: var(--blue); }
+  .card.purple { border-top-color: var(--purple); }
+  .card h4 {
+    font-size: 1.1em;
+    margin-bottom: 8px;
+  }
+  .card p {
+    font-size: 0.9em;
+    color: var(--text-light);
+    margin-bottom: 6px;
+  }
+  .checklist {
+    list-style: none;
+    padding: 0;
+  }
+  .checklist li {
+    padding: 6px 0;
+    padding-left: 28px;
+    position: relative;
+  }
+  .checklist li::before {
+    content: '✅';
+    position: absolute;
+    left: 0;
+  }
+  .checklist.cross li::before {
+    content: '❌';
+  }
+  .checklist.star li::before {
+    content: '⭐';
+  }
+  .divider {
+    height: 2px;
+    background: linear-gradient(to right, transparent, var(--pink), var(--orange), transparent);
+    margin: 40px 0;
+    border: none;
+  }
+  .footer {
+    text-align: center;
+    padding: 40px 24px;
+    color: var(--text-light);
+    font-size: 0.9em;
+  }
+  .footer .brand {
+    font-size: 1.3em;
+    color: var(--pink-dark);
+    font-weight: 700;
+  }
+  .cta-box {
+    background: linear-gradient(135deg, var(--pink), var(--orange));
+    color: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    text-align: center;
+    margin: 24px 0;
+  }
+  .cta-box h3 {
+    font-size: 1.4em;
+    margin-bottom: 8px;
+  }
+  .cta-box p {
+    color: rgba(255,255,255,0.9);
+  }
+  @media (max-width: 600px) {
+    .hero { padding: 40px 20px; }
+    .hero h1 { font-size: 1.8em; }
+    .container { padding: 24px 16px; }
+    .chapter-title { font-size: 1.2em; }
+    .card-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="emoji-row">🧩 💕 🎓 💰</div>
+  <h1>碎碎念 · 校园合伙人计划</h1>
+  <div class="subtitle">0成本 · 0押金 · 一件代发 · 佣金月结</div>
+</div>
+
+<div class="container">
+
+<!-- 第1章：为什么做这件事 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">01</span> 为什么做这件事</div>
+  
+  <p>碎碎念做的是一种可以写字、画画、送人的创意拼图——异地恋写信拼图、闺蜜生日拼图、毕业纪念拼图。产品已经跑通了，小红书上有很多姐妹自发晒单分享。</p>
+  
+  <p>但我们发现一个问题：<strong>校园市场几乎空白</strong>。大学生是最核心的目标人群（18-28岁女生），却因为线下触达弱，这个群体几乎没被渗透。</p>
+
+  <div class="highlight-box">
+    <strong>核心逻辑：</strong>大学生最懂大学生。与其我们花大钱投广告，不如找到校园里的"超级节点"——她们有朋友圈、有社团、有表白墙、有宿舍楼群。一个活跃的合伙人，比一万块钱的投放更管用。
+  </div>
+</div>
+
+<!-- 第2章：合伙人画像 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">02</span> 合伙人画像</div>
+
+  <div class="highlight-box green">
+    <strong>理想合伙人长这样：</strong>
+  </div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>🎯 基本条件</h4>
+      <p>大二大三在校女生</p>
+      <p>人脉广、爱社交、爱送礼</p>
+      <p>有小红书/抖音使用习惯</p>
+    </div>
+    <div class="card orange">
+      <h4>⭐ 加分项</h4>
+      <p>学生会/社团干部</p>
+      <p>表白墙/二手群运营者</p>
+      <p>小红书有发笔记习惯</p>
+    </div>
+    <div class="card green">
+      <h4>🚀 超级加分</h4>
+      <p>手绘社/动漫社/手工社成员</p>
+      <p>有原创插画能力</p>
+      <p>心理社/情感类社团</p>
+    </div>
+    <div class="card blue">
+      <h4>❌ 不适合</h4>
+      <p>想躺赚不行动的</p>
+      <p>觉得发朋友圈丢人的</p>
+      <p>大四忙毕业/考研的</p>
+    </div>
+  </div>
+
+  <div class="highlight-box orange">
+    <strong>为什么是大二大三？</strong>大一还在适应校园，大四忙毕业。大二大三是最活跃、社交圈最广、最有闲暇搞副业的阶段。女生为主是因为碎碎念85%的消费者是女性，女合伙人更懂用户。
+  </div>
+</div>
+
+<!-- 第3章：三级体系 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">03</span> 三级合伙人体系</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>等级</th>
+        <th>校园联络员</th>
+        <th>校园合伙人</th>
+        <th>校园主理人</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>门槛</strong></td>
+        <td>0门槛，报名即入</td>
+        <td>月销5单以上</td>
+        <td>月销20单+发展2个联络员</td>
+      </tr>
+      <tr>
+        <td><strong>折扣/佣金</strong></td>
+        <td>自购9折 + 拉人奖励</td>
+        <td>15%佣金</td>
+        <td>20%佣金</td>
+      </tr>
+      <tr>
+        <td><strong>免费样品</strong></td>
+        <td>首单享9折体验</td>
+        <td>每季度2份免费样品</td>
+        <td>新品优先体验+无限样品</td>
+      </tr>
+      <tr>
+        <td><strong>联名权益</strong></td>
+        <td>—</td>
+        <td>可投稿联名设计</td>
+        <td>联名分成5% + 独占全校资源</td>
+      </tr>
+      <tr>
+        <td><strong>结算方式</strong></td>
+        <td>9折即时生效</td>
+        <td>佣金月结，次月5号</td>
+        <td>佣金月结 + 联名季度结算</td>
+      </tr>
+      <tr>
+        <td><strong>升级路径</strong></td>
+        <td>月销5单 → 升合伙人</td>
+        <td>月销20单+拉2人 → 升主理人</td>
+        <td>已是最高级</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box purple">
+    <strong>💡 设计理念：</strong>三级体系的本质是"先用低门槛拉人进来，再用结果筛选出真正能干的人"。联络员是流量漏斗，合伙人是核心产出，主理人是未来城市合伙人/全职员工储备。
+  </div>
+</div>
+
+<!-- 第4章：代发模式铁律 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">04</span> 代发模式铁律</div>
+
+  <p>校园合伙人计划能否跑起来，关键是<strong>降低合伙人的参与成本</strong>。任何需要合伙人先掏钱的模式，在校园场景都会死。</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>🚫 不压货</h4>
+      <p>合伙人不买货、不存货</p>
+      <p>所有订单一件代发</p>
+      <p>合伙人零库存风险</p>
+    </div>
+    <div class="card orange">
+      <h4>🚫 不收押金</h4>
+      <p>0加盟费、0押金、0保证金</p>
+      <p>不做任何先收费再合作的模式</p>
+      <p>所有成本由品牌方承担</p>
+    </div>
+    <div class="card green">
+      <h4>✅ 佣金月结</h4>
+      <p>每月5号结算上月佣金</p>
+      <p>微信/支付宝直打</p>
+      <p>账单透明，每笔可查</p>
+    </div>
+    <div class="card blue">
+      <h4>✅ 全程代发</h4>
+      <p>品牌方负责打包发货</p>
+      <p>合伙人只需转发+收集订单</p>
+      <p>售后也由品牌方处理</p>
+    </div>
+  </div>
+
+  <div class="highlight-box">
+    <strong>铁律：</strong>只要合伙人需要先掏一分钱，这个计划就变味了。我们的目标是让合伙人"零风险试错"——试了觉得好就继续，觉得不好随时退，没有任何损失。
+  </div>
+</div>
+
+<!-- 第5章：招募渠道 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">05</span> 四条招募渠道</div>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>📦 渠道一：已有客户</h4>
+      <p>整理发货记录中大学地址</p>
+      <p>主动私信邀请成为合伙人</p>
+      <p>转化率最高（已经是用户）</p>
+      <p><span class="tag tag-green">优先级 ★★★★★</span></p>
+    </div>
+    <div class="card orange">
+      <h4>📱 渠道二：小红书</h4>
+      <p>发招募贴（本文含文案模板）</p>
+      <p>搜索大学生相关的笔记作者</p>
+      <p>私信邀请+评论区筛选</p>
+      <p><span class="tag tag-orange">优先级 ★★★★</span></p>
+    </div>
+    <div class="card green">
+      <h4>📢 渠道三：表白墙/二手群</h4>
+      <p>各校表白墙发帖招募</p>
+      <p>校园二手交易群转发</p>
+      <p>宿舍楼群/专业群扩散</p>
+      <p><span class="tag tag-blue">优先级 ★★★</span></p>
+    </div>
+    <div class="card blue">
+      <h4>🎨 渠道四：社团合作</h4>
+      <p>手绘社：联名设计+分成</p>
+      <p>动漫社：IP联名拼图</p>
+      <p>手工社：DIY拼图体验</p>
+      <p>心理社：情绪疗愈拼图</p>
+      <p><span class="tag tag-purple">优先级 ★★★</span></p>
+    </div>
+  </div>
+</div>
+
+<!-- 第6章：合伙人日常 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">06</span> 合伙人日常做什么</div>
+
+  <p>把合伙人的工作降到最简，核心就三件事：</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>步骤</th>
+        <th>动作</th>
+        <th>耗时</th>
+        <th>工具</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>1. 分享</strong></td>
+        <td>发朋友圈/小红书/社群，展示拼图产品</td>
+        <td>5分钟/天</td>
+        <td>品牌方提供图文素材包</td>
+      </tr>
+      <tr>
+        <td><strong>2. 收单</strong></td>
+        <td>同学想买→收集收件信息→报给品牌方</td>
+        <td>按需</td>
+        <td>微信/小程序表单</td>
+      </tr>
+      <tr>
+        <td><strong>3. 跟进</strong></td>
+        <td>确认收货→提醒晒单→收集反馈</td>
+        <td>5分钟/单</td>
+        <td>微信聊天</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box green">
+    <strong>时间成本：</strong>日均15-30分钟，相当于刷两条小红书的时间。这不是一份"工作"，而是把你日常社交行为变现。你本来就要发朋友圈、本来就要给朋友安利好东西——现在只是顺便赚个佣金。
+  </div>
+</div>
+
+<!-- 第7章：联名玩法 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">07</span> 联名玩法</div>
+
+  <p>这是校园合伙人计划最有想象力的部分——<strong>把大学生的创作变成产品</strong>。</p>
+
+  <div class="highlight-box purple">
+    <strong>联名路径：</strong>合伙人投稿原创插画 → 品牌方评估 → 选中后制成拼图 → 销售分成5%给创作者
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>玩法</th>
+        <th>说明</th>
+        <th>分成</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>个人联名</strong></td>
+        <td>合伙人投稿原创插画，选中后以「碎碎念 × 作者名」出品</td>
+        <td>5%销售分成</td>
+      </tr>
+      <tr>
+        <td><strong>社团联名</strong></td>
+        <td>手绘社/动漫社集体创作，以社团名义出品</td>
+        <td>5%（归社团经费）</td>
+      </tr>
+      <tr>
+        <td><strong>校园限定</strong></td>
+        <td>以学校地标/校徽/校园文化为元素的限定款</td>
+        <td>5% + 校园主理人独占销售权</td>
+      </tr>
+      <tr>
+        <td><strong>比赛获奖</strong></td>
+        <td>校园拼图插画比赛获奖作品直接进入联名管线</td>
+        <td>5% + 奖金/奖品</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight-box">
+    <strong>为什么联名很重要：</strong>它让合伙人从"卖货的"变成"共创者"。卖别人的东西是打工，卖自己设计的东西是创业。这个身份转变，会让合伙人的积极性产生质变。
+  </div>
+</div>
+
+<!-- 第8章：30天执行表 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">08</span> 30天执行表</div>
+
+  <div class="timeline">
+    <div class="timeline-item">
+      <div class="day">第1-3天｜准备阶段</div>
+      <div class="task">
+        <ul class="checklist">
+          <li>整理已有发货记录中的大学地址客户名单</li>
+          <li>制作合伙人招募资料包（品牌介绍+佣金说明+素材样例）</li>
+          <li>准备好统一的招募话术模板</li>
+          <li>设计小红书招募贴（含配图）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="day">第4-7天｜首批触达</div>
+      <div class="task">
+        <ul class="checklist">
+          <li>私信已有大学地址客户，邀请成为合伙人</li>
+          <li>小红书发布招募贴</li>
+          <li>搜索小红书上大学生活跃笔记作者，私信邀请</li>
+          <li>建微信群「碎碎念校园合伙人·预备群」</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="day">第8-14天｜扩面招募</div>
+      <div class="task">
+        <ul class="checklist">
+          <li>联系各校表白墙运营者，发招募贴</li>
+          <li>校园二手群/宿舍群转发</li>
+          <li>筛选报名者，逐一电话/视频沟通</li>
+          <li>确认第一批10-15人进入正式培训</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="day">第15-21天｜培训启动</div>
+      <div class="task">
+        <ul class="checklist">
+          <li>线上培训：产品知识+发圈技巧+收单流程</li>
+          <li>发放首份素材包（图文+视频素材）</li>
+          <li>每人在自己的社交圈发第一条推广内容</li>
+          <li>社团合作洽谈（手绘社/手工社/心理社）</li>
+        </ul>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="day">第22-30天｜首单冲刺</div>
+      <div class="task">
+        <ul class="checklist">
+          <li>跟进每个人的首单进展，1对1辅导</li>
+          <li>收集晒单反馈，制作「合伙人战报」</li>
+          <li>根据首月数据调整佣金/素材/流程</li>
+          <li>筛选出表现好的5-8人，升级为正式合伙人</li>
+          <li>准备第二期招募（扩到30人目标）</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 第9章：风险与应对 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">09</span> 风险与应对</div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>风险</th>
+        <th>概率</th>
+        <th>应对</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>合伙人报名后不行动</strong></td>
+        <td>高</td>
+        <td>正常，预期50%会沉默。靠量补质，招30人预期15人活跃，5-8人产出</td>
+      </tr>
+      <tr>
+        <td><strong>被误认为传销/微商</strong></td>
+        <td>中</td>
+        <td>强调0收费+一件代发+无层级提成（只按销售额算佣金，不按拉人头算）</td>
+      </tr>
+      <tr>
+        <td><strong>合伙人恶性竞争</strong></td>
+        <td>低</td>
+        <td>每个学校只设1个主理人，避免内卷；佣金标准统一透明</td>
+      </tr>
+      <tr>
+        <td><strong>产品质量/售后问题</strong></td>
+        <td>低</td>
+        <td>品牌方全权负责售后，合伙人零负担；7天无理由退换</td>
+      </tr>
+      <tr>
+        <td><strong>合伙人隐私泄露</strong></td>
+        <td>低</td>
+        <td>签署隐私保护协议；客户数据仅品牌方可见；合伙人只看自己的订单</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 第10章：小红书招募贴文案 -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">10</span> 小红书招募贴文案</div>
+
+  <div class="highlight-box orange">
+    <strong>📌 标题备选（3选1）：</strong><br>
+    1. 🧩大学女生看过来｜副业0成本，宿舍就能搞钱<br>
+    2. 🧩找30个大学生合伙人｜不用囤货不用交钱，佣金月结<br>
+    3. ✨你的校园人脉值多少钱？｜碎碎念校园合伙人招募
+  </div>
+
+  <div class="highlight-box" style="white-space: pre-wrap; line-height: 2.2;">
+姐妹们！！谁懂啊😭
+在宿舍刷手机的时间，其实可以变成零花钱
+
+我是碎碎念拼图的创始人🧩
+我们做的是一种可以写字、画画、送人的创意拼图
+——异地恋写信拼图、闺蜜生日拼图、毕业纪念拼图
+小红书搜「碎碎念拼图」能看到很多姐妹的真实分享💕
+
+现在我要找 <strong>30个大学生合伙人</strong> 一起玩
+
+👇 你要做的超简单：
+✅ 觉得拼图好看，愿意分享给身边人
+✅ 发发朋友圈 / 小红书 / 社群
+✅ 帮想买的同学下单
+
+👇 你不用担心的：
+❌ 不用囤货（一件代发）
+❌ 不用交钱（0押金0加盟费）
+❌ 不用打包发货（全部我来）
+
+👇 你能得到的：
+💰 每单15%-20%佣金，月结打卡
+🎁 免费样品（新品优先体验）
+🎨 优秀作品可以联名出产品，还有版权分成
+📈 做得好可以升级「校园主理人」，独享全校资源
+
+🎯 最适合这样的你：
+• 大二大三女生（人脉广、爱社交）
+• 有小红书/抖音使用习惯
+• 学生会/社团/表白墙运营经验加分✨
+• 手绘社、动漫社、手工社成员超级加分加分✨✨
+
+📩 想了解的姐妹：
+评论区扣「1」或者私信我「合伙」
+我会发你详细的资料包～
+
+⚠️ 名额只有30个，先到先得
+这个学期，给自己一个搞钱的机会💪
+
+#大学生副业 #校园创业 #碎碎念拼图 #女生副业 #宿舍搞钱 #校园合伙人 #0成本创业 #大学生赚钱 #创意拼图 #异地恋礼物
+  </div>
+
+  <div class="section-title">配图建议</div>
+  <table>
+    <thead>
+      <tr>
+        <th>图序</th>
+        <th>内容</th>
+        <th>说明</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>图1（封面）</td>
+        <td>拼图产品实物图 + 大字标题</td>
+        <td>「0成本·宿舍搞钱·校园合伙人招募」</td>
+      </tr>
+      <tr>
+        <td>图2</td>
+        <td>拼图写字/送礼场景图</td>
+        <td>展示产品使用场景，激发共鸣</td>
+      </tr>
+      <tr>
+        <td>图3</td>
+        <td>佣金体系简图</td>
+        <td>三级体系可视化：联络员9折→合伙人15%→主理人20%</td>
+      </tr>
+      <tr>
+        <td>图4</td>
+        <td>合伙人日常流程图</td>
+        <td>发朋友圈→同学下单→坐等佣金</td>
+      </tr>
+      <tr>
+        <td>图5</td>
+        <td>晒单/好评截图拼图</td>
+        <td>社交证明，增强信任</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 第11章：FAQ -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">11</span> 常见问题 FAQ</div>
+
+  <div class="highlight-box">
+    <strong>Q：这和微商有什么区别？</strong><br>
+    A：核心区别三点：①不收任何费用（微商要拿货压货）②佣金只按实际销售额算，不按拉人头算③只有三级（不是无限层级），不存在上线吃下线。
+  </div>
+
+  <div class="highlight-box orange">
+    <strong>Q：一个月大概能赚多少？</strong><br>
+    A：取决于你的社交圈大小和活跃度。保守估计：一个活跃合伙人月销10-15单，客单价¥30-60，15%佣金≈月入45-135元。校园主理人月销30单以上≈月入270-540元。不暴富，但零花钱够用。
+  </div>
+
+  <div class="highlight-box green">
+    <strong>Q：会不会影响学业？</strong><br>
+    A：日均15-30分钟，比刷抖音的时间少。本质就是把日常社交行为变现——你本来就要发朋友圈安利好东西。
+  </div>
+
+  <div class="highlight-box blue">
+    <strong>Q：毕业了还能继续做吗？</strong><br>
+    A：可以！毕业后自然升级为城市合伙人，拓展职场社交圈。很多校园合伙人毕业后的收入反而更高——因为同事/朋友的消费力比学生更强。
+  </div>
+
+  <div class="highlight-box purple">
+    <strong>Q：联名设计有什么要求？</strong><br>
+    A：原创即可，风格不限（插画/摄影/文字排版都行）。我们会评估后选中适合做拼图的设计，选中后签联名协议，销售分成5%。版权归创作者所有，品牌方获得拼图品类授权。
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="cta-box">
+  <h3>🧩 碎碎念校园合伙人计划</h3>
+  <p>0成本 · 0押金 · 一件代发 · 佣金月结</p>
+  <p style="margin-top:12px; font-size:0.95em;">评论区扣「1」或私信「合伙」了解详情</p>
+</div>
+
+</div>
+
+<div class="footer">
+  <div class="brand">🧩 碎碎念 Suìsuìniàn</div>
+  <p>让每一块拼图，都有话想说</p>
+  <p style="margin-top:8px;">© 2026 碎碎念品牌 · 校园合伙人计划 · 内部文件</p>
+</div>
+
+</body>
+</html>
