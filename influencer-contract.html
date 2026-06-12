@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>碎碎念 · 达人合作合同模板</title>
+<style>
+  :root {
+    --pink: #ff6b9d;
+    --pink-light: #fff0f5;
+    --pink-dark: #e8457a;
+    --orange: #ff8c42;
+    --green: #4ecdc4;
+    --blue: #45b7d1;
+    --purple: #a06cd5;
+    --bg: #fefefe;
+    --text: #2d2d2d;
+    --text-light: #666;
+    --border: #e5e5e5;
+    --shadow: 0 2px 12px rgba(255,107,157,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.85;
+    padding: 0;
+  }
+  .hero {
+    background: linear-gradient(135deg, var(--pink) 0%, var(--orange) 50%, #ffa751 100%);
+    padding: 48px 40px; text-align: center; color: #fff;
+  }
+  .hero .logo { max-height: 65px; margin-bottom: 14px; }
+  .hero h1 { font-size: 2em; letter-spacing: 3px; text-shadow: 0 2px 20px rgba(0,0,0,0.15); }
+  .hero .subtitle { font-size: 1.05em; opacity: 0.92; font-weight: 300; }
+  .container { max-width: 900px; margin: 0 auto; padding: 36px 24px; }
+
+  /* 合同文档样式 - 更正式 */
+  .contract { background: #fff; border-radius: 10px; box-shadow: var(--shadow); overflow: hidden; margin-bottom: 40px; border: 1px solid var(--border); }
+  .contract-header {
+    background: linear-gradient(90deg, var(--pink), var(--orange));
+    color: #fff; padding: 20px 28px; display: flex; align-items: center; justify-content: space-between;
+  }
+  .contract-header h2 { font-size: 1.25em; letter-spacing: 1px; }
+  .contract-header .mode-tag {
+    padding: 4px 16px; background: rgba(255,255,255,0.22); border-radius: 20px; font-size: 0.82em;
+  }
+  .contract-body { padding: 28px 32px; font-size: 0.92em; }
+
+  .contract-section { margin-bottom: 24px; }
+  .section-label {
+    font-weight: 700; color: var(--pink-dark); font-size: 1em;
+    margin-bottom: 8px; padding-bottom: 4px;
+    border-bottom: 1.5px solid var(--pink); display: inline-block;
+  }
+  .field-row {
+    display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 6px;
+  }
+  .field-item { min-width: 200px; }
+  .field-item label { font-weight: 600; color: var(--text-light); font-size: 0.88em; }
+  .field-item .value { 
+    padding: 3px 0 3px 10px; border-bottom: 1px dotted #ccc; 
+    color: var(--pink-dark); font-weight: 500; min-width: 120px; display: inline-block;
+  }
+
+  /* 条款样式 */
+  .article { margin: 18px 0; }
+  .article-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 24px; height: 24px; background: var(--pink); color: #fff;
+    border-radius: 50%; font-size: 0.75em; font-weight: 700; margin-right: 8px;
+  }
+  .article-title { font-weight: 700; font-size: 1em; color: var(--text); }
+  .article-content { padding-left: 34px; margin-top: 6px; color: var(--text-light); line-height: 1.85; }
+  .clause-list { list-style: none; padding: 0; }
+  .clause-list li { padding: 4px 0; padding-left: 18px; position: relative; }
+  .clause-list li::before { content: "•"; position: absolute; left: 4px; color: var(--pink); font-weight: bold; }
+
+  /* 签名区 */
+  .signature-area {
+    margin-top: 32px; padding-top: 20px;
+    border-top: 2px solid var(--border);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+  }
+  .sig-block h4 { font-size: 0.92em; color: var(--text-light); margin-bottom: 16px; }
+  .sig-line { border-bottom: 1px solid #999; height: 30px; width: 80%; margin-bottom: 10px; }
+
+  /* 提示框 */
+  .tip-box {
+    background: #fffbf0; border-left: 4px solid var(--orange);
+    padding: 14px 18px; margin: 18px 0; border-radius: 0 8px 8px 0; font-size: 0.87em;
+  }
+  .tip-box.green { background: #f0faf9; border-left-color: var(--green); }
+  .tip-box.blue { background: #f0f8ff; border-left-color: var(--blue); }
+  .tip-box strong { color: var(--pink-dark); }
+
+  .chapter { margin-bottom: 44px; }
+  .chapter-title {
+    display: flex; align-items: center; gap: 10px;
+    font-size: 1.35em; font-weight: 700; color: var(--pink-dark);
+    margin-bottom: 16px; padding-bottom: 10px; border-bottom: 3px solid var(--pink);
+  }
+  .chapter-title .num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 34px; height: 34px; background: var(--pink); color: #fff;
+    border-radius: 50%; font-size: 0.55em; font-weight: 700;
+  }
+
+  table {
+    width: 100%; border-collapse: collapse; margin: 14px 0;
+    font-size: 0.88em; border-radius: 8px; overflow: hidden; box-shadow: var(--shadow);
+  }
+  thead th { background: var(--pink); color: #fff; padding: 10px 14px; text-align: left; font-weight: 600; }
+  tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); }
+  tbody tr:hover { background: var(--pink-light); }
+
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 16px; font-size: 0.82em; font-weight: 600; }
+  .tag-pink { background: var(--pink-light); color: var(--pink-dark); }
+  .tag-orange { background: #fff3e0; color: #e65100; }
+  .tag-green { background: #e8f5e9; color: #2e7d32; }
+
+  .footer { text-align: center; padding: 32px 20px; color: var(--text-light); font-size: 0.85em; }
+  .footer .brand { font-size: 1.2em; color: var(--pink-dark); font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; }
+  .footer .brand img { height: 26px; }
+  
+  @media (max-width: 650px) {
+    .hero { padding: 32px 18px; } .hero h1 { font-size: 1.55em; }
+    .container { padding: 20px 14px; } .contract-body { padding: 18px 16px; }
+    .signature-area { grid-template-columns: 1fr; gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <img src="碎碎念logo.png" alt="碎碎念" class="logo">
+  <h1>达人合作合同模板</h1>
+  <div class="subtitle">三种模式 · 可直接使用 · 法律友好</div>
+</div>
+
+<div class="container">
+
+<!-- ==================== 使用指南 ==================== -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">01</span> 使用说明</div>
+
+  <table>
+    <thead><tr><th>模式</th><th>适用达人量级</th><th>品牌方成本</th><th>达人收益</th><th>推荐场景</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>A · 纯置换</strong></td>
+        <td>1千-1万粉 KOC</td>
+        <td>产品成本 ¥15-25</td>
+        <td>免费样品体验</td>
+        <td>首次合作/冷启动阶段</td>
+      </tr>
+      <tr>
+        <td><strong>B · 佣金制</strong></td>
+        <td>1万-5万粉 KOC</td>
+        <td>样品 + 按成交付佣金</td>
+        <td>样品 + 15-20%销售分成</td>
+        <td>有稳定产出能力的达人</td>
+      </tr>
+      <tr>
+        <td><strong>C · 稿费+佣金</strong></td>
+        <td>5万+粉丝博主</td>
+        <td>¥200-500稿费 + 样品 + 佣金</td>
+        <td>固定稿费 + 销售分成</td>
+        <td>头部KOL / 有明确数据背书</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="tip-box">
+    <strong>💡 使用建议：</strong><br>
+    • 碎碎念现阶段以<strong>模式A（纯置换）</strong>为主，批量铺量<br>
+    • 表现好的达人升级到<strong>模式B（佣金制）</strong>，建立长期关系<br>
+    • <strong>模式C</strong>暂不建议使用——等有了稳定ROI数据后再考虑付费投放
+  </div>
+
+  <div class="tip-box green">
+    <strong>⚖️ 法律提示：</strong><br>
+    本合同为商业合作协议范本，不构成法律意见。金额超过¥5,000的合作建议咨询律师。涉及肖像权、知识产权的条款需根据实际情况调整。
+  </div>
+</div>
+
+<!-- ==================== 合同A：纯置换 ==================== -->
+<div class="contract">
+  <div class="contract-header">
+    <h2>📋 产品体验置换合作协议（模式 A）</h2>
+    <span class="mode-tag">纯置换 · 无费用</span>
+  </div>
+  <div class="contract-body">
+
+    <!-- 基本信息 -->
+    <div class="contract-section">
+      <div class="section-label">一、合作双方</div>
+      <div class="field-row" style="margin-top:10px;">
+        <div class="field-item"><label>甲方（品牌方）：</label><span class="value">______________________</span></div>
+        <div class="field-item"><label>联系人：</label><span class="value">______________________</span></div>
+      </div>
+      <div class="field-row">
+        <div class="field-item"><label>乙方（达人）：</label><span class="value">______________________</span></div>
+        <div class="field-item"><label>平台账号：</label><span class="value">@______________________</span></div>
+      </div>
+      <div class="field-row">
+        <div class="field-item"><label>签约日期：</label><span class="value">____年____月____日</span></div>
+        <div class="field-item"><label>协议编号：</label><span class="value">SS-EX-A-_________</span></div>
+      </div>
+    </div>
+
+    <!-- 合作内容 -->
+    <div class="contract-section">
+      <div class="section-label">二、合作内容</div>
+      <div class="article">
+        <span class="article-num"></span>
+        <span class="article-title">甲方提供</span>
+        <div class="article-content">
+          <ul class="clause-list">
+            <li>免费提供【<span style="color:var(--pink-dark);font-weight:600;">________</span>】产品样品 _____ 件（以下简称"样品"），价值约人民币 ______ 元</li>
+            <li>随样品附带产品介绍资料、高清图片素材、短视频素材等推广辅助材料</li>
+            <li>样品的所有权在交付后归乙方所有，无需退还</li>
+          </ul>
+        </div>
+      </div>
+      <div class="article">
+        <span class="article-num"></span>
+        <span class="article-title">乙方承诺</span>
+        <div class="article-content">
+          <ul class="clause-list">
+            <li>收到样品后 _____ 天内，在小红书平台发布至少 _____ 条图文/视频笔记</li>
+            <li>内容需真实展示产品及使用体验，不得虚构或夸大</li>
+            <li>@甲方官方账号（如有）或在正文中提及"碎碎念"品牌</li>
+            <li>内容发布后保留不少于 _____ 天，非经双方协商同意不得删除或设为私密</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 权利义务 -->
+    <div class="contract-section">
+      <div class="section-label">三、权利与义务</div>
+      <div class="article">
+        <span class="article-num"></span>
+        <span class="article-title">甲方的权利与义务</span>
+        <div class="article-content">
+          <ul class="clause-list">
+            <li>拥有对乙方发布内容的合理审核权（仅限事实性错误，不含创意方向干预）</li>
+            <li>有权在乙方发布的笔记评论区进行正常互动和用户服务</li>
+            <li>负责产品的质量保证和售后服务（如产生订单）</li>
+            <li>不得要求乙方发布虚假宣传或违反平台规则的内容</li>
+          </ul>
+        </div>
+      </div>
+      <div class="article">
+        <span class="article-num"></span>
+        <span class="article-title">乙方的权利与义务</span>
+        <div class="article-content">
+          <ul class="clause-list">
+            <li>享有样品的所有权，可自由使用和处置</li>
+            <li>内容创作风格和表达方式由乙方自主决定，甲方不得强行规定脚本或文案</li>
+            <li>如发现产品质量问题，有权如实反馈但应先与甲方沟通确认</li>
+            <li>不得在同一合作周期内为甲方竞品发布类似推广内容</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- 知识产权 -->
+    <div class="contract-section">
+      <div class="section-label">四、知识产权</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>乙方创作的内容（文字、图片、视频）著作权归乙方所有</li>
+          <li>甲方获得在自身渠道（官网、公众号、店铺详情页等）转载/引用该内容的<strong>非独占使用权</strong>，需注明出处</li>
+          <li>甲方提供的素材（产品图、Logo等）知识产权归甲方所有，乙方仅限本次合作使用</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 违约 -->
+    <div class="contract-section">
+      <div class="section-label">五、违约责任</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>乙方逾期未发布内容超过约定天数的 _____ 倍，甲方有权终止合作并收回未使用的素材授权</li>
+          <li>如因乙方故意发布虚假信息导致甲方声誉受损，乙方需承担相应赔偿责任</li>
+          <li>如甲方提供的样品存在质量问题，乙方可免除此次发布义务</li>
+          <li>任何一方提前解除协议需提前 _____ 天书面通知对方</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 其他 -->
+    <div class="contract-section">
+      <div class="section-label">六、其他条款</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>本协议一式两份，甲乙双方各执一份，具同等法律效力</li>
+          <li>未尽事宜双方友好协商解决；协商不成可向甲方所在地人民法院提起诉讼</li>
+          <li>本协议自双方签字/盖章之日起生效，有效期至内容发布完成后 _____ 天止</li>
+          <li>本次合作为<strong>无偿产品体验置换</strong>，甲方不向乙方支付任何现金报酬</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 签名 -->
+    <div class="signature-area">
+      <div class="sig-block">
+        <h4>甲方（盖章/签字）</h4>
+        <div class="sig-line"></div>
+        <p style="font-size:0.83em;color:#999;">签字：_______________　日期：____年__月__日</p>
+      </div>
+      <div class="sig-block">
+        <h4>乙方（签字）</h4>
+        <div class="sig-line"></div>
+        <p style="font-size:0.83em;color:#999;">签字：_______________　日期：____年__月__日</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 合同B：佣金制 ==================== -->
+<div class="contract">
+  <div class="contract-header">
+    <h2>📋 达人推广佣金合作协议（模式 B）</h2>
+    <span class="mode-tag">样品 + 佣金分成</span>
+  </div>
+  <div class="contract-body">
+
+    <div class="contract-section">
+      <div class="section-label">一、合作双方</div>
+      <div class="field-row" style="margin-top:10px;">
+        <div class="field-item"><label>甲方（品牌方）：</label><span class="value">______________________</span></div>
+        <div class="field-item"><label>联系人：</label><span class="value">______________________</span></div>
+      </div>
+      <div class="field-row">
+        <div class="field-item"><label>乙方（达人）：</label><span class="value">______________________</span></div>
+        <div class="field-item"><label>平台账号：</label><span class="value">@______________________</span></div>
+      </div>
+      <div class="field-row">
+        <div class="field-item"><label>签约日期：</label><span class="value">____年____月____日</span></div>
+        <div class="field-item"><label>协议编号：</label><span class="value">SS-CM-B-_________</span></div>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">二、合作内容</div>
+      <div class="article">
+        <span class="article-num"></span>
+        <span class="article-title">推广产品</span>
+        <div class="article-content">甲方委托乙方在其社交媒体账号上推广以下产品：<br>
+        <table style="margin:8px 0;">
+          <thead><tr><th>产品名称</th><th>规格</th><th>零售价</th></tr></thead>
+          <tbody>
+            <tr><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td></tr>
+            <tr><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+        （详见附件《产品清单》）
+        </div>
+      </div>
+      <div class="article">
+        <span class="article-num"></span>
+        <span class="article-title">推广形式</span>
+        <div class="article-content">
+          <ul class="clause-list">
+            <li>平台：<span style="color:var(--pink-dark);font-weight:600;">□ 小红书 □ 抖音 □ B站 □ 微信视频号 □ 其他：_____</span></li>
+            <li>形式：<span style="color:var(--pink-dark);font-weight:600;">□ 图文笔记 □ 短视频 □ 直播 □ 其他：_____</span></li>
+            <li>数量：每月不少于 _____ 条/期</li>
+            <li>合作期限：自 ____ 年 __ 月 __ 日至 ____ 年 __ 月 __ 日</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">三、费用与结算</div>
+      <div class="tip-box blue" style="margin:10px 0;">
+        <strong>💰 佣金方案（勾选一项）：</strong><br>
+        □ 方案一：按实际销售额的 <span style="font-weight:700;font-size:1.05em;">15%</span> 计算佣金<br>
+        □ 方案二：按实际销售额的 <span style="font-weight:700;font-size:1.05em;">20%</span> 计算佣金（需月销≥___单）<br>
+        □ 方案三：基础佣金 10% + 阶梯奖励：
+        　　 月销 10 单以内 → 10% | 11-30 单 → 15% | 31单以上 → 20%
+      </div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li><strong>结算方式：</strong>每月 ___ 号统计上月通过乙方专属渠道产生的有效订单，次月 ___ 号前支付佣金</li>
+          <li><strong>支付方式：</strong>□ 银行转账 □ 微信支付 □ 支付宝 □ 其他：_____</li>
+          <li><strong>佣金计算基数：</strong>以实际成交金额为准，不含运费和优惠券抵扣部分</li>
+          <li><strong>"有效订单"定义：</strong>已付款且未退换货的订单（退货订单不计入佣金）</li>
+          <li><strong>专属优惠码：</strong>甲方为乙方生成专属折扣码「________」，粉丝凭码购买自动计入乙方业绩</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">四、样品支持</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>合作期间甲方每季度向乙方提供 _____ 份免费样品（新品优先）</li>
+          <li>乙方需配合拍摄产品实拍图/视频供甲方用于官方渠道（含包装盒正面图、背面图、拼完效果图等）</li>
+          <li>额外样品需求可按员工内部价 _____ 折购买</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">五、内容规范</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>乙方发布内容必须包含：产品实物出镜 + 核心卖点提及（可写字/送人礼物属性）+ 购买引导</li>
+          <li>内容必须标注为"广告/合作/赞助"或使用平台规定的合作标识（如小红书"品牌合作笔记"标签）</li>
+          <li>甲方有权对内容进行事前审核，审核时间不超过 24 小时，超时未回复视为默认通过</li>
+          <li>乙方不得发布损害甲方品牌形象或违反法律法规的内容</li>
+          <li>合作期内乙方不得为甲方直接竞品（同类创意拼图品牌）做推广</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">六、知识产权</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>乙方创作内容的著作权归乙方所有</li>
+          <li>甲方获<strong>非独占使用权</strong>，可在官方渠道转载引用，须注明"by @[乙方昵称]"</li>
+          <li>甲方素材知识产权归甲方所有，乙方仅限本次合作使用</li>
+          <li>合作期满后甲方仍保有已转载内容的继续使用权</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">七、保密义务</div>
+      <div class="article-content">
+        双方应对在合作过程中知悉的商业秘密（包括但不限于产品成本、销售数据、客户名单等）承担保密义务，未经对方书面同意不得向第三方披露。保密期限为本协议终止后 ___ 年内持续有效。
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">八、违约责任</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>乙方连续 _____ 个月未达到最低发布量的 _____%，甲方有权单方解除本协议</li>
+          <li>甲方逾期支付佣金的，每日按应付金额的 _____ ‰ 支付滞纳金</li>
+          <li>任一方违反保密条款导致对方损失的，应承担赔偿责任</li>
+          <li>因不可抗力（自然灾害、政策变化、平台规则重大变更等）导致无法履行的不视为违约</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">九、协议终止</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>协议期满自然终止，双方可续签</li>
+          <li>任一方需提前 ___ 天书面通知对方终止协议</li>
+          <li>协议终止后，甲方应在 ___ 个工作日内结清全部未付佣金</li>
+          <li>协议终止不影响保密条款和知识产权条款的持续效力</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">十、争议解决</div>
+      <div class="article-content">
+        因本协议引起的或与本协议有关的任何争议，双方应首先友好协商解决；协商不成的，任何一方均可向<strong>甲方所在地</strong>有管辖权的人民法院提起诉讼。
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="sig-block">
+        <h4>甲方（盖章/签字）</h4>
+        <div class="sig-line"></div>
+        <p style="font-size:0.83em;color:#999;">签字：_______________　日期：____年__月__日</p>
+      </div>
+      <div class="sig-block">
+        <h4>乙方（签字）</h4>
+        <div class="sig-line"></div>
+        <p style="font-size:0.83em;color:#999;">签字：_______________　日期：____年__月__日</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 合同C：稿费+佣金 ==================== -->
+<div class="contract">
+  <div class="contract-header">
+    <h2>📋 达人内容推广合作协议（模式 C）</h2>
+    <span class="mode-tag">稿费 + 佣金 + 样品</span>
+  </div>
+  <div class="contract-body">
+
+    <div class="contract-section">
+      <div class="section-label">一、合作双方</div>
+      <div class="field-row" style="margin-top:10px;">
+        <div class="field-item"><label>甲方（品牌方）：</label><span class="value">______________________</span></div>
+        <div class="field-item"><label>联系人：</label><span class="value">______________________</span></div>
+      </div>
+      <div class="field-row">
+        <div class="field-item"><label>乙方（达人/KOL）：</label><span class="value">______________________</span></div>
+        <div class="field-item"><label>平台账号：</label><span class="value">@______________________</span></div>
+      </div>
+      <div class="field-row">
+        <div class="field-item"><label>粉丝数：</label><span class="value">约 ______ 人</span></div>
+        <div class="field-item"><label>签约日期：</label><span class="value">____年____月____日</span></div>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">二、合作内容</div>
+      <div class="article">
+        <span class="article-num"></span>
+        <span class="article-title">推广产品</span>
+        <div class="article-content">甲方委托乙方推广碎碎念品牌系列产品（详见附件清单）。乙方需在以下渠道发布推广内容：</div>
+      </div>
+      
+      <table style="margin:12px 0; font-size:0.88em;">
+        <thead><tr><th>序号</th><th>平台</th><th>形式</th><th>条数</th><th>要求</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>□ 小红书 □ 抖音 □ B站</td><td>□ 图文 □ 视频</td><td>___条</td><td>需挂购物链接/优惠码</td></tr>
+          <tr><td>2</td><td>□ 小红书 □ 抖音 □ B站</td><td>□ 图文 □ 视频</td><td>___条</td><td></td></tr>
+          <tr><td colspan="5" style="padding:8px 14px;background:#f9f9f9;"><strong>合计：</strong>共 ___ 条内容，合作期限 ____ 年 __ 月 __ 日至 ____ 年 __ 月 __ 日</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">三、费用明细</div>
+      <table style="font-size:0.9em;">
+        <thead><tr><th>项目</th><th>金额（元）</th><th>说明</th><th>支付时间</th></tr></thead>
+        <tbody>
+          <tr><td><strong>基础稿费</strong></td><td>￥_______</td><td>固定费用，不论效果如何均需支付</td><td>内容发布并通过审核后 ___ 个工作日内</td></tr>
+          <tr><td><strong>绩效奖金</strong></td><td>￥_______</td><td>达成目标时触发（可选）</td><td>数据确认后 ___ 个工作日内</td></tr>
+          <tr><td><strong>销售佣金</strong></td><td>销售额 × ___%</td><td>按实际成交计算</td><td>次月 ___ 日前</td></tr>
+          <tr><td><strong>样品价值</strong></td><td>约 ￥___/份</td><td>免费提供 ___ 份</td><td>签约后 ___ 天内寄出</td></tr>
+          <tr style="background:var(--pink-light);font-weight:700;"><td><strong>合计</strong></td><td colspan="3">稿费 ￥_______ + 浮动佣金（按实际销售）+ 免费样品</td></tr>
+        </tbody>
+      </table>
+
+      <div class="tip-box green" style="margin:12px 0;">
+        <strong>📌 绩效奖金触发条件示例（可自定义）：</strong><br>
+        □ 单条内容阅读量 > ______ → 奖励 ￥___<br>
+        □ 单条内容互动率 > ______% → 奖励 ￥___<br>
+        □ 月度总GMV > ￥_______ → 奖励 ￥___<br>
+        □ 不设绩效奖金（固定稿费即可）
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">四、内容要求</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li><strong>必含元素：</strong>①产品实物清晰出镜 ②核心卖点（可写信/画画+送礼场景） ③@甲方账号 ④合规的广告标识</li>
+          <li><strong>审核流程：</strong>乙方提交初稿→甲方24小时内反馈修改意见→乙方修改后发布（最多修改2轮）</li>
+          <li><strong>修改权：</strong>甲方仅对事实性错误和违规风险点提出修改，不干涉乙方创意表达</li>
+          <li><strong>数据权限：</strong>乙方同意向甲方开放该条内容的后台数据查看权限或定期截图汇报</li>
+          <li><strong>删改限制：</strong>内容发布后非经甲方书面同意，乙方不得删除、隐藏或实质性修改</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">五、排他性条款</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>合作期内乙方不得为甲方直接竞品（创意类拼图/可写明信片类产品）做商业推广</li>
+          <li>□ 排他期限延至本协议终止后 ___ 个月（竞业限制）</li>
+          <li>□ 无排他要求（乙方可自由接其他品牌合作）</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">六、知识产权</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>乙方创作内容的著作权归乙方所有</li>
+          <li>甲方获得内容的<strong>非独占、永久、免费使用权</strong>，可在全渠道使用（含改编、二次创作）</li>
+          <li>如甲方需要将乙方内容用于付费广告投放，需另行协商费用</li>
+          <li>甲方提供的所有素材知识产权归属甲方</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">七、违约责任</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>乙方未按时交付内容：每逾期一天扣减稿费的 _____ %</li>
+          <li>乙方内容严重偏离约定要求且拒不修改：甲方有权拒付稿费并追究责任</li>
+          <li>甲方逾期付款：每日按应付金额的 _____ ‰ 支付滞纳金</li>
+          <li>乙方违反排他条款：退还已收全部费用并赔偿等额违约金</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="contract-section">
+      <div class="section-label">八、其他</div>
+      <div class="article-content">
+        <ul class="clause-list">
+          <li>本协议一式两份，甲乙双方各执一份</li>
+          <li>未尽事宜双方协商；协商不成提交甲方所在地人民法院诉讼</li>
+          <li>附件：《产品清单》《内容排期表》为本协议不可分割部分</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="signature-area">
+      <div class="sig-block">
+        <h4>甲方（盖章/签字）</h4>
+        <div class="sig-line"></div>
+        <p style="font-size:0.83em;color:#999;">签字：_______________　日期：____年__月__日</p>
+      </div>
+      <div class="sig-block">
+        <h4>乙方（签字）</h4>
+        <div class="sig-line"></div>
+        <p style="font-size:0.83em;color:#999;">签字：_______________　日期：____年__月__日</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== 附录：实操Tips ==================== -->
+<div class="chapter">
+  <div class="chapter-title"><span class="num">02</span> 合同签署实用Tips</div>
+
+  <div class="card-grid">
+    <div class="card" style="border-top-color: var(--pink);">
+      <h4>🔑 什么时候要签正式合同？</h4>
+      <p>• 涉及现金支付（稿费）时</p>
+      <p>• 合作金额 > ¥500 时</p>
+      <p>• 达人主动要求签合同时</p>
+      <p>• 准备长期合作时</p>
+    </div>
+    <div class="card orange" style="border-top-color: var(--orange);">
+      <h4>📝 什么时候不需要合同？</h4>
+      <p>• 纯置换（只寄样品）</p>
+      <p>• 合作金额 < ¥300</p>
+      <p>• 首次试水/一次性合作</p>
+      <p>• 用私信聊天记录留证即可</p>
+    </div>
+    <div class="card green" style="border-top-color: var(--green);">
+      <h4>⚠️ 必须注意的法律红线</h4>
+      <p>• 不要用"传销式"层级分佣措辞</p>
+      <p>• 广告内容必须有明确标识</p>
+      <p>• 不能让达人承诺具体销量</p>
+      <p>• 佣金不能按"拉人头"算只能按销售额算</p>
+    </div>
+    <div class="card blue" style="border-top-color: var(--blue);">
+      <h4>📱 签署方式推荐</h4>
+      <p>• 电子签名（法大大/上签宝）</p>
+      <p>• 扫描件互发微信存档</p>
+      <p>• 小金额可直接微信文字确认</p>
+      <p>• 重要合作打印纸质版邮寄</p>
+    </div>
+  </div>
+
+  <div class="tip-box" style="margin-top:18px;">
+    <strong>🎯 碎碎念现阶段策略：</strong><br>
+    大多数KOC合作用<strong>模式A（纯置换）</strong>，私信沟通确认即可，不需要走正式合同流程。<br>
+    只有当达人升级到<strong>模式B/C</strong>、涉及现金往来时才需要正式签署。<br>
+    但无论是否签合同，都要做好<strong>聊天记录截图存档</strong>作为凭证。
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="footer">
+  <div class="brand"><img src="../碎碎念logo.png" alt=""> 碎碎念 Suìsuìniàn</div>
+  <p>让每一块拼图，都有话想说</p>
+  <p style="margin-top:6px;">© 2026 碎碎念品牌 · 达人合作合同模板 · v1.0</p>
+</div>
+
+</div>
+</body>
+</html>
