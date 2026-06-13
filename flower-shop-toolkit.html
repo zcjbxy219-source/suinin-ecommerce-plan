@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>碎碎念 × 花店合作工具包</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-primary: #5C4E8A;
+    --color-primary-light: #8672C8;
+    --color-rose: #F4A7B9;
+    --color-rose-light: #F4C6D5;
+    --color-rose-ultra-light: #FDEEF3;
+    --color-cream-accent: #F7D98B;
+    --color-mint: #A8D5C2;
+    --color-dark-text: #3D3450;
+    --color-muted: #9182A8;
+    --color-warm-gray: #F0E6EF;
+    --color-cream: #FFF8FB;
+    --color-white: #FFFFFF;
+    --shadow-sm: 0 2px 16px rgba(92,78,138,0.08);
+    --shadow-md: 0 2px 20px rgba(92,78,138,0.12);
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    color: var(--color-dark-text);
+    background: var(--color-cream);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Nav */
+  .nav {
+    position: fixed; top:0; left:0; right:0; z-index:100;
+    background: rgba(92,78,138,0.92);
+    backdrop-filter: blur(12px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 56px;
+  }
+  .nav-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 6px; color: var(--color-rose-light);
+  }
+  .nav-links { display: flex; gap: 20px; }
+  .nav-links a {
+    font-size: 12px; letter-spacing: 2px;
+    color: rgba(255,255,255,0.55);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--color-rose-light); }
+
+  /* Hero */
+  .hero {
+    margin-top: 56px;
+    background: linear-gradient(135deg, #7B6FB0 0%, #B59AD8 50%, #E8A6BE 100%);
+    padding: 80px 40px 60px;
+    text-align: center; color: white;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 19px, rgba(92,78,138,0.06) 19px, rgba(92,78,138,0.06) 20px),
+      repeating-linear-gradient(90deg, transparent, transparent 19px, rgba(92,78,138,0.06) 19px, rgba(92,78,138,0.06) 20px);
+  }
+  .hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 6px;
+    text-transform: uppercase; opacity: 0.7; margin-bottom: 12px;
+  }
+  .hero-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 900; line-height: 1.2;
+    letter-spacing: clamp(4px, 1vw, 14px);
+    margin-bottom: 16px;
+  }
+  .hero-subtitle {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(14px, 2vw, 18px);
+    font-weight: 400; line-height: 1.7; opacity: 0.9;
+  }
+
+  /* Section */
+  .section { padding: 80px 0; }
+  .container { max-width: 960px; margin: 0 auto; padding: 0 40px; }
+  .section-alt { background: var(--color-white); }
+  .section-cream { background: var(--color-cream); }
+  .section-tag {
+    font-size: 11px; letter-spacing: 4px;
+    color: var(--color-primary-light); font-weight: 400;
+    text-transform: uppercase; margin-bottom: 8px;
+  }
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(24px, 3.5vw, 36px);
+    font-weight: 900; line-height: 1.2;
+    color: var(--color-primary); margin-bottom: 16px;
+  }
+  .divider {
+    width: 48px; height: 3px;
+    background: linear-gradient(90deg, var(--color-rose), var(--color-primary-light));
+    border-radius: 2px; margin: 20px 0;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--color-white);
+    border-radius: 14px; border: 1.5px solid var(--color-warm-gray);
+    box-shadow: var(--shadow-sm);
+    padding: 28px 24px; margin-bottom: 20px;
+  }
+  .card-feature {
+    background: var(--color-cream);
+    border-radius: 14px; border: 1.5px solid var(--color-warm-gray);
+    border-top: 3px solid var(--color-rose);
+    box-shadow: var(--shadow-sm);
+    padding: 28px 24px; margin-bottom: 20px;
+  }
+  .card h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 18px; font-weight: 700;
+    color: var(--color-primary); margin-bottom: 12px;
+  }
+  .card-feature h3 {
+    font-size: 18px; font-weight: 700;
+    color: var(--color-primary); margin-bottom: 12px;
+  }
+  .card p, .card-feature p {
+    font-size: 14px; color: var(--color-muted); line-height: 1.9;
+  }
+  .card ul, .card-feature ul {
+    font-size: 14px; color: var(--color-dark-text); line-height: 2;
+    padding-left: 20px;
+  }
+
+  /* Script Block */
+  .script-block {
+    background: var(--color-rose-ultra-light);
+    border-radius: 14px;
+    border-left: 4px solid var(--color-rose);
+    padding: 24px 28px;
+    margin: 16px 0;
+  }
+  .script-block .label {
+    font-size: 11px; letter-spacing: 2px;
+    color: var(--color-rose); font-weight: 700;
+    margin-bottom: 8px; text-transform: uppercase;
+  }
+  .script-block .script-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 15px; line-height: 2;
+    color: var(--color-dark-text);
+  }
+
+  /* Step */
+  .step-row {
+    display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start;
+  }
+  .step-num {
+    min-width: 36px; height: 36px;
+    background: var(--color-primary-light); color: white;
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 16px; flex-shrink: 0;
+  }
+  .step-content { flex: 1; }
+  .step-content h4 {
+    font-size: 15px; font-weight: 700;
+    color: var(--color-primary); margin-bottom: 4px;
+  }
+  .step-content p {
+    font-size: 13px; color: var(--color-muted); line-height: 1.8;
+  }
+
+  /* Table */
+  .data-table {
+    width: 100%; border-collapse: collapse; margin: 16px 0;
+    font-size: 13px;
+  }
+  .data-table th {
+    background: var(--color-primary);
+    color: white; padding: 10px 14px;
+    text-align: left; font-weight: 700;
+    font-size: 12px; letter-spacing: 1px;
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--color-warm-gray);
+    vertical-align: top;
+  }
+  .data-table tr:nth-child(even) td {
+    background: var(--color-cream);
+  }
+
+  /* Tag */
+  .tag {
+    font-size: 11px; background: var(--color-warm-gray);
+    padding: 3px 10px; border-radius: 10px;
+    color: var(--color-dark-text);
+    display: inline-block; margin: 2px;
+  }
+  .tag-rose { background: var(--color-rose-ultra-light); color: var(--color-rose); }
+  .tag-mint { background: #E8F7F0; color: #2E7D5C; }
+  .tag-ink { background: rgba(134,114,200,0.15); color: var(--color-primary); }
+
+  /* Highlight box */
+  .highlight {
+    background: linear-gradient(135deg, var(--color-primary) 0%, #7B6FB0 100%);
+    color: white; border-radius: 14px;
+    padding: 32px 28px; margin: 24px 0;
+  }
+  .highlight h3 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px; font-weight: 900;
+    margin-bottom: 12px;
+  }
+  .highlight p {
+    font-size: 14px; opacity: 0.9; line-height: 1.9;
+  }
+
+  /* Comparison */
+  .compare-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin: 16px 0;
+  }
+  .compare-card {
+    border-radius: 14px; padding: 24px;
+  }
+  .compare-card--do {
+    background: #E8F7F0;
+    border: 1.5px solid #A8D5C2;
+  }
+  .compare-card--dont {
+    background: #FCE8EE;
+    border: 1.5px solid #F4A7B9;
+  }
+  .compare-card h4 {
+    font-size: 15px; font-weight: 700; margin-bottom: 8px;
+  }
+  .compare-card--do h4 { color: #2E7D5C; }
+  .compare-card--dont h4 { color: #C62856; }
+  .compare-card ul {
+    font-size: 13px; line-height: 2;
+    padding-left: 18px;
+  }
+
+  /* Footer */
+  .footer {
+    background: var(--color-primary);
+    color: rgba(255,255,255,0.5);
+    text-align: center; padding: 32px 40px;
+    font-size: 12px;
+  }
+
+  @media (max-width: 760px) {
+    .nav { padding: 0 20px; }
+    .hero { padding: 60px 20px 40px; }
+    .container { padding: 0 20px; }
+    .section { padding: 60px 0; }
+    .compare-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-logo">碎碎念 × 花店合作</div>
+  <div class="nav-links">
+    <a href="#strategy">推广策略</a>
+    <a href="#scripts">话术</a>
+    <a href="#sop">SOP</a>
+    <a href="#faq">FAQ</a>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow">Flower Shop Partnership Toolkit</div>
+    <h1 class="hero-title">碎碎念 × 花店<br>合作工具包</h1>
+    <p class="hero-subtitle">从留言卡替代到拼图角<br>一步步跑通花店异业合作</p>
+  </div>
+</section>
+
+<!-- ==================== PART 1: 推广策略 ==================== -->
+<section class="section section-alt" id="strategy">
+  <div class="container">
+    <div class="section-tag">Part 01 · Promotion Strategy</div>
+    <h2 class="section-title">线上招募 vs 线下谈判？</h2>
+    <div class="divider"></div>
+
+    <div class="compare-grid">
+      <div class="compare-card compare-card--do">
+        <h4>✓ 线下一家家谈（推荐起步）</h4>
+        <ul>
+          <li>建立信任——花店老板要看到实物</li>
+          <li>即时反馈——当场调整方案</li>
+          <li>筛选精准——只选目标客群匹配的店</li>
+          <li>转化率高——面对面 > 任何线上沟通</li>
+        </ul>
+      </div>
+      <div class="compare-card compare-card--dont">
+        <h4>✗ 纯线上招募（不推荐起步期）</h4>
+        <ul>
+          <li>花店老板不看私信/邮件</li>
+          <li>没摸到实物，很难建立信心</li>
+          <li>说服成本比线下高 3 倍</li>
+          <li>线上招募适合后期规模化</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="highlight">
+      <h3>结论：先线下 3 家 → 跑出数据 → 再线上规模化</h3>
+      <p>线下谈 3 家花店，30 天跑出转化率数据。数据证明有效后，用「已合作花店 × 家，平均月销 × 单」作为背书，线上招募才有说服力。</p>
+    </div>
+
+    <div class="card-feature" style="margin-top:32px;">
+      <h3>三阶段推广路线</h3>
+      <div class="step-row" style="margin-top:16px;">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>冷启动期（第 1-30 天）</h4>
+          <p>线下面谈 3-5 家花店。目标：跑通最小闭环，拿到转化率数据。<br>渠道：你自己城市里，选商圈/大学城周边的精品花店。</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>验证期（第 31-60 天）</h4>
+          <p>把数据做成案例。开始线上招募——小红书发帖、花艺行业群、本地商家群。<br>话术从「要不要合作」变成「XX花店合作 30 天，月增收 ¥X」。</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>规模化（第 61 天起）</h4>
+          <p>出标准化合作包（陈列物料 + 培训视频 + 结算系统）。花店线上申请，你审核后寄物料包。<br>目标：从「一家家谈」变成「一套标准化的入驻流程」。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 花店筛选标准 -->
+    <div class="card" style="margin-top:24px;">
+      <h3>🎯 花店筛选标准</h3>
+      <p style="margin-bottom:12px;">不是所有花店都适合合作。用这个标准筛选：</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>维度</th><th>✓ 选</th><th>✗ 不选</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>位置</td><td>商圈、大学城、写字楼</td><td>菜市场、殡葬周边</td></tr>
+          <tr><td>客单价</td><td>¥150+ 花束为主</td><td>¥50 以下散花为主</td></tr>
+          <tr><td>客群</td><td>18-35 岁女性为主</td><td>中老年/企业客户为主</td></tr>
+          <tr><td>老板</td><td>愿意试新事物、有社媒</td><td>保守、抗拒变化</td></tr>
+          <tr><td>有线上</td><td>有美团/饿了么/小程序</td><td>纯线下无线上</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PART 2: 话术 ==================== -->
+<section class="section section-cream" id="scripts">
+  <div class="container">
+    <div class="section-tag">Part 02 · Pitch Scripts</div>
+    <h2 class="section-title">花店合作话术</h2>
+    <div class="divider"></div>
+
+    <!-- 场景 1: 进店初次接触 -->
+    <div class="card">
+      <h3>场景 1：进店初次接触（30 秒版）</h3>
+      <p style="margin-bottom:12px;">目标：不是谈合作，是让他记住你，愿意加微信。</p>
+      <div class="script-block">
+        <div class="label">话术</div>
+        <div class="script-text">
+          老板你好！我是做创意留言卡的，叫碎碎念——拼图留言卡。<br><br>
+          你家留言卡现在是不是免费送的？客户看完就扔了对吧？<br><br>
+          我们的产品就是把留言卡变成拼图，客户要拼完才能读到上面的话。<br>
+          有不少花店拿我们当差异化卖点——「全城唯一送拼图留言卡的花店」。<br><br>
+          不耽误你时间，加个微信，我发你个 30 秒视频看看效果？
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:var(--color-muted);">
+        <strong>关键点：</strong>不谈合作细节，不谈分成，只做一件事——让他加你微信。<br>
+        <strong>避坑：</strong>不要一上来就说「合作」「代理」「加盟」——花店老板听到这些词会本能防备。
+      </p>
+    </div>
+
+    <!-- 场景 2: 微信跟进 -->
+    <div class="card">
+      <h3>场景 2：微信跟进（加微信后 2 小时内）</h3>
+      <p style="margin-bottom:12px;">目标：发视频 + 抛钩子，约第二次见面。</p>
+      <div class="script-block">
+        <div class="label">第一条消息</div>
+        <div class="script-text">
+          老板好！刚才在店里聊的碎碎念拼图留言卡，这是 30 秒效果视频 👇<br>
+          [发送产品演示视频]<br><br>
+          你家花束质感很好，配上这个拼图留言卡，客户收到花+拼图的双重惊喜，比普通留言卡记忆点强 10 倍。
+        </div>
+      </div>
+      <div class="script-block" style="margin-top:12px;">
+        <div class="label">跟进消息（如果对方没回复，24 小时后）</div>
+        <div class="script-text">
+          老板，简单说下合作方式——你不用出一分钱，我免费给你供样品。<br>
+          客户订花时你问一句「要不要升级留言卡为拼图留言？+¥29.9」，卖出去你再给我结。<br>
+          卖不出去，样品送你，不用退。<br><br>
+          哪天方便我再过来一趟，带实物给你看看？
+        </div>
+      </div>
+      <p style="margin-top:12px;font-size:13px;color:var(--color-muted);">
+        <strong>关键点：</strong>「0 成本 + 不用退」打消顾虑；「带实物」创造二次见面机会。
+      </p>
+    </div>
+
+    <!-- 场景 3: 第二次见面谈合作 -->
+    <div class="card">
+      <h3>场景 3：第二次见面谈合作（15 分钟版）</h3>
+      <p style="margin-bottom:12px;">目标：达成合作，签简单协议，留样品。</p>
+
+      <div class="step-row">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>展示实物（2 分钟）</h4>
+          <p>当面演示：翻开明信片 → 写字 → 撕成拼图 → 装进信封。让老板亲手拼一片，感受体验。</p>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>讲清楚合作方式（3 分钟）</h4>
+          <div class="script-block">
+            <div class="label">话术</div>
+            <div class="script-text">
+              合作方式很简单：<br><br>
+              一、我免费给你 3 套样品，放柜台展示<br>
+              二、客户订花时，你问一句：「要不要把留言卡升级成拼图留言？+¥29.9」<br>
+              三、客户同意，你收 ¥29.9，我给你 ¥25 的供货价，你每单赚 ¥4.9<br>
+              四、或者你加价卖 ¥39.9，每单赚 ¥14.9<br>
+              五、卖完我补货，卖不完样品送你，零风险
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>教话术（3 分钟）</h4>
+          <div class="script-block">
+            <div class="label">教给花店员工的原话</div>
+            <div class="script-text">
+              「您要写留言卡吗？我们有一种拼图留言卡，对方要亲手拼完拼图才能读到您写的话，特别有仪式感。升级只要 ¥29.9，要不要试试？」
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="step-row">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>留物料 + 加微信 + 约回访（3 分钟）</h4>
+          <p>留 3 套样品 + 1 张 A5 宣传卡（写好微信二维码）。<br>加老板微信 + 店长微信（双重触达）。<br>约好：「下周我来补货/看看效果」。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 场景 4: 线上招募 -->
+    <div class="card">
+      <h3>场景 4：线上招募帖（验证期用）</h3>
+      <p style="margin-bottom:12px;">有了前 3 家数据后，用这段文案在小红书/花艺群/本地商家群招募：</p>
+      <div class="script-block">
+        <div class="label">小红书招募帖</div>
+        <div class="script-text">
+          🌸 花店老板看过来！免费供货，零成本加个差异化卖点<br><br>
+          我是碎碎念拼图留言卡的创始人。我们帮花店把免费留言卡升级成拼图留言卡——客户订花时加 ¥29.9，收花人要亲手拼完拼图才能读到留言，仪式感拉满。<br><br>
+          已合作 XX 家花店，平均每月多卖 XX 单，每单赚 ¥4.9-14.9。<br><br>
+          合作方式：<br>
+          📍 免费供样品，0 押金 0 囤货<br>
+          📍 卖完补货，卖不完样品送你<br>
+          📍 你只管推荐，我负责发货<br><br>
+          想了解的评论区扣 1，我私信你发演示视频 🎬
+        </div>
+      </div>
+    </div>
+
+    <!-- 客户场景话术 -->
+    <div class="card-feature">
+      <h3>💡 花店对客户的话术（3 个版本）</h3>
+
+      <div style="margin-top:16px;">
+        <span class="tag tag-rose">日常推荐</span>
+        <div class="script-block" style="margin-top:8px;">
+          <div class="label">花店员工 → 客户</div>
+          <div class="script-text">
+            「您要写留言卡吗？我们有拼图留言卡，对方要亲手拼完才能看到您写的话。比普通纸片有仪式感多了，¥29.9 一份，要不要试试？」
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <span class="tag tag-ink">节日推荐</span>
+        <div class="script-block" style="margin-top:8px;">
+          <div class="label">花店员工 → 客户</div>
+          <div class="script-text">
+            「情人节花束配拼图留言卡特别火！您写在背面，TA 拼完才能读到——比普通贺卡浪漫太多了。¥39.9 定制款，我们帮您写帮您撕帮您寄。」
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <span class="tag tag-mint">异地恋推荐</span>
+        <div class="script-block" style="margin-top:8px;">
+          <div class="label">花店员工 → 客户</div>
+          <div class="script-text">
+            「您是异地送花吧？花送到了，再配一个拼图留言卡寄过去，TA 收到花 + 收到拼图，两份惊喜。拼完才读到您的话，超有感觉的。」
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PART 3: SOP ==================== -->
+<section class="section section-alt" id="sop">
+  <div class="container">
+    <div class="section-tag">Part 03 · Standard Operating Procedure</div>
+    <h2 class="section-title">留言卡合作 SOP</h2>
+    <div class="divider"></div>
+
+    <!-- Phase 1 -->
+    <div class="card-feature">
+      <h3>阶段一：合作启动（Day 1-3）</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>步骤</th><th>谁做</th><th>交付物</th><th>时间</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 筛选花店（按上页标准）</td>
+            <td>你</td>
+            <td>3-5 家目标花店清单</td>
+            <td>Day 1</td>
+          </tr>
+          <tr>
+            <td>2. 线下拜访，用 30 秒话术敲门</td>
+            <td>你</td>
+            <td>加到微信 × N</td>
+            <td>Day 1-2</td>
+          </tr>
+          <tr>
+            <td>3. 微信发视频 + 跟进</td>
+            <td>你</td>
+            <td>约到第二次见面</td>
+            <td>Day 2</td>
+          </tr>
+          <tr>
+            <td>4. 第二次见面：带实物谈合作</td>
+            <td>你 + 花店老板</td>
+            <td>口头达成合作</td>
+            <td>Day 2-3</td>
+          </tr>
+          <tr>
+            <td>5. 留样品 + 宣传物料</td>
+            <td>你</td>
+            <td>3 套样品 + 1 张 A5 宣传卡</td>
+            <td>Day 3</td>
+          </tr>
+          <tr>
+            <td>6. 培训花店员工（当场教话术）</td>
+            <td>你</td>
+            <td>员工会讲推荐话术</td>
+            <td>Day 3</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Phase 2 -->
+    <div class="card-feature">
+      <h3>阶段二：运营跑通（Day 4-30）</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>步骤</th><th>谁做</th><th>频次</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1. 微信问候：「这周有客户问拼图留言卡吗？」</td>
+            <td>你</td>
+            <td>每周 1 次</td>
+          </tr>
+          <tr>
+            <td>2. 补货（样品卖出后补新样品）</td>
+            <td>你</td>
+            <td>按需</td>
+          </tr>
+          <tr>
+            <td>3. 结算（花店卖出的单，你按供货价收款）</td>
+            <td>你 + 花店</td>
+            <td>每周 1 次（微信转账）</td>
+          </tr>
+          <tr>
+            <td>4. 收集客户反馈（花店转述）</td>
+            <td>花店</td>
+            <td>随时</td>
+          </tr>
+          <tr>
+            <td>5. 拍素材（花店拍照/视频，你剪成社媒内容）</td>
+            <td>花店 + 你</td>
+            <td>每周 1-2 次</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Phase 3 -->
+    <div class="card-feature">
+      <h3>阶段三：数据复盘（Day 30）</h3>
+      <p style="margin-bottom:12px;">30 天到期，拿出这张表跟花店一起填：</p>
+      <table class="data-table">
+        <thead>
+          <tr><th>指标</th><th>目标</th><th>实际</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>推荐次数（员工问了多少个客户）</td><td>≥ 60 次</td><td>____</td></tr>
+          <tr><td>成交单数</td><td>≥ 5 单</td><td>____</td></tr>
+          <tr><td>转化率（成交÷推荐）</td><td>≥ 5%</td><td>____</td></tr>
+          <tr><td>花店增收</td><td>≥ ¥75</td><td>____</td></tr>
+          <tr><td>客户好评数</td><td>≥ 2 条</td><td>____</td></tr>
+        </tbody>
+      </table>
+
+      <div class="highlight" style="margin-top:16px;">
+        <h3>决策树</h3>
+        <p>
+          转化率 ≥ 5% → 继续合作，谈长期协议 + 加量<br>
+          转化率 2-5% → 优化话术/位置/定价，再跑 30 天<br>
+          转化率 < 2% → 原因分析：是员工没推？客户不感兴趣？还是花店客群不对？<br>
+          &nbsp;&nbsp;&nbsp;→ 员工没推 → 换花店或加强激励<br>
+          &nbsp;&nbsp;&nbsp;→ 客户不感兴趣 → 这个场景可能不成立<br>
+          &nbsp;&nbsp;&nbsp;→ 客群不对 → 换花店
+        </p>
+      </div>
+    </div>
+
+    <!-- 定价表 -->
+    <div class="card" style="margin-top:24px;">
+      <h3>💰 定价与分成</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>SKU</th><th>你的供货价</th><th>花店零售价</th><th>花店利润/单</th><th>你的利润/单</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>空白款（留言卡替代）</td><td>¥25</td><td>¥29.9</td><td>¥4.9</td><td>¥13.1（52%）</td></tr>
+          <tr><td>定制款（代写版）</td><td>¥30</td><td>¥39.9</td><td>¥9.9</td><td>¥16.1（54%）</td></tr>
+          <tr><td>礼盒装（高端款）</td><td>¥40</td><td>¥59.9</td><td>¥19.9</td><td>¥24.1（60%）</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:8px;font-size:13px;color:var(--color-muted);">
+        注：花店利润看似不高，但他们赚的不是这点差价——是差异化卖点带来的客户粘性和复购。你要把这个逻辑讲清楚。
+      </p>
+    </div>
+
+    <!-- 物料清单 -->
+    <div class="card">
+      <h3>📦 合作物料包（单店）</h3>
+      <table class="data-table">
+        <thead>
+          <tr><th>物料</th><th>数量</th><th>你的成本</th><th>用途</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>碎碎念样品（空白款）</td><td>3 套</td><td>¥15</td><td>柜台展示 + 客户体验</td></tr>
+          <tr><td>A5 宣传卡</td><td>1 张</td><td>¥2</td><td>写好购买二维码，放柜台</td></tr>
+          <tr><td>小立牌（6×8cm）</td><td>1 个</td><td>¥3</td><td>「拼图留言卡 ¥29.9 起」</td></tr>
+          <tr><td>微信二维码贴纸</td><td>2 张</td><td>¥1</td><td>贴在包装/宣传卡上</td></tr>
+        </tbody>
+      </table>
+      <p style="margin-top:8px;font-size:13px;color:var(--color-muted);">
+        单店物料成本约 ¥21。5 家店启动成本约 ¥105。成本极低。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== PART 4: FAQ ==================== -->
+<section class="section section-cream" id="faq">
+  <div class="container">
+    <div class="section-tag">Part 04 · FAQ</div>
+    <h2 class="section-title">花店常见疑问 & 应对</h2>
+    <div class="divider"></div>
+
+    <div class="card">
+      <h3>Q1：「这个和留言卡有什么区别？」</h3>
+      <div class="script-block">
+        <div class="label">回答</div>
+        <div class="script-text">
+          留言卡是看完就扔的纸片。碎碎念是拼图留言——对方要亲手拼完才能读到你的话。<br>
+          想象一下：你收到一束花 + 一个小信封，打开是拼图碎片，你一片一片拼，最后翻过来看到「我爱你」三个字。这比一张纸片有记忆点多了。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Q2：「我店里没地方放啊」</h3>
+      <div class="script-block">
+        <div class="label">回答</div>
+        <div class="script-text">
+          不需要专门的地方。3 套样品就一个信封大小，放收银台旁边就行。<br>
+          客户问留言卡的时候，你拿出来给 TA 看，不用摆一大片。<br>
+          如果后面卖得好，我们再谈做拼图角的事。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Q3：「客户会加 ¥29.9 买这个吗？」</h3>
+      <div class="script-block">
+        <div class="label">回答</div>
+        <div class="script-text">
+          花束 ¥150 起，加 ¥29.9 是 20% 的加购。关键是话术——<br>
+          你不要说「要不要买个拼图」，要说「要不要升级留言卡」。<br>
+          升级比新买的心理门槛低很多。先试 1 个月，不行的样品送你。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Q4：「卖不出去怎么办？」</h3>
+      <div class="script-block">
+        <div class="label">回答</div>
+        <div class="script-text">
+          样品不用退，我送你。你零成本、零风险。<br>
+          最差的情况：你没卖出去，但你多了一个差异化卖点可以跟客户说。<br>
+          最好的情况：你每月多赚几百块 + 客户觉得你家花店特别。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Q5：「我要囤货吗？」</h3>
+      <div class="script-block">
+        <div class="label">回答</div>
+        <div class="script-text">
+          不用囤货。你只管推荐，客户要了你告诉我，我直接发货给你的客户或发到店里。<br>
+          你手里就 3 套样品，没有库存压力。
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Q6：「花店怎么结算？」</h3>
+      <div class="script-block">
+        <div class="label">回答</div>
+        <div class="script-text">
+          两种方式你选：<br>
+          A. 客户付你 ¥29.9，你每周微信转我 ¥25×卖出数量<br>
+          B. 客户扫二维码直接下单，系统自动分你 ¥4.9/单<br>
+          推荐先 A，简单直接，不用搞系统。
+        </div>
+      </div>
+    </div>
+
+    <div class="highlight" style="margin-top:32px;">
+      <h3>行动清单</h3>
+      <p>
+        ☐ 列出 3-5 家目标花店（按筛选标准）<br>
+        ☐ 准备物料包：3 套样品 + A5 宣传卡 + 立牌 + 二维码贴纸<br>
+        ☐ 熟记 30 秒敲门话术<br>
+        ☐ Day 1 线下拜访，加微信<br>
+        ☐ Day 2 发视频 + 跟进<br>
+        ☐ Day 3 带实物谈合作，留样品<br>
+        ☐ 每周回访 1 次<br>
+        ☐ Day 30 数据复盘，决定是否继续/扩量
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <p>© 2026 碎碎念 Suìsuìniàn — PUZZLE KING 艺术拼图子品牌</p>
+  <p style="margin-top:6px;font-size:10px;letter-spacing:2px;opacity:0.4;">Pick Up the Pieces, Read My Mind</p>
+</footer>
+
+</body>
+</html>
