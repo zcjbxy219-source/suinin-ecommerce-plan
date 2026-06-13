@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>碎碎念 · 包装印刷稿</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap');
+
+/* ── 马卡龙治愈色系 Tokens ── */
+:root{
+  --ink:      #5C4E8A;   /* 薰衣草深紫·主色 */
+  --ink2:     #8672C8;   /* 薰衣草中紫·辅色 */
+  --pink:     #F4A7B9;   /* 马卡龙粉·情感色 */
+  --pink-lt:  #FDEEF3;   /* 超浅粉 */
+  --pink-mid: #F4C6D5;   /* 中粉 */
+  --yellow:   #F7D98B;   /* 奶油黄·点缀 */
+  --yellow-dk:#E8C15A;   /* 深黄 */
+  --mint:     #A8D5C2;   /* 薄荷绿 */
+  --cream:    #FFF8FB;   /* 粉白·背景 */
+  --warm:     #F0E6EF;   /* 暖粉灰 */
+  --text-dark:#3D3450;   /* 深紫灰·正文 */
+  --text-muted:#9182A8;  /* 薰衣草灰·次要 */
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans SC',sans-serif;background:#f5eff8;color:var(--text-dark);line-height:1.6;}
+
+.serif{font-family:'Noto Serif SC',serif;}
+
+/* ── Page Layout ── */
+.page-wrap{max-width:900px;margin:0 auto;padding:40px 20px;}
+.section-label{font-size:12px;color:var(--ink2);letter-spacing:4px;text-transform:uppercase;margin-bottom:8px;}
+.section-title{font-size:28px;font-weight:900;margin-bottom:32px;border-left:4px solid var(--pink);padding-left:16px;color:var(--ink);}
+
+/* ── 折叠卡展开稿 ── */
+.fold-card{
+  background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:0 4px 30px rgba(92,78,138,.15);margin-bottom:60px;
+}
+.fold-card-inner{display:flex;flex-wrap:wrap;}
+
+/* ── 正面 ── */
+.card-front{
+  width:100%;min-height:420px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#7B6FB0 0%,#9E88D8 50%,#C4A8E0 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px;text-align:center;
+}
+.card-front::before{
+  content:'';position:absolute;inset:0;opacity:.06;
+  background-image:
+    repeating-linear-gradient(0deg,#fff 0px,#fff 1px,transparent 1px,transparent 40px),
+    repeating-linear-gradient(90deg,#fff 0px,#fff 1px,transparent 1px,transparent 40px);
+}
+/* 装饰圆 */
+.card-front::after{
+  content:'';position:absolute;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle,rgba(244,167,185,.2) 0%,transparent 70%);
+  bottom:-60px;right:-40px;
+}
+.cf-brand{font-size:11px;letter-spacing:8px;color:rgba(255,255,255,.75);margin-bottom:20px;position:relative;z-index:1;}
+.cf-en{font-size:13px;color:rgba(255,255,255,.7);letter-spacing:3px;margin-bottom:24px;position:relative;z-index:1;font-style:italic;}
+.cf-title{font-size:56px;font-weight:900;color:#fff;letter-spacing:12px;position:relative;z-index:1;text-shadow:0 2px 20px rgba(244,167,185,.4);}
+.cf-line{width:60px;height:2px;background:rgba(255,255,255,.5);margin:20px auto;position:relative;z-index:1;}
+.cf-slogan{font-size:16px;color:rgba(255,255,255,.9);letter-spacing:3px;position:relative;z-index:1;max-width:400px;}
+.cf-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:16px;position:relative;z-index:1;letter-spacing:2px;}
+
+/* ── 背面 ── */
+.card-back{
+  width:100%;min-height:600px;background:var(--cream);padding:40px 36px;position:relative;
+}
+.card-back::before{
+  content:'';position:absolute;top:20px;right:20px;width:80px;height:80px;border-radius:50%;
+  background:radial-gradient(circle,var(--pink-lt) 0%,transparent 70%);
+  opacity:.6;
+}
+
+/* how it works */
+.how-section{margin-bottom:32px;}
+.how-title{font-size:11px;color:var(--ink2);letter-spacing:6px;margin-bottom:20px;font-weight:700;}
+.how-steps{display:flex;flex-direction:column;gap:16px;}
+.how-step{display:flex;gap:14px;align-items:flex-start;}
+.how-num{
+  width:28px;height:28px;border-radius:50%;
+  background:linear-gradient(135deg,var(--ink),var(--ink2));
+  color:#fff;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;
+  flex-shrink:0;margin-top:2px;
+}
+.how-text{font-size:13px;color:var(--text-dark);line-height:1.7;}
+.how-text b{color:var(--ink2);}
+
+/* emotion paragraph */
+.emotion-section{margin-bottom:32px;padding:20px 24px;background:var(--pink-lt);border-radius:12px;border:1.5px solid rgba(244,167,185,.3);}
+.emotion-text{font-size:14px;line-height:2.1;color:#5C3D5A;}
+.emotion-text .serif{font-size:15px;}
+
+/* specs */
+.specs-section{margin-bottom:24px;}
+.specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.spec-row{font-size:12px;color:var(--text-muted);padding:6px 0;border-bottom:1px solid var(--warm);}
+.spec-row b{color:var(--text-dark);float:right;font-weight:500;}
+
+/* brand footer */
+.brand-footer{text-align:center;padding-top:20px;border-top:1px solid var(--warm);}
+.bf-name{font-size:16px;font-weight:700;color:var(--ink);letter-spacing:6px;margin-bottom:6px;}
+.bf-slogan{font-size:12px;color:var(--text-muted);letter-spacing:2px;}
+
+/* ── 信封 ── */
+.envelope-section{
+  display:flex;gap:24px;flex-wrap:wrap;margin-bottom:60px;
+}
+.envelope-card{
+  flex:1;min-width:300px;background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:0 4px 24px rgba(92,78,138,.12);
+}
+.envelope-visual{
+  min-height:200px;background:linear-gradient(135deg,#F0D8A0,var(--yellow));
+  position:relative;display:flex;align-items:center;justify-content:center;
+}
+.envelope-visual.front::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:80px;
+  background:linear-gradient(180deg,var(--yellow-dk),var(--yellow));
+  clip-path:polygon(0 0,100% 0,100% 100%,50% 60%,0 100%);
+  opacity:.6;
+}
+.ev-text{
+  position:relative;z-index:2;text-align:center;padding:40px;
+  color:#5C3D20;font-size:15px;line-height:1.8;letter-spacing:1px;
+  text-shadow:0 1px 4px rgba(255,255,255,.5);
+}
+.envelope-back .envelope-visual{background:linear-gradient(135deg,#E8C88A,#F0D8A0);}
+.envelope-label{
+  padding:16px;font-size:13px;color:var(--text-muted);text-align:center;
+}
+.envelope-label b{color:var(--ink2);}
+
+/* ── 说明插页 ── */
+.insert-card{
+  background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:0 4px 24px rgba(92,78,138,.12);margin-bottom:60px;
+}
+.insert-visual{
+  min-height:400px;padding:48px 40px;
+  background:linear-gradient(180deg,var(--cream) 0%,var(--pink-lt) 100%);
+  display:flex;flex-direction:column;justify-content:center;
+}
+.insert-title{font-size:18px;color:var(--ink2);letter-spacing:4px;margin-bottom:28px;text-align:center;}
+.insert-body{font-size:14px;line-height:2.4;color:var(--text-dark);max-width:480px;margin:0 auto;}
+.insert-body .highlight{color:var(--ink2);font-weight:600;}
+
+/* ── 电商详情页 ── */
+.detail-section{margin-bottom:60px;}
+
+/* 主图文案区 */
+.main-banner{
+  min-height:300px;position:relative;overflow:hidden;border-radius:16px;
+  background:linear-gradient(135deg,#7B6FB0,#B59AD8);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:40px;text-align:center;
+  margin-bottom:24px;
+}
+.main-banner::before{
+  content:'';position:absolute;inset:0;opacity:.06;
+  background-image:
+    repeating-linear-gradient(0deg,#fff 0px,#fff 1px,transparent 1px,transparent 60px),
+    repeating-linear-gradient(90deg,#fff 0px,#fff 1px,transparent 1px,transparent 60px);
+}
+/* 装饰泡泡 */
+.main-banner::after{
+  content:'';position:absolute;width:250px;height:250px;border-radius:50%;
+  background:radial-gradient(circle,rgba(244,167,185,.25) 0%,transparent 70%);
+  bottom:-80px;right:-60px;
+}
+.mb-tag{font-size:11px;color:rgba(255,255,255,.7);letter-spacing:6px;position:relative;z-index:1;}
+.mb-title{font-size:48px;font-weight:900;color:#fff;letter-spacing:8px;position:relative;z-index:1;margin:16px 0;text-shadow:0 2px 20px rgba(244,167,185,.4);}
+.mb-sub{font-size:16px;color:rgba(255,255,255,.85);position:relative;z-index:1;letter-spacing:3px;}
+
+/* 卖点卡 */
+.sell-points{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
+.sp-card{background:#fff;border-radius:14px;padding:24px 18px;text-align:center;box-shadow:0 2px 16px rgba(92,78,138,.08);border:1.5px solid var(--warm);}
+.sp-icon{font-size:28px;margin-bottom:10px;}
+.sp-title{font-size:15px;font-weight:700;margin-bottom:6px;color:var(--ink);}
+.sp-desc{font-size:12px;color:var(--text-muted);line-height:1.6;}
+
+/* 详情长图段落 */
+.detail-block{
+  background:#fff;border-radius:14px;padding:40px;margin-bottom:20px;
+  box-shadow:0 2px 16px rgba(92,78,138,.08);border:1.5px solid var(--warm);
+}
+.db-num{font-size:12px;color:var(--ink2);letter-spacing:4px;margin-bottom:8px;}
+.db-title{font-size:22px;font-weight:700;margin-bottom:16px;color:var(--ink);}
+.db-text{font-size:14px;color:var(--text-muted);line-height:2;margin-bottom:16px;}
+.db-text b{color:var(--text-dark);}
+.db-quote{
+  font-size:16px;color:var(--ink);font-style:italic;text-align:center;
+  padding:20px;border-left:3px solid var(--pink);background:var(--pink-lt);
+  margin:20px 0;border-radius:0 8px 8px 0;
+}
+
+/* 场景标签 */
+.scene-tags{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0;}
+.scene-tag{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;background:var(--pink-lt);color:#5C3D5A;border:1px solid rgba(244,167,185,.4);}
+
+/* 参数表格 */
+.detail-table{width:100%;border-collapse:collapse;margin-top:16px;}
+.detail-table td{padding:10px 14px;font-size:13px;border-bottom:1px solid var(--warm);}
+.detail-table td:first-child{color:var(--text-muted);width:40%;}
+.detail-table td:last-child{color:var(--text-dark);font-weight:500;}
+
+/* ── Print Note ── */
+.print-note{
+  background:var(--ink);color:rgba(255,255,255,.8);padding:32px;border-radius:14px;margin-bottom:40px;
+}
+.print-note h3{color:var(--pink-lt);font-size:14px;letter-spacing:4px;margin-bottom:16px;}
+.print-note p{font-size:12px;line-height:1.9;opacity:.75;margin-bottom:8px;}
+.print-note p:last-child{margin-bottom:0;}
+
+/* responsive */
+@media(max-width:600px){
+  .cf-title{font-size:40px;letter-spacing:8px;}
+  .sell-points{grid-template-columns:1fr;}
+  .card-back{padding:28px 20px;}
+  .insert-visual{padding:32px 20px;}
+  .specs-grid{grid-template-columns:1fr;}
+  .mb-title{font-size:36px;}
+}
+</style>
+</head>
+<body>
+
+<div class="page-wrap">
+
+<!-- ============================================ -->
+<!-- PART 1: 包装印刷稿 -->
+<!-- ============================================ -->
+
+<div style="text-align:center;margin-bottom:24px;"><img src="碎碎念logo.png" alt="碎碎念" style="max-height:60px;"></div>
+<div class="section-label">PART 01</div>
+<h1 class="section-title">碎碎念 · 包装印刷稿</h1>
+
+<!-- ── 正面 ── -->
+<div class="fold-card">
+  <div class="fold-card-inner">
+    <div class="card-front">
+      <div class="cf-brand">PUZZLE KING</div>
+      <div class="cf-en serif">Pick Up the Pieces, Read My Mind</div>
+      <div class="cf-title">碎碎念</div>
+      <div class="cf-line"></div>
+      <div class="cf-slogan serif">把想说的话撕成碎片，让TA亲手拼回来</div>
+      <div class="cf-sub">在背面写好 · 打散装进信封 · 寄出去</div>
+    </div>
+
+    <!-- ── 背面 ── -->
+    <div class="card-back">
+      <div class="how-section">
+        <div class="how-title">HOW IT WORKS · 怎么玩</div>
+        <div class="how-steps">
+          <div class="how-step">
+            <div class="how-num">1</div>
+            <div class="how-text">翻到拼图<b>背面</b>，写下你想说的那些碎碎念</div>
+          </div>
+          <div class="how-step">
+            <div class="how-num">2</div>
+            <div class="how-text"><b>亲手打散</b>，装进附赠的牛皮纸信封</div>
+          </div>
+          <div class="how-step">
+            <div class="how-num">3</div>
+            <div class="how-text"><b>寄出去</b>——或者当面递给TA</div>
+          </div>
+          <div class="how-step">
+            <div class="how-num">4</div>
+            <div class="how-text">TA必须<b>拼完60片</b>，才能看见你写了什么</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="emotion-section">
+        <div class="emotion-text serif">
+          有些话，<br>
+          打字发过去太轻，说出来又太直。<br>
+          干脆碎成60片，<br>
+          让TA一片一片拼出来。<br><br>
+          拼图的人每多拼一片，<br>
+          就多想你一秒。<br><br>
+          这才是<b>碎碎念</b>的意义。
+        </div>
+      </div>
+
+      <div class="specs-section">
+        <div class="specs-grid">
+          <div class="spec-row">片数 <b>60片</b></div>
+          <div class="spec-row">拼图尺寸 <b>12.6 × 17.6 cm</b></div>
+          <div class="spec-row">材质 <b>蓝芯灰底优质卡纸</b></div>
+          <div class="spec-row">工艺 <b>四色印刷 · 精密裁切</b></div>
+          <div class="spec-row">出厂状态 <b>已拼好，背面可书写</b></div>
+          <div class="spec-row">含配件 <b>牛皮纸信封 × 1</b></div>
+          <div class="spec-row">适合年龄 <b>8岁以上</b></div>
+          <div class="spec-row">品牌 <b>PUZZLE KING</b></div>
+        </div>
+      </div>
+
+      <div class="brand-footer">
+        <div class="bf-name">PUZZLE KING 艺术拼图</div>
+        <div class="bf-slogan serif">把碎碎念，变成要拼的信</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 信封 ── -->
+<div class="envelope-section">
+  <div class="envelope-card">
+    <div class="envelope-visual front">
+      <div class="ev-text serif">里面有60片碎碎念<br>拼好才能看</div>
+    </div>
+    <div class="envelope-label"><b>信封正面</b></div>
+  </div>
+  <div class="envelope-card">
+    <div class="envelope-back">
+      <div class="envelope-visual">
+        <div class="ev-text serif">慢慢拼，不着急<br>每一片都是想说的</div>
+      </div>
+    </div>
+    <div class="envelope-label"><b>信封封口</b></div>
+  </div>
+</div>
+
+<!-- ── 说明插页 ── -->
+<div class="insert-card">
+  <div class="insert-visual">
+    <div class="insert-title serif">写 给 碎 碎 念 的 主 人</div>
+    <div class="insert-body serif">
+      这副拼图出厂时已经拼好了。<br>
+      翻到背面，你会看到一大片空白。<br><br>
+
+      那片空白，是你的。<br><br>
+
+      想说什么就写什么，别犹豫。<br>
+      写完，把它打散——<br>
+      对，就是你<span class="highlight">亲手打碎</span>的那种散。<br><br>
+
+      然后装进信封，寄出去。<br><br>
+
+      剩下的60片碎碎念，<br>
+      交给TA去拼。<br><br>
+
+      这就是碎碎念的全部玩法。<br>
+      没有别的。<br><br>
+
+      只有你写的字，<br>
+      和拼它的人。<br>
+    </div>
+  </div>
+</div>
+
+<!-- ── 印刷说明 ── -->
+<div class="print-note">
+  <h3>印刷工艺说明</h3>
+  <p>· 正面：薰衣草紫渐变底色（#7B6FB0→#C4A8E0），白色烫印品名，品牌LOGO及Slogan</p>
+  <p>· 背面：粉白底色（#FFF8FB），文字四色印刷，情感区用浅粉色块（#FDEEF3）</p>
+  <p>· 材质建议：300g以上白卡纸，双面覆哑膜，手感细腻</p>
+  <p>· 信封：120g牛皮纸（可考虑粉色内衬），可手写地址，贴邮票即可寄出</p>
+  <p>· 说明插页：120g米色/奶白特种纸，单面印刷，增加仪式感</p>
+  <p>· 刀模尺寸：以实际拼图尺寸+信封厚度为准，预留3mm出血</p>
+</div>
+
+
+<!-- ============================================ -->
+<!-- PART 2: 电商详情页文案 -->
+<!-- ============================================ -->
+
+<div style="margin-top:80px;"></div>
+<div class="section-label">PART 02</div>
+<h1 class="section-title">碎碎念 · 电商详情页文案</h1>
+
+<div class="detail-section">
+
+  <!-- 主图文案 -->
+  <div class="main-banner">
+    <div class="mb-tag">PUZZLE KING 新品</div>
+    <div class="mb-title">碎 碎 念</div>
+    <div class="mb-sub serif">把想说的话撕成碎片，让TA亲手拼回来</div>
+  </div>
+
+  <!-- 核心卖点 -->
+  <div class="sell-points">
+    <div class="sp-card">
+      <div class="sp-icon">✍️</div>
+      <div class="sp-title">你写下</div>
+      <div class="sp-desc">在背面空白处写上你想说的话——告白、祝福、道歉、或者只是一句想念</div>
+    </div>
+    <div class="sp-card">
+      <div class="sp-icon">🧩</div>
+      <div class="sp-title">亲手打散</div>
+      <div class="sp-desc">亲手把拼图打散，装进信封——这一步是只有你能做的仪式</div>
+    </div>
+    <div class="sp-card">
+      <div class="sp-icon">💌</div>
+      <div class="sp-title">TA拼出</div>
+      <div class="sp-desc">收到的人必须亲手拼完60片，才能看见你写的内容。每一片，都是期待</div>
+    </div>
+  </div>
+
+  <!-- 详情段落 1: 产品介绍 -->
+  <div class="detail-block">
+    <div class="db-num">01 / 产品介绍</div>
+    <div class="db-title">一封信，需要拼好才能读</div>
+    <div class="db-text">
+      <b>碎碎念</b>不是普通拼图。它出厂时已经拼好，背面留白等你来写。<br><br>
+      写完后打散，装进信封，寄给你想寄的那个人。<br><br>
+      收件人收到的是60片碎片和一封<b>看不见的信</b>。<br>
+      必须亲手拼完，才能读完你想说的每一个字。
+    </div>
+    <div class="db-quote serif">
+      "拼图的人每多拼一片，就多想你一秒。"
+    </div>
+  </div>
+
+  <!-- 详情段落 2: 怎么玩 -->
+  <div class="detail-block">
+    <div class="db-num">02 / 玩法说明</div>
+    <div class="db-title">四步完成，没有门槛</div>
+    <div class="db-text">
+      <b>Step 1 · 写</b><br>
+      翻到拼图背面，在空白区域写下你想说的话。可以是告白、生日祝福、毕业寄语、道歉、感谢……什么都行。<br><br>
+      <b>Step 2 · 散</b><br>
+      亲手把拼图打散。对，就是你亲手打碎的那种散——这一步的仪式感很重要。<br><br>
+      <b>Step 3 · 寄</b><br>
+      把60片碎片装进附赠的牛皮纸信封，封口，贴邮票寄出。或者当面交给TA。<br><br>
+      <b>Step 4 · 拼</b><br>
+      TA打开信封，看到的是一堆碎片。必须一片一片拼回去，才能看见你写了什么。拼完的那一刻，就是惊喜落地的瞬间。
+    </div>
+  </div>
+
+  <!-- 详情段落 3: 适用场景 -->
+  <div class="detail-block">
+    <div class="db-num">03 / 适用场景</div>
+    <div class="db-title">每一种心意，都值得碎成碎片</div>
+    <div class="scene-tags">
+      <div class="scene-tag">🎂 生日惊喜</div>
+      <div class="scene-tag">💌 情侣告白</div>
+      <div class="scene-tag">🎓 毕业纪念</div>
+      <div class="scene-tag">👫 闺蜜友情</div>
+      <div class="scene-tag">🙏 道歉和解</div>
+      <div class="scene-tag">💼 员工关怀</div>
+      <div class="scene-tag">🎊 节日祝福</div>
+      <div class="scene-tag">💒 婚礼邀请</div>
+    </div>
+    <div class="db-text" style="margin-top:16px;">
+      不管是不好意思开口的<b>告白</b>，还是想给平淡日常加一点<b>仪式感</b>的生日祝福，碎碎念都能把一件普通的事变成一场值得记住的小冒险。
+    </div>
+  </div>
+
+  <!-- 详情段落 4: 为什么选碎碎念 -->
+  <div class="detail-block">
+    <div class="db-num">04 / 产品优势</div>
+    <div class="db-title">为什么不是直接写张卡片？</div>
+    <div class="db-text">
+      <b>仪式感碾压</b>：一张卡片看完就放下了。碎碎念让对方花30-60分钟拼好，过程中的每一秒都在想你。<br><br>
+      <b>惊喜加倍</b>：打开信封看到的是碎片，好奇心直接拉满。"你到底写了什么？"——这种悬念感是普通卡片给不了的。<br><br>
+      <b>可留存</b>：拼好后就是一幅完整画面的明信片，可以摆起来当装饰，也可以寄回给你当回信。<br><br>
+      <b>零门槛</b>：60片难度适中，不无聊不劝退，一次拼完刚刚好。
+    </div>
+  </div>
+
+  <!-- 详情段落 5: 情感共鸣 -->
+  <div class="detail-block">
+    <div class="db-num">05 / 写给下单的你</div>
+    <div class="db-title">有些话，值得用60片碎片来寄</div>
+    <div class="db-text serif" style="font-size:15px;line-height:2.2;">
+      我们做碎碎念的初衷很简单：<br><br>
+      这个时代发消息太快了。<br>
+      快到说完就忘，收到就滑走。<br><br>
+      但有些话，值得让人多花一点时间去拆开。<br><br>
+      碎碎念就是这样——<br>
+      你花一分钟写好，TA花一个小时拼好。<br>
+      这一个小时里，TA满脑子都是你。<br><br>
+      这才是我们想给你的。<br>
+      不是一张拼图，是一种<b>被认真对待的感觉</b>。
+    </div>
+  </div>
+
+  <!-- 产品参数 -->
+  <div class="detail-block">
+    <div class="db-num">06 / 产品参数</div>
+    <div class="db-title">规格详情</div>
+    <table class="detail-table">
+      <tr><td>产品名称</td><td>碎碎念 · 60片秘密明信片拼图</td></tr>
+      <tr><td>片数</td><td>60片</td></tr>
+      <tr><td>拼图尺寸</td><td>12.6 × 17.6 cm（明信片比例）</td></tr>
+      <tr><td>材质</td><td>蓝芯灰底优质卡纸</td></tr>
+      <tr><td>工艺</td><td>四色印刷 · 精密裁切 · 防水哑膜</td></tr>
+      <tr><td>出厂状态</td><td>已拼好，背面留白可书写</td></tr>
+      <tr><td>含配件</td><td>牛皮纸信封 × 1 + 说明插页 × 1</td></tr>
+      <tr><td>适合年龄</td><td>8岁以上</td></tr>
+      <tr><td>品牌</td><td>PUZZLE KING 艺术拼图</td></tr>
+    </table>
+  </div>
+
+  <!-- 店铺/品牌信息 -->
+  <div class="main-banner" style="min-height:180px;">
+    <div class="mb-tag" style="color:rgba(255,255,255,.7)">PUZZLE KING</div>
+    <div style="font-family:'Noto Serif SC',serif;color:#fff;letter-spacing:6px;font-size:20px;font-weight:700;margin:8px 0;">艺术拼图</div>
+    <div class="bf-slogan serif" style="color:rgba(255,255,255,.85);margin-top:8px;letter-spacing:3px;">把碎碎念，变成要拼的信</div>
+  </div>
+
+</div>
+
+</div>
+
+</body>
+</html>
