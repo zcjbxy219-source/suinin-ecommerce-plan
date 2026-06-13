@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>碎碎念 × Roblox 角色系统设计方案</title>
+<style>
+  :root {
+    --rose: #FBEAF0; --rose-dark: #D4537E; --rose-text: #993556;
+    --lavender: #EEEDFE; --lavender-dark: #534AB7; --lavender-text: #3C3489;
+    --mint: #E1F5EE; --mint-dark: #1D9E75; --mint-text: #085041;
+    --cream: #FAEEDA; --cream-dark: #EF9F27; --cream-text: #854F0B;
+    --ink: #2C2C2A; --ink-light: #5F5E5A; --bg: #FFFDF9;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif; background:var(--bg); color:var(--ink); line-height:1.7; }
+  .hero { text-align:center; padding:48px 24px 36px; background:linear-gradient(135deg,var(--lavender) 0%,var(--rose) 50%,var(--cream) 100%); }
+  .hero img { max-height:70px; margin-bottom:14px; }
+  .hero h1 { font-size:26px; font-weight:700; color:var(--ink); letter-spacing:2px; }
+  .hero p { font-size:15px; color:var(--ink-light); margin-top:8px; max-width:600px; margin-inline:auto; }
+  .container { max-width:900px; margin:0 auto; padding:24px 20px 60px; }
+  h2 { font-size:20px; font-weight:700; color:var(--ink); margin:40px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--rose-dark); display:flex; align-items:center; gap:10px; }
+  h2 .num { display:inline-block; width:32px; height:32px; line-height:32px; text-align:center; background:var(--rose-dark); color:#fff; border-radius:50%; font-size:14px; }
+  h3 { font-size:16px; font-weight:600; color:var(--lavender-dark); margin:24px 0 12px; }
+  h4 { font-size:14px; font-weight:600; color:var(--mint-dark); margin:18px 0 8px; }
+  p { margin-bottom:12px; font-size:14.5px; }
+  
+  /* Character profile card */
+  .char-card { display:grid; grid-template-columns:240px 1fr; gap:24px; background:linear-gradient(135deg,var(--rose),var(--lavender)); border-radius:16px; padding:28px; margin:20px 0; border:1px solid rgba(212,83,126,0.2); }
+  .char-visual { text-align:center; }
+  .char-visual .avatar-box { width:200px; height:220px; margin:0 auto 12px; background:white; border-radius:16px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; border:2px solid var(--rose-dark); }
+  .char-name { font-size:22px; font-weight:700; color:var(--rose-text); }
+  .char-sub { font-size:13px; color:var(--rose-text); opacity:0.75; }
+  .char-info dl { display:grid; grid-template-columns:auto 1fr; gap:6px 16px; font-size:14px; }
+  .char-info dt { font-weight:600; color:var(--lavender-dark); }
+  .char-info dd { color:var(--ink); }
+
+  /* Color palette */
+  .palette { display:flex; flex-wrap:wrap; gap:10px; margin:16px 0; }
+  .swatch { display:flex; align-items:center; gap:8px; background:white; border-radius:8px; padding:8px 12px; border:1px solid rgba(0,0,0,0.08); min-width:150px; }
+  .swatch-color { width:36px; height:36px; border-radius:8px; border:1px solid rgba(0,0,0,0.1); }
+  .swatch-name { font-size:13px; font-weight:600; }
+  .swatch-hex { font-size:11px; color:var(--ink-light); }
+
+  /* Item cards */
+  .item-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:16px; margin:16px 0; }
+  .item-card { background:white; border-radius:12px; padding:18px; border:1px solid rgba(0,0,0,0.06); transition:transform 0.2s; }
+  .item-card:hover { transform:translateY(-2px); box-shadow:0 6px 20px rgba(0,0,0,0.08); }
+  .item-card.t1 { border-top:3px solid var(--rose-dark); }
+  .item-card.t2 { border-top:3px solid var(--lavender-dark); }
+  .item-card.t3 { border-top:3px solid var(--mint-dark); }
+  .item-header { display:flex; justify-content:space-between; align-items:start; margin-bottom:10px; }
+  .item-name { font-size:15px; font-weight:700; }
+  .item-tier { font-size:11px; padding:3px 8px; border-radius:10px; color:white; font-weight:500; }
+  .tier-t1 { background:var(--rose-dark); }
+  .tier-t2 { background:var(--lavender-dark); }
+  .tier-t3 { background:var(--mint-dark); }
+  .item-desc { font-size:13px; color:var(--ink-light); margin-bottom:10px; }
+  .item-specs { display:grid; grid-template-columns:1fr 1fr; gap:6px; font-size:11.5px; }
+  .spec-label { color:var(--ink-light); }
+  .spec-value { font-weight:600; }
+
+  /* Tables */
+  table { width:100%; border-collapse:collapse; margin:16px 0; font-size:13.5px; background:white; border-radius:10px; overflow:hidden; box-shadow:0 1px 4px rgba(0,0,0,0.05); }
+  th { background:var(--lavender); color:var(--lavender-text); font-weight:600; padding:10px 14px; text-align:left; font-size:12.5px; }
+  td { padding:9px 14px; border-top:1px solid rgba(0,0,0,0.05); }
+  tr:nth-child(even) td { background:rgba(238,237,254,0.3); }
+
+  /* Checklist */
+  .checklist { list-style:none; margin:12px 0; }
+  .checklist li { padding:8px 0 8px 30px; position:relative; font-size:14px; border-bottom:1px solid rgba(0,0,0,0.04); }
+  .checklist li::before { content:"☐"; position:absolute; left:0; font-size:16px; color:var(--lavender-dark); }
+  .checklist li.done::before { content:"☑"; color:var(--mint-dark); }
+
+  /* Code blocks */
+  pre { background:var(--ink); color:#E8E6E3; padding:18px; border-radius:10px; overflow-x:auto; font-size:12.5px; line-height:1.6; margin:14px 0; }
+  code { font-family:"Cascadia Code","Fira Code","Consolas",monospace; }
+  .code-lua .kw { color:#C586C0; } .code-lua .fn { color:#DCDCAA; }
+  .code-lua .str { color:#CE9178; } .code-lua .cmt { color:#6A9955; }
+  .code-lua .num { color:#B5CEA8; } .code-lua .type { color:#4EC9B0; }
+
+  /* Timeline */
+  .timeline { position:relative; padding-left:32px; margin:20px 0; }
+  .timeline::before { content:""; position:absolute; left:12px; top:0; bottom:0; width:2px; background:linear-gradient(to bottom,var(--rose-dark),var(--lavender-dark),var(--mint-dark)); border-radius:1px; }
+  .tl-item { position:relative; margin-bottom:24px; }
+  .tl-dot { position:absolute; left:-28px; top:4px; width:14px; height:14px; border-radius:50%; border:2px solid var(--lavender-dark); background:var(--bg); }
+  .tl-item.phase1 .tl-dot { border-color:var(--rose-dark); background:var(--rose); }
+  .tl-item.phase2 .tl-dot { border-color:var(--lavender-dark); background:var(--lavender); }
+  .tl-item.phase3 .tl-dot { border-color:var(--mint-dark); background:var(--mint); }
+  .tl-title { font-weight:700; font-size:14.5px; }
+  .tl-time { font-size:12px; color:var(--ink-light); }
+  .tl-desc { font-size:13.5px; color:var(--ink-light); margin-top:4px; }
+
+  /* Callout boxes */
+  .callout { border-radius:12px; padding:16px 20px; margin:16px 0; font-size:14px; }
+  .callout-tip { background:var(--mint); color:var(--mint-text); border-left:4px solid var(--mint-dark); }
+  .callout-warn { background:var(--cream); color:var(--cream-text); border-left:4px solid var(--cream-dark); }
+  .callout-info { background:var(--lavender); color:var(--lavender-text); border-left:4px solid var(--lavender-dark); }
+
+  /* Section divider */
+  .divider { height:1px; background:linear-gradient(to right,transparent,var(--rose-dark),transparent); margin:36px 0; opacity:0.3; }
+
+  @media(max-width:600px) {
+    .char-card { grid-template-columns:1fr; }
+    .item-grid { grid-template-columns:1fr; }
+    h1 { font-size:22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <img src="碎碎念logo.png" alt="碎碎念" onerror="this.style.display='none'">
+  <h1>碎碎念 × Roblox 角色系统</h1>
+  <p>品牌拟人形象「念念」完整设计方案 · UGC配件产品线 · Creator Marketplace 提交规范</p>
+</div>
+
+<div class="container">
+
+<!-- ==================== PART 1: 角色概念 ==================== -->
+<h2><span class="num">1</span>角色概念：念 念（Niànnian）</h2>
+
+<div class="char-card">
+  <div class="char-visual">
+    <div class="avatar-box">
+      <!-- SVG character preview -->
+      <svg viewBox="0 0 180 200" xmlns="http://www.w3.org/2000/svg" style="width:180px;height:200px;">
+        <ellipse cx="90" cy="72" rx="42" ry="44" fill="#FFF5F0" stroke="#D4A99B" stroke-width="1"/>
+        <path d="M48 55 Q46 25 90 22 Q134 25 132 55 Q130 38 112 34 Q90 29 68 34 Q50 38 48 55Z" fill="#8B6B61" stroke="#6B4B41" stroke-width="0.6"/>
+        <path d="M48 55 Q43 72 48 95" fill="none" stroke="#8B6B61" stroke-width="5" stroke-linecap="round"/>
+        <path d="M132 55 Q137 72 132 95" fill="none" stroke="#8B6B61" stroke-width="5" stroke-linecap="round"/>
+        <path d="M52 44 Q64 56 77 46 Q90 58 103 46 Q116 56 128 44 Q120 37 90 35 Q60 37 52 44Z" fill="#8B6B61"/>
+        <ellipse cx="74" cy="70" rx="10" ry="11" fill="white" stroke="#8B6B61" stroke-width="0.5"/>
+        <ellipse cx="106" cy="70" rx="10" ry="11" fill="white" stroke="#8B6B61" stroke-width="0.5"/>
+        <circle cx="76" cy="71" r="5.5" fill="#534AB7"/>
+        <circle cx="108" cy="71" r="5.5" fill="#534AB7"/>
+        <circle cx="77.5" cy="69.5" r="2" fill="white"/><circle cx="109.5" cy="69.5" r="2" fill="white"/>
+        <ellipse cx="62" cy="82" rx="7" ry="4" fill="#F0997B" opacity="0.35"/>
+        <ellipse cx="118" cy="82" rx="7" ry="4" fill="#F0997B" opacity="0.35"/>
+        <path d="M82 92 Q90 99 98 92" fill="none" stroke="#D4A99B" stroke-width="1.2" stroke-linecap="round"/>
+        <g transform="translate(52,42)">
+          <path d="M0 5 L0 15 Q0 18 3 18 L6 18 Q6 21 9 21 Q12 21 12 18 L15 18 Q18 18 18 15 L18 5 Q18 2 15 2 L12 2 Q12 -1 9 -1 Q6 -1 6 2 L3 2 Q0 2 0 5Z" fill="#D4537E" stroke="#993556" stroke-width="0.4"/>
+          <text x="9" y="13" text-anchor="middle" font-size="6" font-weight="bold" fill="white">碎</text>
+        </g>
+        <path d="M58 115 L50 140 L50 175 Q50 179 56 179 L124 179 Q130 179 130 175 L130 140 L122 115 Q114 108 90 111 Q66 108 58 115Z" fill="#CECBF6" stroke="#7F77DD" stroke-width="0.5"/>
+        <path d="M68 116 Q90 126 112 116" fill="none" stroke="#AFA9EC" stroke-width="1.5" stroke-linecap="round"/>
+        <g transform="translate(78,132)">
+          <path d="M0 3 L0 11 Q0 13 2 13 L4 13 Q4 15 6 15 Q8 15 8 13 L10 13 Q12 13 12 11 L12 3 Q12 1 10 1 L8 1 L8 -1 L6 -1 L6 1 L4 1 Q2 1 0 3Z" fill="#FBEAF0" stroke="#ED93B1" stroke-width="0.3"/>
+        </g>
+        <path d="M65 176 L62 215 Q90 222 118 215 L115 176Z" fill="#FBEAF0" stroke="#ED93B1" stroke-width="0.4"/>
+        <rect x="70" y="215" width="15" height="18" rx="3" fill="#FFF5F0" stroke="#D4A99B" stroke-width="0.3"/>
+        <rect x="95" y="215" width="15" height="18" rx="3" fill="#FFF5F0" stroke="#D4A99B" stroke-width="0.3"/>
+        <ellipse cx="77" cy="238" rx="10" ry="5" fill="#D4537E" stroke="#993556" stroke-width="0.3"/>
+        <ellipse cx="103" cy="238" rx="10" ry="5" fill="#D4537E" stroke="#993556" stroke-width="0.3"/>
+        <g transform="translate(128,160)">
+          <rect width="28" height="38" rx="2.5" fill="#FAEEDA" stroke="#EF9F27" stroke-width="0.4"/>
+          <line x1="4" y1="6" x2="24" y2="6" stroke="#EF9F27" stroke-width="0.3"/>
+          <line x1="4" y1="13" x2="24" y2="13" stroke="#EF9F27" stroke-width="0.3"/>
+          <line x1="4" y1="20" x2="18" y2="20" stroke="#EF9F27" stroke-width="0.3"/>
+          <rect x="17" y="26" width="8" height="8" rx="1" fill="#D4537E" opacity="0.6"/>
+          <text x="14" y="35" text-anchor="middle" font-size="5" fill="#993C1D">念念</text>
+        </g>
+      </svg>
+    </div>
+    <div class="char-name">念念</div>
+    <div class="char-sub">Niànnian · 情绪拼图收集者</div>
+  </div>
+  <div class="char-info">
+    <dl>
+      <dt>全名</dt><dd>念念（Niànnian）</dd>
+      <dt>定位</dt><dd>碎碎念品牌拟人化形象 / Roblox 品牌角色</dd>
+      <dt>核心概念</dt><dd>收集散落的情绪碎片，把它们拼成完整的温暖故事</dd>
+      <dt>性格关键词</dt><dd>治愈系 · 碎嘴（爱碎碎念）· 手作达人</dd>
+      <dt>目标用户共鸣</dt><dd>异地恋女生 / 闺蜜送礼群体 / 情绪疗愈需求者</dd>
+      <dt>标志性道具</dt><dd>拼图块发夹、明信片小挎包、手写便签</dd>
+      <dt>Roblox 定位</dt><dd>体验内 NPC + UGC 配件系列代言人</dd>
+    </dl>
+  </div>
+</div>
+
+<h3>品牌色彩映射到角色</h3>
+<div class="palette">
+  <div class="swatch"><div class="swatch-color" style="background:#FBEAF0;"></div><div><div class="swatch-name">玫瑰粉</div><div class="swatch-hex">#FBEAF0</div></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#EEEDFE;"></div><div><div class="swatch-name">薰衣草紫</div><div class="swatch-hex">#EEEDFE</div></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#E1F5EE;"></div><div><div class="swatch-name">薄荷绿</div><div class="swatch-hex">#E1F5EE</div></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#FAEEDA;"></div><div><div class="swatch-name">奶油黄</div><div class="swatch-hex">#FAEEDA</div></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#D4537E;"></div><div><div class="swatch-name">强调红</div><div class="swatch-hex">#D4537E</div></div></div>
+  <div class="swatch"><div class="swatch-color" style="background:#534AB7;"></div><div><div class="swatch-name">深邃蓝</div><div class="swatch-hex">#534AB7</div></div></div>
+</div>
+
+<p>配色逻辑：玫瑰粉作为主色调传递温暖治愈感，薰衣草紫呼应品牌Logo的深色调性，薄荷绿代表清新与成长，奶油黄来自明信片/信封的纸质感，强调红用于关键视觉焦点（发夹、鞋子、印章），深邃蓝用于眼睛和文字元素。</p>
+
+<div class="callout callout-info">
+  <strong>💡 设计原则：</strong>所有颜色均取自碎碎念品牌手册的治愈系马卡龙色系，确保 Roblox 虚拟形象与实体产品线视觉统一。避免使用高饱和荧光色——那会破坏疗愈氛围。
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== PART 2: UGC配件产品线 ==================== -->
+<h2><span class="num">2</span>UGC 配件产品线（9款）</h2>
+
+<p>基于念念的角色设定，规划三档共 9 款可独立销售的 UGC 配件，覆盖头部→身体→背部/手持的完整穿搭体系。每款均可单独购买，组合后还原完整角色。</p>
+
+<h3>T1 头部配件（3款）— 入门级引流品</h3>
+<div class="item-grid">
+  <div class="item-card t1">
+    <div class="item-header">
+      <div class="item-name">🧩 碎碎拼图发夹</div>
+      <div class="item-tier tier-t1">T1</div>
+    </div>
+    <div class="item-desc">左侧头发的拼图造型发夹，带「碎」字浮雕。念念的标志单品，识别度最高。</div>
+    <div class="item-specs">
+      <span><span class="spec-label">类型：</span><span class="spec-value">HatAccessory</span></span>
+      <span><span class="spec-label">三角数：</span><span class="spec-value">~280 tri</span></span>
+      <span><span class="spec-label">纹理：</span><span class="spec-value">512×512 PNG</span></span>
+      <span><span class="spec-label">挂载点：</span><span class="spec-value">HatAttachment</span></span>
+      <span><span class="spec-label">建议定价：</span><span class="spec-value">65 Robux</span></span>
+      <span><span class="spec-label">透明：</span><span class="spec-value">无</span></span>
+    </div>
+  </div>
+  <div class="item-card t1">
+    <div class="item-header">
+      <div class="item-name">💌 明信片宽发箍</div>
+      <div class="item-tier tier-t1">T1</div>
+    </div>
+    <div class="item-desc">横跨头顶的发箍，造型为一张迷你明信片。边缘做旧感邮戳装饰。</div>
+    <div class="item-specs">
+      <span><span class="spec-label">类型：</span><span class="spec-value">HairAccessory</span></span>
+      <span><span class="spec-label">三角数：</span><span class="spec-value">~350 tri</span></span>
+      <span><span class="spec-label">纹理：</span><span class="spec-value">512×512 PNG</span></span>
+      <span><span class="spec-label">挂载点：</span><span class="spec-value">HairAttachment</span></span>
+      <span><span class="spec-label">建议定价：</span><span class="spec-value">75 Robux</span></span>
+      <span><span class="spec-label">透明：</span><span class="spec-value">无</span></span>
+    </div>
+  </div>
+  <div class="item-card t1">
+    <div class="item-header">
+      <div class="item-name">✨ 情绪碎片耳饰</div>
+      <div class="item-tier tier-t1">T1</div>
+    </div>
+    <div class="item-desc">左右耳各一枚不规则碎片造型耳钉，半透明材质带微光。象征收集中的情绪碎片。</div>
+    <div class="item-specs">
+      <span><span class="spec-label">类型：</span><span class="spec-value">FaceAccessory</span></span>
+      <span><span class="spec-label">三角数：</span><span class="spec-value">~180 tri</span></span>
+      <span><span class="spec-label">纹理：</span><span class="spec-value">256×256 PNG</span></span>
+      <span><span class="spec-label">挂载点：</span><span class="spec-value">FaceFrontAttachment</span></span>
+      <span><span class="spec-label">建议定价：</span><span class="spec-value">55 Robux</span></span>
+      <span><span class="spec-label">透明：</span><span class="spec-value">有（Alpha）</span></span>
+    </div>
+  </div>
+</div>
+
+<h3>T2 身体服饰（3款）— 核心利润款</h3>
+<div class="item-grid">
+  <div class="item-card t2">
+    <div class="item-header">
+      <div class="item-name">🧶 拼图案纹毛衣</div>
+      <div class="item-tier tier-t2">T2</div>
+    </div>
+    <div class="item-desc">Oversized 薰衣草紫毛衣，胸口处有拼图块提花图案。宽松版型，袖口微卷。Layered Clothing 上衣类。</div>
+    <div class="item-specs">
+      <span><span class="spec-label">类型：</span><span class="spec-value">Layered Shirt</span></span>
+      <span><span class="spec-label">三角数：</span><span class="spec-value">~1,800 tri</span></span>
+      <span><span class="spec-label">纹理：</span><span class="spec-value">1024×1024 PNG</span></span>
+      <span><span class="spec-label">骨骼绑定：</span><span class="spec-value">R15 UpperBody</span></span>
+      <span><span class="spec-label">内笼网格：</span><span class="spec-value">必需 _InnerCage</span></span>
+      <span><span class="spec-label">建议定价：</span><span class="spec-value">250 Robux</span></span>
+    </div>
+  </div>
+  <div class="item-card t2">
+    <div class="item-header">
+      <div class="item-name">👗 百褶裙·玫瑰粉</div>
+      <div class="item-tier tier-t2">T2</div>
+    </div>
+    <div class="item-desc">高腰 A 字百褶裙，玫瑰粉色，膝盖长度。褶皱自然垂坠感，裙摆微微外扩。Layered Clothing 下装类。</div>
+    <div class="item-specs">
+      <span><span class="spec-label">类型：</span><span class="spec-value">Layered Pants</span></span>
+      <span><span class="spec-label">三角数：</span><span class="spec-value">~1,200 tri</span></span>
+      <span><span class="spec-label">纹理：</span><span class="spec-value">1024×1024 PNG</span></span>
+      <span><span class="spec-label">骨骼绑定：</span><span class="spec-value">R15 LowerBody</span></span>
+      <span><span class="spec-label">内笼网格：</span><span class="spec-value">必需 _InnerCage</span></span>
+      <span><span class="spec-label">建议定价：</span><span class="spec-value">200 Robux</span></span>
+    </div>
+  </div>
+  <div class="item-card t2">
+    <div class="item-header">
+      <div class="item-name">🧣 治愈系围巾</div>
+      <div class="item-tier tier-t2">T2</div>
+    </div>
+    <div class="item-desc">奶油黄长围巾，两端带有流苏。围巾上有隐约的手写体字母纹理（抽象处理非真实文字）。经典围脖配件。</div>
+    <div class="item-specs">
+      <span><span class="spec-label">类型：</span><span class="spec-value">Scarf Accessory</span></span>
+      <span><span class="spec-label">三角数：</span><span class="spec-value">~600 tri</span></span>
+      <span><span class="spec-label">纹理：</span><span class="spec-value">512×512 PNG</span></span>
+      <span><span class="spec-label">挂载点：</span><span class="spec-value">Neck Attachment</span></span>
+      <span><span class="spec-label">物理模拟：</span><span class="spec-value"> Cloth Physics 可选</span></span>
+      <span><span class="spec-label">建议定价：</span><span class="spec-value">120 Robux</span></span>
+    </div>
+  </div>
+</div>
+
+<h3>T3 背部/手持配件（3款）— 高端展示款</h3>
+<div class="item-grid">
+  <div class="item-card t3">
+    <div class="item-header">
+      <div class="item-name">🎒 明信片双肩包</div>
+      <div class="item-tier tier-t3">T3</div>
+    </div>
+    <div class="item-desc">方形复古邮差包造型，主色奶油黄配红色邮戳印花。背包侧面露出 mini 明信片和爱心邮票装饰。念念同款包。</div>
+    <div class="item-specs">
+      <span><span class="spec-label">类型：</span><span class="spec-value">Back Accessory</span></span>
+      <span><span class="spec-label">三角数：</span><span class="spec-value">~900 tri</span></span>
+      <span><span class="spec-label">纹理：</span><span class="spec-value">512×512 PNG</span></span>
+      <span><span class="spec-label">挂载点：</span><span class="spec-value">BackAttachment</span></span>
+      <span><span class="spec-label">建议定价：</span><span class="spec-value">150 Robux</span></span>
+      <span><span class="spec-label">透明：</span><span class="spec-value">无</span></span>
+    </div>
+  </div>
+  <div class="item-card t3">
+    <div class="item-header">
+      <div class="item-name">📦 拼图盒手提袋</div>
+      <div class="item-tier tier-t3">T3</div>
+    </div>
+    <div class="item-desc">mini 拼图盒造型的手提袋，打开盖子能看到里面的虚拟拼图碎片。右手持握配件，行走时轻微晃动。</div>
+    <div class="item-specs">
+      <span><span class="spec-label">类型：</span><span class="spec-value">Held Item (Tool)</span></span>
+      <span><span class="spec-label">三角数：</span><span class="spec-value">~750 tri</span></span>
+      <span><span class="spec-label">纹理：</span><span class="spec-value">512×512 PNG</span></span>
+      <span><span class="spec-label">挂载点：</span><span class="spec-value">RightHand Grip</span></span>
+      <span><span class="spec-label">建议定价：</span><span class="spec-value">130 Robux</span></span>
+      <span><span class="spec-label">动画：</span><span class="spec-value">需定制持握动画</span></span>
+    </div>
+  </div>
+  <div class="item-card t3">
+    <div class="item-header">
+      <div class="item-name">🪽 情绪碎片翅膀</div>
+      <div class="item-tier tier-t3">T3</div>
+    </div>
+    <div class="item-desc">由多片半透明的不规则「情绪碎片」组成的翅膀，背在身后。碎片之间有微光连线。最炫酷的展示款。</div>
+    <div class="item-specs">
+      <span><span class="spec-label">类型：</span><span class="spec-value">Back Accessory</span></span>
+      <span><span class="spec-label">三角数：</span><span class="spec-value">~1,400 tri</span></span>
+      <span><span class="spec-label">纹理：</span><span class="spec-value">512×512 PNG (RGBA)</span></span>
+      <span><span class="spec-label">挂载点：</span><span class="spec-value">BackAttachment</span></span>
+      <span><span class="spec-label">建议定价：</span><span class="spec-value">195 Robux</span></span>
+      <span><span class="spec-label">透明：</span><span class="spec-value">必须（Alpha翅膀）</span></span>
+    </div>
+  </div>
+</div>
+
+<table>
+  <tr><th>SKU</th><th>名称</th><th>档次</th><th>三角数</th><th>纹理</th><th>定价(Robux)</th><th>预计销量排名</th></tr>
+  <tr><td>SUI-001</td><td>碎碎拼图发夹</td><td>T1 引流</td><td>280</td><td>512²</td><td>65</td><td>#1 🏆</td></tr>
+  <tr><td>SUI-002</td><td>明信片宽发箍</td><td>T1 引流</td><td>350</td><td>512²</td><td>75</td><td>#2</td></tr>
+  <tr><td>SUI-003</td><td>情绪碎片耳饰</td><td>T1 引流</td><td>180</td><td>256²</td><td>55</td><td>#3</td></tr>
+  <tr><td>SUI-004</td><td>拼图案纹毛衣</td><td>T2 核心</td><td>1,800</td><td>1024²</td><td>250</td><td>#4</td></tr>
+  <tr><td>SUI-005</td><td>百褶裙·玫瑰粉</td><td>T2 核心</td><td>1,200</td><td>1024²</td><td>200</td><td>#5</td></tr>
+  <tr><td>SUI-006</td><td>治愈系围巾</td><td>T2 核心</td><td>600</td><td>512²</td><td>120</td><td>#6</td></tr>
+  <tr><td>SUI-007</td><td>明信片双肩包</td><td>T3 高端</td><td>900</td><td>512²</td><td>150</td><td>#7</td></tr>
+  <tr><td>SUI-008</td><td>拼图盒手提袋</td><td>T3 高端</td><td>750</td><td>512²</td><td>130</td><td>#8</td></tr>
+  <tr><td>SUI-009</td><td>情绪碎片翅膀</td><td>T3 高端</td><td>1,400</td><td>512²</td><td>195</td><td>#9</td></tr>
+  <tr style="font-weight:700;background:rgba(212,83,126,0.08);"><td colspan="3">全套合计</td><td>~7,460</td><td>—</td><td><strong>1,240</strong></td><td>套装优惠价</td></tr>
+</table>
+
+<div class="callout callout-warn">
+  <strong>⚠️ 定价策略说明：</strong>T1 三款控制在 55~75 Robux 区间（低于 100 Robux 的心理门槛），目的是最大化曝光和试穿率；T2 衣服类 120~250 Robux 是主流价位段；T3 翅膀等展示款 130~195 Robux 面向愿意为颜值付费的用户。如果申请到 Limited 系列资格，可考虑将「情绪碎片翅膀」设为限量版。
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== PART 3: 技术规格详解 ==================== -->
+<h2><span class="num">3</span>技术规格详解</h2>
+
+<h3>3.1 Mesh 建模规范</h3>
+<table>
+  <tr><th>参数</th><th>规范值</th><th>说明</th></tr>
+  <tr><td>三角面上限（配件）</td><td><strong>4,000 tri</strong></td><td>超过自动被审核拒绝，建议预留 10% 余量 → 建模目标 ≤3,600</td></tr>
+  <tr><td>三角面上限（Layered Clothing）</td><td><strong>10,000 tri</strong></td><td>衣服类可以更复杂，但仍需优化</td></tr>
+  <tr><td>UV 通道</td><td>单一通道 [0,1]</td><td>禁止 UV 超出 0~1 范围，禁止重叠 UV 岛</td></tr>
+  <tr><td>UV 岛间距</td><td>≥2 px</td><td>防止压缩 mip 时纹理溢色（bleeding）</td></tr>
+  <tr><td>变换矩阵</td><td>全部 Apply</td><td>导出前 Ctrl+A → Apply Scale/Rotation，scale 必须为 1</td></tr>
+  <tr><td>法线方向</td><td>朝外（ outward ）</td><td>背面剔除模式，法线反了会显示黑色</td></tr>
+  <tr><td>零面积面</td><td>不允许</td><td>清理所有退化几何（degenerate geometry）</td></tr>
+  <tr><td>非流形边</td><td>不允许</td><td>使用 Blender 的 Select → Non-Manifold 检查</td></tr>
+  <tr><td>导出格式</td><td>.fbx（有骨骼）/ .obj（静态）</td><td>FBX 用于 Layered Clothing 和需要变形的配件</td></tr>
+</table>
+
+<h3>3.2 纹理贴图规范</h3>
+<table>
+  <tr><th>参数</th><th>要求</th><th>原因</th></tr>
+  <tr><td>分辨率范围</td><td>256×256 ~ 1024×1024</td><td>超过 1024 自动缩放，细节丢失</td></tr>
+  <tr><td>格式</td><td>PNG（RGBA）</td><td>支持 Alpha 透明通道</td></tr>
+  <tr><td>色深</td><td>8-bit/channel</td><td>标准 RGBA8888</td></tr>
+  <tr><td>版权内容</td><td>❌ 绝对禁止</td><td>任何 Logo、品牌名、现实 IP → 审核拒绝</td></tr>
+  <tr><td>文字内容</text></td><td>⚠️ 极度谨慎</td><td>中文需审核，推荐用抽象图形代替文字</td></tr>
+  <tr><td>不适当内容</td><td>❌ 禁止</td><td>暴力、武器暗示、成人内容一律拒审</td></tr>
+</table>
+
+<div class="callout callout-tip">
+  <strong>✅ 纹理实操建议：</strong>拼图发夹上的「碎」字可以用抽象笔画或符号代替真实汉字，降低审核风险。明信片的「邮戳」用圆形几何图案+心形即可，不写真实地名。围巾上的手写纹理做成类似手写但不可读的抽象线条。
+</div>
+
+<h3>3.3 Attachment 挂载点对照表</h3>
+<table>
+  <tr><th>配件名称</th><th>Attachment 名称</th><th>位置描述</th><th>R15 兼容</th></tr>
+  <tr><td>拼图发夹</td><td>HatAttachment</td><td>头顶中心偏左前方</td><td>✅ 全兼容</td></tr>
+  <tr><td>明信片发箍</td><td>HairAttachment</td><td>额头两侧发际线</td><td>✅ 全兼容</td></tr>
+  <tr><td>情绪碎片耳饰</td><td>FaceFrontAttachment</td><td>脸部两侧耳部区域</td><td>✅ 全兼容</td></tr>
+  <tr><td>治愈围巾</td><td>Neck Attachment</td><td>颈部环绕</td><td>✅ 全兼容</td></tr>
+  <tr><td>明信片背包</td><td>BackAttachment</td><td>脊柱后方肩胛骨间</td><td>✅ 全兼容</td></tr>
+  <tr><td>情绪翅膀</td><td>BackAttachment</td><td>脊柱后方肩胛骨间展开</td><td>⚠️ Rthro 宽肩需调间距</td></tr>
+  <tr><td>拼图盒手提</td><td>RightHand Grip</td><td>右手掌心</td><td>✅ 全兼容</td></tr>
+</table>
+
+<h3>3.4 Layered Clothing 特殊要求（T2 衣服类）</h3>
+
+<p>Roblox 的 Layered Clothing 系统比传统 Shirt/Pants 更复杂，需要额外准备以下文件：</p>
+
+<ul class="checklist">
+  <li><strong>[ItemName].fbx</strong> — 外层可见网格（有 UV 和纹理）</li>
+  <li><strong>[ItemName]_InnerCage.fbx</strong> — 内收缩网格（比外层小 ~0.01 studs），定义衣物如何贴合身体</li>
+  <li><strong>[ItemName]_OuterCage.fbx</strong> — 外扩展网格（比外层大 ~0.01 studs），允许其他叠穿物品堆叠在其上</li>
+  <li><strong>骨骼权重</strong> — 所有顶点必须加权到正确的 R15 骨骼，无未加权顶点（否则撕裂）</li>
+  <li><strong>测试体型</strong> — 必须在 Young / Classic / Normal / Rthro Narrow / Rthro Broad 五种体型下测试</li>
+</ul>
+
+<div class="callout callout-info">
+  <strong>ℹ️ 内笼（InnerCage）的重要性：</strong>缺少 InnerCage 会导致衣物穿模——直接穿透进角色身体里。这是新手最容易踩的坑，也是 Roblox 审核时的高频退回原因。
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== PART 4: 制作流程 ==================== -->
+<h2><span class="num">4</span>DCC → Roblox Studio 制作流程</h2>
+
+<h3>Phase 1：建模（Blender）</h3>
+<ol class="checklist">
+  <li>导入 Roblox 官方 R15 参考骨骼（从 Roblox 官网下载 R15 Reference Rig）</li>
+  <li>以参考骨骼为基准建立配件网格，初始建模即控制三角面在限制内</li>
+  <li>UV 展开，确保单通道 [0,1]，岛间距 ≥2px</li>
+  <li>对 Layered Clothing 项目：复制外层网格 → 缩放生成 InnerCage（Scale 0.98）和 OuterCage（Scale 1.02）</li>
+  <li>权重绘制：使用 Transfer Weights 从参考骨骼转移到新网格</li>
+  <li>检查零面积面和非流形边（3D Viewport → Overlay → Geometry All → 开启 Face Orientation）</li>
+  <li>Apply All Transforms（Ctrl+A → All Transforms）</li>
+</ol>
+
+<h3>Phase 2：纹理绘制</h3>
+<ol class="checklist">
+  <li>导出 UV 布局图（UV Editor → UVs → Export UV Layout）</li>
+  <li>在 Photoshop / Procreate / Krita 中按 UV 布局绘制纹理</li>
+  <li>遵循品牌色彩规范（马卡龙六色系）</li>
+  <li>保存为 PNG（RGBA），分辨率不超过 1024×1024</li>
+  <li>检查 Alpha 通道：边缘平滑过渡，无硬锯齿</li>
+</ol>
+
+<h3>Phase 3：Studio 导入与测试</h3>
+<ol class="checklist">
+  <li>打开 Roblox Studio → Avatar → Import Accessory（配件）或 Import Layered Clothing（衣服）</li>
+  <li>导入 .fbx 文件和对应 .png 纹理</li>
+  <li>在 Avatar Editor 中预览效果</li>
+  <li><strong>五个体型测试：</strong>依次切换 Classic / Young / Normal / Rthro Narrow / Rthro Broad</li>
+  <li><strong>五组动作测试：</strong>idle（站立）、walk（走路）、run（跑步）、jump（跳跃）、sit（坐下）</li>
+  <li>逐帧检查穿模情况（clipping），记录问题帧</li>
+  <li>回到 Blender 修正 → 重新导入 → 再次测试</li>
+</ol>
+
+<h3>Phase 4：提交准备</h3>
+<ol class="checklist">
+  <li>准备 Icon 缩略图：420×420 PNG，纯色背景，清晰展示商品</li>
+  <li>填写元数据：名称准确描述、分类正确、价格合理</li>
+  <li>撰写描述文案：突出品牌特色和使用场景</li>
+  <li>最终自查清单执行（见 Part 5）</li>
+  <li>通过 Creator Dashboard 提交</li>
+</ol>
+
+<div class="divider"></div>
+
+<!-- ==================== PART 5: 提交自查清单 ==================== -->
+<h2><span class="num">5</span>提交前最终自查清单</h2>
+
+<p>每一款配件提交前，逐一核对以下项目：</p>
+
+<h4>🧱 Mesh 检查</h4>
+<ul class="checklist">
+  <li>三角面数 ≤ 4,000（配件）/ ≤ 10,000（Layered Clothing）</li>
+  <li>单一网格对象（Single Mesh Object）</li>
+  <li>单一 UV 通道，所有 UV 在 [0,1] 范围内</li>
+  <li>无重叠 UV 岛</li>
+  <li>All Transforms Applied（scale = 1, rotation = 0）</li>
+  <li>枢轴点（Pivot Point）位于正确的 Attachment 位置</li>
+  <li>无零面积面、无非流形边</li>
+</ul>
+
+<h4>🎨 纹理检查</h4>
+<ul class="checklist">
+  <li>分辨率在 256~1024 px 之间</li>
+  <li>PNG 格式，RGBA 色彩空间</li>
+  <li>UV 岛间距 ≥ 2px</li>
+  <li>无任何版权素材、品牌 Logo、真实 IP 元素</li>
+  <li>Alpha 通道正确（透明部分确实透明）</li>
+</ul>
+
+<h4>🔗 挂载与兼容性检查</h4>
+<ul class="checklist">
+  <li>Attachment 对象存在且命名正确（如 HatAttachment）</li>
+  <li>已在 5 种 R15 体型下测试通过</li>
+  <li>在 idle / walk / run / jump / sit 动作中无穿模</li>
+  <li>Layered Clothing 类包含 InnerCage 和 OuterCage</li>
+  <li>所有顶点已加权，无遗漏</li>
+</ul>
+
+<h4>📦 文件与元数据检查</h4>
+<ul class="checklist">
+  <li>文件格式正确（FBX/OBJ）</li>
+  <li>文件命名规范：[CreatorName]_[ItemName]_[Type]</li>
+  <li>Icon 缩略图 420×420 PNG，清晰展示商品全貌</li>
+  <li>商品名称准确描述，不含误导信息</li>
+  <li>价格参考同类竞品，偏差 ≤15%</li>
+</ul>
+
+<div class="divider"></div>
+
+<!-- ==================== Part 6: In-Experience Integration ==================== -->
+<h2><span class="num">6</span>体验内集成方案</h2>
+
+<p>如果碎碎念计划开发自己的 Roblox 体验（如拼图游戏、社交空间），可以在体验内深度集成念念角色和 UGC 系统：</p>
+
+<h3>6.1 NPC 角色 — 念念作为引导者</h3>
+<pre><code class="code-lua"><span class="cmt">-- ReplicatedStorage/NPCs/NiannianNPC.lua</span>
+<span class="kw">local</span> <span class="type">Players</span> = game:GetService(<span class="str">"Players"</span>)
+<span class="kw">local</span> <span class="type">TweenService</span> = game:GetService(<span class="str">"TweenService"</span>)
+
+<span class="kw">local</span> Niannian = {}
+
+<span class="cmt">-- 在体验中生成念念 NPC 并装备全套 UGC</span>
+<span class="kw">function</span> <span class="fn">Niannian.spawn</span>(parent: Instance)
+    <span class="kw">local</span> npc = Instance.new(<span class="str">"Model"</span>)
+    npc.Name = <span class="str">"Niannian_NPC"</span>
+    
+    <span class="cmt">-- 创建 Humanoid</span>
+    <span class="kw">local</span> humanoid = Instance.new(<span class="str">"Humanoid"</span>)
+    humanoid.DisplayName = <span class="str">"念念"</span>
+    humanoid.WalkSpeed = <span class="num">8</span>
+    
+    <span class="cmt">-- 应用念念的标准外观配置</span>
+    <span class="kw">local</span> description = Instance.new(<span class="str">"HumanoidDescription"</span>)
+    
+    <span class="cmt">-- UGC Asset IDs（提交后获得的实际 ID）</span>
+    description.HatAccessory = <span class="str">""</span>  <span class="cmt">-- SUI-001 拼图发夹 ID</span>
+    description.HairAccessory = <span class="str">""</span>  <span class="cmt">-- SUI-002 明信片发箍 ID</span>
+    description.FaceAccessory = <span class="str">""</span> <span class="cmt">-- SUI-003 情绪耳饰 ID</span>
+    description.Shirt = <span class="str">""</span>       <span class="cmt">-- SUI-004 拼图毛衣 ID</span>
+    description.Pants = <span class="str">""</span>      <span class="cmt">-- SUI-005 百褶裙 ID</span>
+    
+    <span class="cmt">-- 身体颜色（匹配角色肤色）</span>
+    description.HeadColor = Color3.fromRGB(<span class="num">245</span>, <span class="num">225</span>, <span class="num">215</span>)
+    description.TorsoColor = Color3.fromRGB(<span class="num">245</span>, <span class="num">225</span>, <span class="num">215</span>)
+    
+    humanoid:ApplyDescription(description)
+    humanoid.Parent = npc
+    npc.Parent = parent
+    
+    <span class="kw">return</span> npc
+<span class="kw">end</span>
+
+<span class="cmt">-- 念念的待机动画：轻微摇摆身体，像在思考</span>
+<span class="kw">function</span> <span class="fn">Niannian.idleAnimation</span>(humanoid: Humanoid)
+    <span class="kw">local</span> animator = humanoid:FindFirstChildOfClass(<span class="str">"Animator"</span>)
+    <span class="kw">if not</span> animator <span class="kw">then return end</span>
+    
+    <span class="cmt">-- 加载自定义待机动画（需自行制作并上传）</span>
+    <span class="kw">local</span> anim = Instance.new(<span class="str">"Animation"</span>)
+    anim.AnimationId = <span class="str">"rbxassetid://YOUR_IDLE_ANIM_ID"</span>
+    <span class="kw">local</span> track = animator:LoadAnimation(anim)
+    track:Play()
+    <span class="kw">return</span> track
+<span class="kw">end</span>
+
+<span class="kw">return</span> Niannian
+</code></pre>
+
+<h3>6.2 玩家装扮系统 — HumanoidDescription 应用</h3>
+<pre><code class="code-lua"><span class="cmt">-- ServerScriptService/AvatarSystem.lua</span>
+<span class="kw">local</span> <span class="type">Players</span> = game:GetService(<span class="str">"Players"</span>)
+<span class="kw">local</span> <span class="type">DataStoreService</span> = game:GetService(<span class="str">"DataStoreService"</span>)
+<span class="kw">local</span> outfitStore = DataStoreService:GetDataStore(<span class="str">"PlayerOutfits"</span>)
+
+<span class="kw">local</span> AvatarSystem = {}
+
+<span class="cmt">-- 碎碎念 UGC 配件 Asset ID 表（提交后填入实际值）</span>
+<span class="kw">local</span> SUI_ASSETS = {
+    hairClip     = <span class="str">""</span>,   <span class="cmt">-- SUI-001</span>
+    headband     = <span class="str">""</span>,   <span class="cmt">-- SUI-002</span>
+    earrings     = <span class="str">""</span>,   <span class="cmt">-- SUI-003</span>
+    sweater      = <span class="str">""</span>,   <span class="cmt">-- SUI-004</span>
+    skirt        = <span class="str">""</span>,   <span class="cmt">-- SUI-005</span>
+    scarf        = <span class="str">""</span>,   <span class="cmt">-- SUI-006</span>
+    backpack     = <span class="str">""</span>,   <span class="cmt">-- SUI-007</span>
+    handbag      = <span class="str">""</span>,   <span class="cmt">-- SUI-008</span>
+    wings        = <span class="str">""</span>,   <span class="cmt">-- SUI-009</span>
+}
+
+<span class="cmt">-- 一键穿上「念念同款」全套</span>
+<span class="kw">function</span> <span class="fn">AvatarSystem.applyFullSet</span>(player: Player)
+    <span class="kw">local</span> char = player.Character
+    <span class="kw">if not</span> char <span class="kw">then return end</span>
+    
+    <span class="kw">local</span> humanoid = char:FindFirstChildOfClass(<span class="str">"Humanoid"</span>)
+    <span class="kw">if not</span> humanoid <span class="kw">then return end</span>
+    
+    <span class="kw">local</span> desc = humanoid:GetAppliedDescription()
+    
+    desc.HatAccessory   = SUI_ASSETS.hairClip
+    desc.HairAccessory  = SUI_ASSETS.headband
+    desc.FaceAccessory = SUI_ASSETS.earrings
+    desc.Shirt         = SUI_ASSETS.sweater
+    desc.Pants         = SUI_ASSETS.skirt
+    <span class="cmt"-- Backpack/Wings 通过 BackAttachment 叠加 --<span class="cmt"></span>
+    
+    humanoid:ApplyDescription(desc)
+<span class="kw">end</span>
+
+<span class="cmt">-- 保存玩家自选搭配</span>
+<span class="kw">function</span> <span class="fn">AvatarSystem.saveOutfit</span>(player: Player, outfitData: table)
+    <span class="kw">local</span> success, err = pcall(function()
+        outfitStore:SetAsync(player.UserId .. <span class="str">"_outfit"</span>, outfitData)
+    <span class="kw">end</span>)
+    <span class="kw">return</span> success
+<span class="kw">end</span>
+
+<span class="cmt">-- 加载玩家保存的搭配并在重生时应用</span>
+<span class="kw">function</span> <span class="fn">AvatarSystem.loadAndApply</span>(player: Player)
+    <span class="kw">local</span> success, data = pcall(function()
+        <span class="kw">return</span> outfitStore:GetAsync(player.UserId .. <span class="str">"_outfit"</span>)
+    <span class="kw">end</span>)
+    
+    <span class="kw">if</span> success <span class="kw">and</span> data <span class="kw">then</span>
+        <span class="kw">local</span> char = player.Character
+        <span class="kw">local</span> humanoid = char <span class="kw">and</span> char:FindFirstChildOfClass(<span class="str">"Humanoid"</span>)
+        <span class="kw">if</span> humanoid <span class="kw">then</span>
+            <span class="kw">local</span> desc = humanoid:GetAppliedDescription()
+            <span class="kw">for</span> key, assetId <span class="kw">in pairs</span>(data) <span class="kw">do</span>
+                desc[key] = tostring(assetId)
+            <span class="kw">end</span>
+            humanoid:ApplyDescription(desc)
+        <span class="kw">end</span>
+    <span class="kw">end</span>
+<span class="kw">end</span>
+
+<span class="kw">return</span> AvatarSystem
+</code></pre>
+
+<h3>6.3 体验内商店 UI</h3>
+<pre><code class="code-lua"><span class="cmt">-- StarterGui/Scripts/SuishopUI.lua（客户端）</span>
+<span class="kw">local</span> <span class="type">Players</span> = game:GetService(<span class="str">"Players"</span>)
+<span class="kw">local</span> <span class="type">MarketplaceService</span> = game:GetService(<span class="str">"MarketplaceService"</span>)
+<span class="kw">local</span> <span class="type">ReplicatedStorage</span> = game:GetService(<span class="str">"ReplicatedStorage"</span>)
+
+<span class="kw">local</span> SuishopUI = {}
+
+<span class="cmt">-- 展示碎碎念 UGC 商品并引导购买</span>
+<span class="kw">function</span> <span class="fn">SuishopUI.showCatalog</span>(frame: GuiObject)
+    <span class="kw">local</span> items = {
+        {name = <span class="str">"碎碎拼图发夹"</span>, id = SUI_ASSETS.hairClip, price = <span class="num">65</span>},
+        {name = <span class="str">"拼图案纹毛衣"</span>, id = SUI_ASSETS.sweater, price = <span class="num">250</span>,
+         featured = <span class="kw">true</span>},
+        {name = <span class="str">"情绪碎片翅膀"</span>, id = SUI_ASSETS.wings, price = <span class="num">195</span>},
+    }
+    
+    <span class="kw">for</span> _, item <span class="kw">in ipairs</span>(items) <span class="kw">do</span>
+        <span class="cmt">-- 创建商品按钮（GUI 代码省略，根据 UI 设计实现）</span>
+        <span class="kw">local</span> btn = createItemButton(item)
+        
+        btn.MouseButton1Click:Connect(function()
+            <span class="cmt">-- 弹出 Roblox 官方购买弹窗</span>
+            MarketplaceService:PromptPurchase(
+                Players.LocalPlayer,
+                tonumber(item.id)
+            )
+        <span class="kw">end</span>)
+    <span class="kw">end</span>
+<span class="kw">end</span>
+
+<span class="cmt">-- 监听购买完成事件</span>
+MarketplaceService.PromptPurchaseFinished:Connect(
+    function(player: Player, assetId: number, isPurchased: boolean)
+        <span class="kw">if</span> isPurchased <span class="kw">then</span>
+            <span class="cmt">-- 通知服务器记录购买并自动穿戴</span>
+            Remotes.ItemPurchased:FireServer(assetId)
+            
+            <span class="cmt">-- 显示庆祝特效（碎纸屑飘落 🎉）</span>
+            showConfettiEffect()
+        <span class="kw">end</span>
+    <span class="kw">end</span>
+)
+
+<span class="kw">return</span> SuishopUI
+</code></pre>
+
+<div class="divider"></div>
+
+<!-- ==================== Part 7: Roadmap ==================== -->
+<h2><span class="num">7</span>开发路线图</h2>
+
+<div class="timeline">
+  <div class="tl-item phase1">
+    <div class="tl-dot"></div>
+    <div class="tl-title">第 1 周：概念定稿 + T1 配件建模</div>
+    <div class="tl-time">Week 1</div>
+    <div class="tl-desc">确认念念最终人设、锁定配色方案。完成 3 款 T1 头部配件的 Blender 建模和 UV 展开。绘制初版纹理草图。</div>
+  </div>
+  <div class="tl-item phase1">
+    <div class="tl-dot"></div>
+    <div class="tl-title">第 2 周：T1 Studio 测试 + T2 衣服建模</div>
+    <div class="tl-time">Week 2</div>
+    <div class="tl-desc">T1 导入 Studio 五体型五动作测试，修正穿模。启动 T2 毛衣和百褶裙建模（含 InnerCage/OuterCage），开始权重绘制。</div>
+  </div>
+  <div class="tl-item phase2">
+    <div class="tl-dot"></div>
+    <div class="tl-title">第 3-4 周：T2+T3 全线完成 + 全面测试</div>
+    <div class="tl-time">Week 3-4</div>
+    <div class="tl-desc">完成剩余 6 款配件的全部建模、纹理、 rigging。9 款配件全部进入 Studio 五体型测试循环。制作 Icon 缩略图。</div>
+  </div>
+  <div class="tl-item phase2">
+    <div class="tl-dot"></div>
+    <div class="tl-title">第 5 周：批量提交 Creator Marketplace</div>
+    <div class="tl-time">Week 5</div>
+    <div class="tl-desc">按 T1→T2→T3 顺序依次提交 9 款 UGC。T1 先上架获取早期反馈和数据。准备营销素材（展示视频、社交媒体帖子）。</div>
+  </div>
+  <div class="tl-item phase3">
+    <div class="tl-dot"></div>
+    <div class="tl-title">第 6-8 周：审核跟进 + 体验内集成（可选）</div>
+    <div class="tl-time">Week 6-8</div>
+    <div class="tl-desc">监控审核队列（通常 24-72 小时）。如有驳回立即分析原因修改重投。同步推进 Roblox 体验开发（如计划做拼图游戏则在此阶段集成 NPC 和商店）。</div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== Part 8: Moderation Risk Analysis ==================== -->
+<h2><span class="num">8</span>审核风险预判与规避</h2>
+
+<table>
+  <tr><th>风险项</th><th>风险等级</th><th>触发条件</th><th>规避策略</th></tr>
+  <tr><td>中文文字审核</td><td>🟡 中</td><td>发夹上的「碎」字、背包上的「念念」</td><td>改用抽象符号/图形替代汉字，或在首次提交时不加文字</td></tr>
+  <tr><td>面部遮挡</td><td>🟡 中</td><td>发箍/大面积头发配件遮挡面部</td><td>确保面部至少 60% 可见；调整配件尺寸和位置</td></tr>
+  <tr><td>三角面超限</td><td>🔴 高</td><td>任一配件 >4,000 tri</td><td>建模阶段实时监控面数；Blender 左上角开启 Statistics 面板</td></tr>
+  <tr><td>穿模（Clipping）</td><td>🟡 中</td><td>RthroBroad 体型下配件刺入身体</td><td>五体型全覆盖测试；问题配件增加缩放安全距离</td></tr>
+  <tr><td>误导性命名</td><td>🟡 中</td><td>名称与实际商品不符或夸大宣传</td><td>名称简洁准确：「[品牌] [品类] [特征]」格式</td></tr>
+  <tr><td>材质违规</td><td>🔴 高</td><td>使用了受版权保护的图像或图案</td><td>所有纹理原创绘制，不引用任何第三方 IP</td></tr>
+  <tr><td>透明度异常</td><td>🟢 低</td><td>Alpha 边缘硬切或半透区域错误</td><td>导出前在 Blender 的 Eevee 模式下预览透明效果</td></tr>
+</table>
+
+<div class="callout callout-warn">
+  <strong>⚠️ 最高风险提示：</strong>Roblox 对文字内容的审核极其严格，尤其是非拉丁文字（中日韩文）。第一次提交建议<strong>完全不使用任何文字</strong>，用纯图形设计通过审核后再尝试加入简化版的品牌标识。这能大幅降低首轮被拒概率。
+</div>
+
+<div class="divider"></div>
+
+<!-- ==================== Part 9: Business Considerations ==================== -->
+<h2><span class="num">9</span>商业考量</div>
+
+<h3>9.1 收入模型</h3>
+<table>
+  <tr><th>收入来源</th><th>分成比例</th><th>预估月收入（保守/乐观）</th></tr>
+  <tr><td>UGC 配件销售</td><td>创作者获 40%（Roblox 抽成 60%，但可通过 Premium Payout 提升至 70%）</td><td>500-2,000 R$/月（取决于流量）</td></tr>
+  <tr><td>体验内嵌入（如开发游戏）</td><td>Game Pass / Dev Products 100% 归开发者</td><td>视 DAU 而定</td></tr>
+  <tr><td>品牌联动引流</td><td>UGC 页面引导至淘宝/小红书</td><td>间接转化，难以量化</td></tr>
+</table>
+
+<h3>9.2 与实体产品的协同效应</h3>
+<p>Roblox UGC 不是独立的收入来源，而是<strong>品牌延伸和获客渠道</strong>：</p>
+
+<ul class="checklist">
+  <li>UGC 商品描述中加入「来自碎碎念情绪疗愈拼图品牌」的品牌声明</li>
+  <li>Icon 缩略图使用与实体包装一致的视觉风格，强化品牌认知</li>
+  <li>如果开发了 Roblox 体验（如拼图小游戏），可在游戏中植入实体拼图的购买引导</li>
+  <li>UGC 社区中积累的粉丝可以通过个人简介/群组引流至小红书/淘宝店铺</li>
+  <li>Limited 限量版配件可作为社群活动奖励，增强粉丝粘性</li>
+</ul>
+
+<h3>9.3 Limited 限量版规划（远期）</h3>
+<p>当品牌在 Roblox 积累一定粉丝基础后（建议首批 9 款总销量 >5,000），可申请 Limited 资格：</p>
+<table>
+  <tr><th>Limited 版本</th><th>数量</th><th>首发价</th><th>定位</th></tr>
+  <tr><td>「念念首秀」纪念版翅膀</td><td>999 份</td><td>300 Robux</td><td>品牌里程碑纪念</td></tr>
+  <tr><td>情人节限定 发夹（红色版）</td><td>520 份</td><td>199 Robux</td><td>节日营销</td></tr>
+  <tr><td>校园合伙人专属 明信片包</td><td>100 份</td><td>免费赠送</td><td>社群激励</td></tr>
+</table>
+
+<div class="divider"></div>
+
+<!-- Footer -->
+<div style="text-align:center;padding:32px 0 16px;color:var(--ink-light);font-size:13px;">
+  <p>碎碎念 × Roblox 角色系统设计方案 v1.0</p>
+  <p style="margin-top:4px;">Pick Up the Pieces, Read My Mind · 情绪疗愈拼图品牌</p>
+  <img src="碎碎念logo.png" alt="碎碎念" style="max-height:40px;margin-top:12px;opacity:0.7;" onerror="this.style.display='none'">
+</div>
+
+</div><!-- /.container -->
+
+</body>
+</html>
