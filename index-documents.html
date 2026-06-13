@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>碎碎念 · 文档中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-primary: #5C4E8A;
+    --color-primary-light: #8672C8;
+    --color-rose: #F4A7B9;
+    --color-cream: #FFF8FB;
+    --color-white: #FFFFFF;
+    --color-dark-text: #3D3450;
+    --color-muted: #9182A8;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: linear-gradient(180deg, #7B6FB0 0%, #B59AD8 40%, #F4A7B9 100%);
+    min-height: 100vh;
+    color: var(--color-dark-text);
+  }
+  .hero {
+    background: linear-gradient(135deg, rgba(92,78,138,0.85) 0%, rgba(134,114,200,0.7) 100%),
+                repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(255,255,255,0.04) 11px, rgba(255,255,255,0.04) 12px);
+    padding: 80px 40px 60px;
+    text-align: center;
+    color: white;
+  }
+  .hero h1 {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(28px, 5vw, 42px);
+    font-weight: 900;
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+  }
+  .hero p {
+    font-size: clamp(13px, 2vw, 16px);
+    opacity: 0.8;
+    letter-spacing: 2px;
+  }
+  .content {
+    max-width: 960px;
+    margin: -40px auto 60px;
+    padding: 0 20px;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+  }
+  .doc-card {
+    background: white;
+    border-radius: 14px;
+    border: 1.5px solid #F0E6EF;
+    box-shadow: 0 2px 16px rgba(92,78,138,0.08);
+    padding: 24px;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .doc-card:hover {
+    box-shadow: 0 4px 24px rgba(92,78,138,0.12);
+    transform: translateY(-2px);
+  }
+  .doc-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  .doc-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .doc-desc {
+    font-size: 13px;
+    color: var(--color-muted);
+    line-height: 1.7;
+  }
+  .section-label {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px;
+    color: white;
+    font-weight: 700;
+    margin: 40px 0 20px;
+    letter-spacing: 2px;
+  }
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(255,255,255,0.6);
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  @media (max-width: 640px) {
+    .hero { padding: 60px 20px 50px; }
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <h1>碎碎念</h1>
+  <p>文档中心 · Pick Up the Pieces, Read My Mind</p>
+</section>
+
+<div class="content">
+  <div class="section-label">📄 电商与运营方案</div>
+  <div class="card-grid">
+    <a class="doc-card" href="./">
+      <div class="doc-icon">🏠</div>
+      <div class="doc-title">电商破局方案</div>
+      <div class="doc-desc">全平台电商布局策略，价格体系、渠道选择、推广节奏完整方案</div>
+    </a>
+    <a class="doc-card" href="xiaohongshu-plan.html">
+      <div class="doc-icon">📱</div>
+      <div class="doc-title">小红书起号方案</div>
+      <div class="doc-desc">0→1起号完整路径，内容策略、达人投放、转化链路</div>
+    </a>
+    <a class="doc-card" href="influencer-outreach.html">
+      <div class="doc-icon">🤝</div>
+      <div class="doc-title">达人触达清单</div>
+      <div class="doc-desc">300+达人数据库，按粉丝量级分类，触达话术与跟进SOP</div>
+    </a>
+    <a class="doc-card" href="influencer-contract.html">
+      <div class="doc-icon">📋</div>
+      <div class="doc-title">达人合作合同模板</div>
+      <div class="doc-desc">MCN合作标准合同，费用、权责、违约条款完整版</div>
+    </a>
+    <a class="doc-card" href="campus-partner.html">
+      <div class="doc-icon">🎓</div>
+      <div class="doc-title">校园合伙人计划</div>
+      <div class="doc-desc">插画比赛→联名产品→校园代理，三方联动增长方案</div>
+    </a>
+  </div>
+
+  <div class="section-label">🌸 花店合作项目</div>
+  <div class="card-grid">
+    <a class="doc-card" href="flower-shop-toolkit.html">
+      <div class="doc-icon">🛠️</div>
+      <div class="doc-title">花店合作工具包</div>
+      <div class="doc-desc">推广策略、话术脚本、留言卡SOP、FAQ，完整作战手册</div>
+    </a>
+    <a class="doc-card" href="flower-shop-materials.html">
+      <div class="doc-icon">🎨</div>
+      <div class="doc-title">花店合作物料设计</div>
+      <div class="doc-desc">拼图留言卡、台卡、海报三款物料HTML设计稿</div>
+    </a>
+  </div>
+
+  <div class="section-label">📦 产品与品牌</div>
+  <div class="card-grid">
+    <a class="doc-card" href="product-detail-demo.html">
+      <div class="doc-icon">📦</div>
+      <div class="doc-title">产品详情页示例</div>
+      <div class="doc-desc">基于DESIGN.md的设计系统，完整产品详情页参考</div>
+    </a>
+    <a class="doc-card" href="packaging-copy.html">
+      <div class="doc-icon">📝</div>
+      <div class="doc-title">包装文案印刷稿</div>
+      <div class="doc-desc">包装正面/背面文案，详情页文案，印刷级定稿</div>
+    </a>
+    <a class="doc-card" href="roblox-system.html">
+      <div class="doc-icon">🎮</div>
+      <div class="doc-title">Roblox角色系统方案</div>
+      <div class="doc-desc">品牌×游戏跨界融合，角色系统设计方案</div>
+    </a>
+  </div>
+</div>
+
+<div class="footer">
+  <div style="font-family:'Noto Serif SC',serif; font-size:14px; color:rgba(255,255,255,0.85); letter-spacing:3px; margin-bottom:8px;">碎碎念 Suìsuìniàn</div>
+  <div>文档中心 · 2026-06</div>
+  <div style="margin-top:6px; opacity:0.6;">Pick Up the Pieces, Read My Mind</div>
+</div>
+
+</body>
+</html>
