@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>碎碎念 × 花店 · 合作一页纸</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  @page {
+    size: A4;
+    margin: 0;
+  }
+  @media print {
+    body { margin: 0; padding: 0; }
+    .page { box-shadow: none; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: #E8E0EE;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    width: 210mm;
+    min-height: 297mm;
+    background: #FFFFFF;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(92,78,138,0.15);
+  }
+
+  /* ---- 顶部品牌带 ---- */
+  .brand-bar {
+    background: linear-gradient(135deg, #5C4E8A 0%, #8672C8 40%, #B59AD8 70%, #E8A6BE 100%);
+    padding: 28px 36px 22px;
+    position: relative;
+  }
+  .brand-bar::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 11px, rgba(255,255,255,0.04) 11px, rgba(255,255,255,0.04) 12px),
+      repeating-linear-gradient(90deg, transparent, transparent 11px, rgba(255,255,255,0.04) 11px, rgba(255,255,255,0.04) 12px);
+  }
+  .brand-top {
+    position: relative; z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .brand-name {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: #FFFFFF;
+    letter-spacing: 12px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  }
+  .brand-tagline {
+    position: relative; z-index: 1;
+    font-size: 12px;
+    color: rgba(255,255,255,0.75);
+    letter-spacing: 3px;
+    margin-top: 6px;
+  }
+  .brand-badge {
+    position: relative; z-index: 1;
+    background: rgba(255,255,255,0.2);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.3);
+    border-radius: 20px;
+    padding: 6px 16px;
+    color: #FFFFFF;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  /* ---- 中间核心区 ---- */
+  .main {
+    padding: 24px 36px 20px;
+  }
+
+  /* 核心主张 */
+  .proposition {
+    background: linear-gradient(135deg, #F4EEFF 0%, #FDEEF3 100%);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(92,78,138,0.08);
+    position: relative;
+  }
+  .proposition::before {
+    content: '\201C';
+    position: absolute;
+    top: 8px;
+    left: 14px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 48px;
+    color: rgba(92,78,138,0.1);
+    line-height: 1;
+  }
+  .proposition-text {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: #3D3450;
+    line-height: 1.8;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+  .proposition-text em {
+    font-style: normal;
+    color: #5C4E8A;
+    border-bottom: 2px solid #F4A7B9;
+    padding-bottom: 1px;
+  }
+
+  /* 三栏价值块 */
+  .value-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .value-card {
+    border-radius: 10px;
+    padding: 18px 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .value-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .value-card.shop {
+    background: #F4EEFF;
+    border: 1px solid rgba(92,78,138,0.1);
+  }
+  .value-card.shop::before { background: linear-gradient(90deg, #5C4E8A, #8672C8); }
+  .value-card.customer {
+    background: #FDEEF3;
+    border: 1px solid rgba(244,167,185,0.15);
+  }
+  .value-card.customer::before { background: linear-gradient(90deg, #F4A7B9, #E8A6BE); }
+  .value-card.start {
+    background: #EEFBF4;
+    border: 1px solid rgba(168,213,194,0.2);
+  }
+  .value-card.start::before { background: linear-gradient(90deg, #A8D5C2, #7BC8A4); }
+
+  .value-icon {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  .value-card.shop .value-icon { background: rgba(92,78,138,0.12); color: #5C4E8A; }
+  .value-card.customer .value-icon { background: rgba(244,167,185,0.2); color: #D4788A; }
+  .value-card.start .value-icon { background: rgba(168,213,194,0.25); color: #3D8B6A; }
+
+  .value-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #3D3450;
+    margin-bottom: 8px;
+    letter-spacing: 1px;
+  }
+  .value-list {
+    list-style: none;
+    font-size: 12.5px;
+    color: #5A5070;
+    line-height: 1.9;
+  }
+  .value-list li::before {
+    content: '·';
+    margin-right: 6px;
+    font-weight: 700;
+  }
+  .value-card.shop .value-list li::before { color: #8672C8; }
+  .value-card.customer .value-list li::before { color: #F4A7B9; }
+  .value-card.start .value-list li::before { color: #A8D5C2; }
+
+  /* 体验流程 */
+  .flow-section {
+    margin-bottom: 18px;
+  }
+  .flow-title {
+    font-size: 11px;
+    font-weight: 500;
+    color: #9182A8;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .flow-steps {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .flow-step {
+    flex: 1;
+    text-align: center;
+    position: relative;
+    padding: 14px 8px;
+  }
+  .flow-step:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: -4px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #D4C8E8;
+    border-bottom: 2px solid #D4C8E8;
+    transform: translateY(50%) rotate(-45deg);
+    z-index: 1;
+  }
+  .flow-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #5C4E8A, #8672C8);
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 8px;
+  }
+  .flow-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #3D3450;
+    margin-bottom: 3px;
+  }
+  .flow-desc {
+    font-size: 11px;
+    color: #9182A8;
+    line-height: 1.5;
+  }
+
+  /* 试用方案 */
+  .trial-box {
+    background: linear-gradient(135deg, #5C4E8A 0%, #8672C8 100%);
+    border-radius: 10px;
+    padding: 18px 24px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .trial-box::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(255,255,255,0.03) 15px, rgba(255,255,255,0.03) 16px),
+      repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(255,255,255,0.03) 15px, rgba(255,255,255,0.03) 16px);
+  }
+  .trial-left {
+    position: relative; z-index: 1;
+  }
+  .trial-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.2);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 10px;
+    letter-spacing: 2px;
+    font-weight: 500;
+    margin-bottom: 6px;
+  }
+  .trial-heading {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+  }
+  .trial-detail {
+    font-size: 12px;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+  }
+  .trial-right {
+    position: relative; z-index: 1;
+    text-align: center;
+    flex-shrink: 0;
+    margin-left: 20px;
+  }
+  .trial-qr {
+    width: 72px; height: 72px;
+    background: #FFFFFF;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 4px;
+  }
+  .trial-qr-text {
+    font-size: 9px;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 1px;
+  }
+  .qr-placeholder {
+    font-size: 10px;
+    color: #5C4E8A;
+    text-align: center;
+    line-height: 1.3;
+  }
+
+  /* 底部信息条 */
+  .footer-bar {
+    background: #F7F4FB;
+    padding: 12px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(92,78,138,0.06);
+  }
+  .footer-left {
+    font-size: 10px;
+    color: #9182A8;
+    letter-spacing: 1px;
+    line-height: 1.6;
+  }
+  .footer-right {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+  .footer-contact {
+    font-size: 10px;
+    color: #5C4E8A;
+    font-weight: 500;
+    letter-spacing: 1px;
+  }
+
+  /* 装饰拼图碎片 */
+  .deco-piece {
+    position: absolute;
+    opacity: 0.04;
+    pointer-events: none;
+  }
+  .deco-1 {
+    bottom: 80px; right: -20px;
+    width: 120px; height: 120px;
+    border: 4px solid #5C4E8A;
+    border-radius: 20px;
+    transform: rotate(15deg);
+  }
+  .deco-2 {
+    top: 200px; left: -15px;
+    width: 80px; height: 80px;
+    border: 3px solid #F4A7B9;
+    border-radius: 16px;
+    transform: rotate(-20deg);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <!-- 装饰碎片 -->
+  <div class="deco-piece deco-1"></div>
+  <div class="deco-piece deco-2"></div>
+
+  <!-- 顶部品牌带 -->
+  <div class="brand-bar">
+    <div class="brand-top">
+      <div>
+        <div class="brand-name">碎碎念</div>
+        <div class="brand-tagline">一封需要拼完才能读到的信</div>
+      </div>
+      <div class="brand-badge">花店合作邀请</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- 核心主张 -->
+    <div class="proposition">
+      <div class="proposition-text">
+        买花时附一张<em>碎碎念拼图留言卡</em><br>
+        顾客写上心里话，打散后夹在花束里<br>
+        收花人亲手拼出留言 —— <em>感动翻倍</em>
+      </div>
+    </div>
+
+    <!-- 三栏价值 -->
+    <div class="value-grid">
+      <div class="value-card shop">
+        <div class="value-icon">🏪</div>
+        <div class="value-title">花店得到什么</div>
+        <ul class="value-list">
+          <li>免费获得拼图留言卡样品</li>
+          <li>台卡+海报免费提供</li>
+          <li>增加顾客下单转化率</li>
+          <li>差异化竞争：「不只卖花」</li>
+          <li>零成本、零风险试营</li>
+        </ul>
+      </div>
+
+      <div class="value-card customer">
+        <div class="value-icon">💝</div>
+        <div class="value-title">顾客得到什么</div>
+        <ul class="value-list">
+          <li>买花自带一张留言卡</li>
+          <li>亲手写下藏在花里的心意</li>
+          <li>收花人拼出留言的惊喜感</li>
+          <li>比普通贺卡更浪漫的仪式</li>
+          <li>拍照分享的社交货币</li>
+        </ul>
+      </div>
+
+      <div class="value-card start">
+        <div class="value-icon">🤝</div>
+        <div class="value-title">如何开始</div>
+        <ul class="value-list">
+          <li>扫码领取试用包</li>
+          <li>收到50张留言卡+台卡</li>
+          <li>摆在柜台，买花即送</li>
+          <li>30天后看反馈再决定</li>
+          <li>不满意随时停止，无任何费用</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- 体验流程 -->
+    <div class="flow-section">
+      <div class="flow-title">顾客体验流程</div>
+      <div class="flow-steps">
+        <div class="flow-step">
+          <div class="flow-num">1</div>
+          <div class="flow-label">买花</div>
+          <div class="flow-desc">顾客在店里选购花束</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">2</div>
+          <div class="flow-label">写留言</div>
+          <div class="flow-desc">在拼图留言卡上写下心意</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">3</div>
+          <div class="flow-label">打散</div>
+          <div class="flow-desc">把拼图打散，夹进花束</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">4</div>
+          <div class="flow-label">送出</div>
+          <div class="flow-desc">收花人收到一束"藏着秘密"的花</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-num">5</div>
+          <div class="flow-label">拼出感动</div>
+          <div class="flow-desc">亲手拼出留言，感动翻倍</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 试用方案 -->
+    <div class="trial-box">
+      <div class="trial-left">
+        <div class="trial-badge">零风险试用</div>
+        <div class="trial-heading">免费领取试用包</div>
+        <div class="trial-detail">
+          50张拼图留言卡 + 台卡 + A3海报<br>
+          不收一分钱，30天后看效果
+        </div>
+      </div>
+      <div class="trial-right">
+        <div class="trial-qr">
+          <div class="qr-placeholder">扫码<br>领取</div>
+        </div>
+        <div class="trial-qr-text">微信扫码</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 底部 -->
+  <div class="footer-bar">
+    <div class="footer-left">
+      碎碎念 · PUZZLE KING 旗下品牌<br>
+      让每一束花都带着一句「说不出口的碎碎念」
+    </div>
+    <div class="footer-right">
+      <span class="footer-contact">TEL: 1XX-XXXX-XXXX</span>
+      <span class="footer-contact">WECHAT: 碎碎念官方</span>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

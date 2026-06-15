@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>碎碎念 × 名创优品 · 合作提案</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4; margin: 0; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .page-break { page-break-before: always; }
+    .no-print { display: none; }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Noto Sans SC', sans-serif;
+    background: #F0EDF5;
+    -webkit-font-smoothing: antialiased;
+    padding: 24px 0 40px;
+  }
+
+  /* ---- 导航（屏幕版） ---- */
+  .top-nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(92,78,138,0.95);
+    backdrop-filter: blur(10px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 40px; height: 48px;
+    font-size: 12px; letter-spacing: 2px;
+  }
+  .top-nav-brand { color: #F4C6D5; font-weight: 500; }
+  .top-nav-links { display: flex; gap: 24px; }
+  .top-nav-links a { color: rgba(255,255,255,0.55); text-decoration: none; }
+  .top-nav-links a:hover { color: #F4C6D5; }
+  @media print { .top-nav { display: none; } }
+
+  /* ---- 页面容器 ---- */
+  .doc {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* ---- 封面页 ---- */
+  .cover {
+    background: linear-gradient(145deg, #3D3450 0%, #5C4E8A 40%, #8672C8 70%, #C49DC8 100%);
+    border-radius: 16px;
+    padding: 72px 64px 60px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 20px;
+    color: #fff;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 23px, rgba(255,255,255,0.03) 23px, rgba(255,255,255,0.03) 24px),
+      repeating-linear-gradient(90deg, transparent, transparent 23px, rgba(255,255,255,0.03) 23px, rgba(255,255,255,0.03) 24px);
+  }
+  .cover-inner { position: relative; z-index: 1; }
+  .cover-eyebrow {
+    font-size: 11px; letter-spacing: 5px;
+    text-transform: uppercase; opacity: 0.55;
+    margin-bottom: 20px;
+  }
+  .cover-brands {
+    display: flex; align-items: center; gap: 20px;
+    margin-bottom: 28px;
+  }
+  .brand-pill {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; font-weight: 700;
+    letter-spacing: 6px;
+  }
+  .brand-x {
+    font-size: 24px; opacity: 0.4;
+  }
+  .miniso-pill {
+    background: rgba(255,0,60,0.18);
+    border: 1px solid rgba(255,80,80,0.3);
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-size: 18px; font-weight: 700;
+    letter-spacing: 3px;
+    color: #FFB3BC;
+  }
+  .cover-headline {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 38px; font-weight: 900;
+    line-height: 1.3; letter-spacing: 4px;
+    margin-bottom: 16px;
+  }
+  .cover-sub {
+    font-size: 14px; opacity: 0.7;
+    line-height: 1.8; letter-spacing: 1px;
+    margin-bottom: 36px;
+    max-width: 520px;
+  }
+  .cover-meta {
+    display: flex; gap: 32px;
+  }
+  .cover-meta-item {
+    opacity: 0.6; font-size: 11px; letter-spacing: 1px;
+  }
+  .cover-meta-item strong { display: block; font-size: 13px; opacity: 1; margin-bottom: 2px; }
+
+  /* ---- 通用区块 ---- */
+  .section {
+    background: #FFFFFF;
+    border-radius: 12px;
+    padding: 36px 48px;
+    margin-bottom: 16px;
+  }
+  .section-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #F0EDF5;
+  }
+  .section-num {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, #5C4E8A, #8672C8);
+    color: #fff; font-size: 13px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .section-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 20px; font-weight: 700;
+    color: #3D3450; letter-spacing: 2px;
+  }
+  .section-sub {
+    font-size: 13px; color: #9182A8;
+    letter-spacing: 1px; margin-top: 2px;
+  }
+
+  /* ---- 核心指标卡 ---- */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .metric-card {
+    background: #F7F4FB;
+    border-radius: 10px;
+    padding: 16px 14px;
+    text-align: center;
+  }
+  .metric-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 26px; font-weight: 900;
+    color: #5C4E8A; line-height: 1;
+    margin-bottom: 6px;
+  }
+  .metric-unit {
+    font-size: 12px; color: #5C4E8A; font-weight: 500;
+  }
+  .metric-label {
+    font-size: 11px; color: #9182A8;
+    letter-spacing: 1px; margin-top: 2px;
+  }
+
+  /* ---- 产品展示 ---- */
+  .product-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .product-card {
+    border: 1px solid #EDE8F5;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .product-img {
+    height: 120px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 40px;
+    position: relative;
+  }
+  .product-img.p1 { background: linear-gradient(135deg, #F4EEFF, #E8DEF8); }
+  .product-img.p2 { background: linear-gradient(135deg, #FDEEF3, #F4D0DC); }
+  .product-img.p3 { background: linear-gradient(135deg, #EFF8F3, #D8EEE2); }
+  .product-body { padding: 12px 14px; }
+  .product-name {
+    font-size: 13px; font-weight: 600; color: #3D3450;
+    margin-bottom: 4px;
+  }
+  .product-desc {
+    font-size: 11px; color: #9182A8; line-height: 1.6;
+    margin-bottom: 8px;
+  }
+  .product-price-row {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .supply-price {
+    font-size: 12px; color: #5C4E8A; font-weight: 600;
+  }
+  .retail-price {
+    font-size: 11px; color: #9182A8;
+    text-decoration: line-through;
+  }
+  .margin-badge {
+    background: #EEF8F1;
+    color: #3D8B6A;
+    font-size: 10px; font-weight: 600;
+    padding: 2px 8px; border-radius: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* ---- 两栏布局 ---- */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .info-card {
+    background: #F7F4FB;
+    border-radius: 10px;
+    padding: 18px 20px;
+  }
+  .info-card-title {
+    font-size: 13px; font-weight: 600;
+    color: #3D3450; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .info-card-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #8672C8; flex-shrink: 0;
+  }
+  .info-list {
+    list-style: none;
+    font-size: 12px; color: #5A5070;
+    line-height: 2;
+  }
+  .info-list li::before {
+    content: '·';
+    color: #B59AD8;
+    margin-right: 6px;
+    font-weight: 700;
+  }
+
+  /* ---- 合作模式 ---- */
+  .mode-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 20px;
+  }
+  .mode-card {
+    border-radius: 10px;
+    padding: 20px 20px;
+    border: 1.5px solid transparent;
+    position: relative;
+  }
+  .mode-card.recommended {
+    border-color: #8672C8;
+    background: #F9F7FF;
+  }
+  .mode-card.alternative {
+    border-color: #EDE8F5;
+    background: #FAFAFA;
+  }
+  .mode-badge {
+    position: absolute; top: -10px; left: 16px;
+    background: #5C4E8A;
+    color: #fff;
+    font-size: 10px; font-weight: 600;
+    padding: 2px 10px; border-radius: 4px;
+    letter-spacing: 1px;
+  }
+  .mode-name {
+    font-size: 15px; font-weight: 700;
+    color: #3D3450; margin-bottom: 8px;
+  }
+  .mode-detail {
+    font-size: 12px; color: #5A5070;
+    line-height: 1.8;
+  }
+  .mode-detail strong { color: #5C4E8A; }
+  .mode-pros {
+    margin-top: 10px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .mode-pro-tag {
+    background: #EEEDFE;
+    color: #5C4E8A;
+    font-size: 10px; padding: 2px 8px;
+    border-radius: 4px; letter-spacing: 1px;
+  }
+
+  /* ---- 价格体系 ---- */
+  .price-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .price-table th {
+    background: #5C4E8A;
+    color: #fff;
+    padding: 10px 16px;
+    text-align: left;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .price-table th:first-child { border-radius: 8px 0 0 0; }
+  .price-table th:last-child { border-radius: 0 8px 0 0; }
+  .price-table td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #F0EDF5;
+    color: #3D3450;
+  }
+  .price-table tr:last-child td { border-bottom: none; }
+  .price-table tr:nth-child(odd) td { background: #FAFAFA; }
+  .price-table tr:nth-child(even) td { background: #FFFFFF; }
+  .price-hl { color: #5C4E8A; font-weight: 600; }
+  .price-green { color: #3D8B6A; font-weight: 600; }
+
+  /* ---- 时间线 ---- */
+  .timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px; top: 8px; bottom: 8px;
+    width: 2px;
+    background: linear-gradient(to bottom, #8672C8, #F4A7B9);
+  }
+  .timeline-item {
+    position: relative;
+    margin-bottom: 20px;
+    padding-left: 20px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -18px; top: 6px;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #5C4E8A;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 0 0 2px #8672C8;
+  }
+  .timeline-phase {
+    font-size: 11px; font-weight: 600;
+    color: #8672C8; letter-spacing: 2px;
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .timeline-title {
+    font-size: 14px; font-weight: 600;
+    color: #3D3450; margin-bottom: 4px;
+  }
+  .timeline-detail {
+    font-size: 12px; color: #7A6E8A;
+    line-height: 1.7;
+  }
+
+  /* ---- 竞争优势 ---- */
+  .advantage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .advantage-card {
+    background: #F7F4FB;
+    border-radius: 10px;
+    padding: 18px 16px;
+    border-top: 3px solid #8672C8;
+  }
+  .advantage-icon-wrap {
+    width: 40px; height: 40px;
+    background: #EEEDFE;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .advantage-title {
+    font-size: 13px; font-weight: 600;
+    color: #3D3450; margin-bottom: 6px;
+  }
+  .advantage-desc {
+    font-size: 11px; color: #7A6E8A;
+    line-height: 1.7;
+  }
+
+  /* ---- 陈列建议 ---- */
+  .display-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  .display-visual {
+    background: linear-gradient(135deg, #F4EEFF, #FDEEF3);
+    border-radius: 10px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    position: relative;
+    border: 1px solid rgba(92,78,138,0.08);
+  }
+  .display-shelf {
+    width: 100%; height: 6px;
+    background: #D4C8E8;
+    border-radius: 3px;
+    margin: 8px 0;
+  }
+  .display-items {
+    display: flex; gap: 8px; margin-bottom: 4px;
+  }
+  .display-item {
+    width: 28px; height: 36px;
+    border-radius: 4px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+  }
+  .display-item.purple { background: #C4B8E8; }
+  .display-item.pink { background: #F4C8D8; }
+  .display-item.mint { background: #B8E4D4; }
+  .display-caption {
+    font-size: 11px; color: #9182A8;
+    letter-spacing: 1px; margin-top: 8px;
+    text-align: center;
+  }
+  .display-specs {
+    display: flex; flex-direction: column; gap: 8px;
+    justify-content: center;
+  }
+  .spec-row {
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .spec-icon {
+    width: 24px; height: 24px;
+    background: #EEEDFE;
+    border-radius: 6px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .spec-text {
+    font-size: 12px; color: #5A5070;
+    line-height: 1.6;
+  }
+  .spec-text strong { color: #3D3450; font-weight: 600; }
+
+  /* ---- 底部CTA ---- */
+  .cta-section {
+    background: linear-gradient(135deg, #3D3450, #5C4E8A);
+    border-radius: 12px;
+    padding: 36px 48px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(255,255,255,0.025) 15px, rgba(255,255,255,0.025) 16px),
+      repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(255,255,255,0.025) 15px, rgba(255,255,255,0.025) 16px);
+  }
+  .cta-left { position: relative; z-index: 1; }
+  .cta-eyebrow {
+    font-size: 10px; letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 6px;
+  }
+  .cta-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 22px; font-weight: 700;
+    margin-bottom: 8px; letter-spacing: 2px;
+  }
+  .cta-detail {
+    font-size: 12px; color: rgba(255,255,255,0.65);
+    line-height: 1.7;
+  }
+  .cta-right {
+    position: relative; z-index: 1;
+    background: rgba(255,255,255,0.12);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    padding: 16px 24px;
+    text-align: center;
+    min-width: 160px;
+    margin-left: 24px;
+  }
+  .cta-contact-label {
+    font-size: 10px; letter-spacing: 2px;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+  }
+  .cta-contact-name {
+    font-size: 14px; font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .cta-contact-info {
+    font-size: 12px; color: rgba(255,255,255,0.75);
+    line-height: 1.8;
+  }
+
+  .footnote {
+    text-align: center;
+    font-size: 11px; color: #B0A8C0;
+    letter-spacing: 2px;
+    padding: 8px;
+  }
+
+  /* ---- 市场数据表格 ---- */
+  .data-highlight {
+    background: linear-gradient(135deg, #F4EEFF, #FDEEF3);
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin-bottom: 16px;
+    border-left: 4px solid #8672C8;
+  }
+  .data-highlight-text {
+    font-size: 13px; color: #3D3450;
+    line-height: 1.8;
+  }
+  .data-highlight-text strong { color: #5C4E8A; }
+
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .tag {
+    background: #EEEDFE;
+    color: #5C4E8A;
+    font-size: 11px; padding: 4px 12px;
+    border-radius: 20px; letter-spacing: 1px;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #D4C8E8, transparent);
+    margin: 20px 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- 导航 -->
+<div class="top-nav no-print">
+  <span class="top-nav-brand">碎碎念 × 名创优品 · 合作提案</span>
+  <div class="top-nav-links">
+    <a href="#overview">概览</a>
+    <a href="#product">产品</a>
+    <a href="#mode">合作模式</a>
+    <a href="#pricing">价格</a>
+    <a href="#plan">推进计划</a>
+  </div>
+</div>
+
+<div class="doc">
+
+  <!-- 封面 -->
+  <div class="cover" id="overview">
+    <div class="cover-inner">
+      <div class="cover-eyebrow">Brand Collaboration Proposal · 2026</div>
+      <div class="cover-brands">
+        <div class="brand-pill">碎碎念</div>
+        <div class="brand-x">×</div>
+        <div class="miniso-pill">MINISO 名创优品</div>
+      </div>
+      <div class="cover-headline">
+        情感礼物新品类<br>进驻门店合作提案
+      </div>
+      <div class="cover-sub">
+        碎碎念是中国首个「可写拼图明信片」品牌，定位情感礼物赛道。<br>
+        目标人群高度匹配名创优品核心客群，建议以买断+陈列授权模式启动合作。
+      </div>
+      <div class="cover-meta">
+        <div class="cover-meta-item">
+          <strong>PUZZLE KING 旗下品牌</strong>
+          碎碎念 · Suìsuìniàn
+        </div>
+        <div class="cover-meta-item">
+          <strong>目标人群</strong>
+          18-28岁女性 · Z世代
+        </div>
+        <div class="cover-meta-item">
+          <strong>核心场景</strong>
+          情人节 · 520 · 七夕 · 闺蜜礼物
+        </div>
+        <div class="cover-meta-item">
+          <strong>提案日期</strong>
+          2026年6月
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 一、市场机会 -->
+  <div class="section" id="market">
+    <div class="section-header">
+      <div class="section-num">01</div>
+      <div>
+        <div class="section-title">市场机会</div>
+        <div class="section-sub">为什么现在是引入情感拼图品类的最佳时机</div>
+      </div>
+    </div>
+
+    <div class="metric-grid">
+      <div class="metric-card">
+        <div class="metric-num">116<span class="metric-unit">亿</span></div>
+        <div class="metric-label">中国拼图市场规模（2025）</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">8.6<span class="metric-unit">%</span></div>
+        <div class="metric-label">拼图市场年增长率</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">1.7<span class="metric-unit">万亿</span></div>
+        <div class="metric-label">中国礼品行业规模</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-num">10<span class="metric-unit">万亿+</span></div>
+        <div class="metric-label">文创市场预测规模（"十五五"末）</div>
+      </div>
+    </div>
+
+    <div class="data-highlight">
+      <div class="data-highlight-text">
+        当前名创优品礼品区以<strong>贺卡、便签、小摆件</strong>为主，缺少一个能让消费者「愿意多停留、愿意拍照、愿意分享」的<strong>互动型情感礼物</strong>。碎碎念填补的正是这个空白——它不是益智拼图，是一种有仪式感的表达媒介。
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="info-card">
+        <div class="info-card-title"><div class="info-card-dot"></div>名创优品核心客群</div>
+        <ul class="info-list">
+          <li>18-28岁都市女性，学生+职场新人</li>
+          <li>偏好颜值好、价格亲民的生活小物</li>
+          <li>高频节日送礼需求（情人节/生日/七夕）</li>
+          <li>乐于分享的社交型消费行为</li>
+          <li>Z世代：拒绝无聊礼物，要"有心意"</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title"><div class="info-card-dot" style="background:#F4A7B9"></div>碎碎念精准命中</div>
+        <ul class="info-list">
+          <li>主打18-28岁女性，100%重合</li>
+          <li>定价12.9-19.9元，完美匹配名创价格带</li>
+          <li>「写→散→寄→拼」自带分享冲动</li>
+          <li>差异化强：搜「拼图明信片」几乎无竞品</li>
+          <li>情感化品类，天然的节日礼物首选</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag">情感礼物赛道</span>
+      <span class="tag">Z世代偏好</span>
+      <span class="tag">高拍照率</span>
+      <span class="tag">天然传播属性</span>
+      <span class="tag">节日礼物场景</span>
+      <span class="tag">零直接竞品</span>
+    </div>
+  </div>
+
+  <!-- 二、产品介绍 -->
+  <div class="section" id="product">
+    <div class="section-header">
+      <div class="section-num">02</div>
+      <div>
+        <div class="section-title">产品介绍</div>
+        <div class="section-sub">碎碎念 · 可写拼图明信片，一款核心SKU打透情感礼物场景</div>
+      </div>
+    </div>
+
+    <div style="max-width:420px;margin:0 auto;">
+      <div class="product-card">
+        <div class="product-img p1" style="height:140px;font-size:48px;">🧩</div>
+        <div class="product-body" style="padding:16px 18px;">
+          <div class="product-name" style="font-size:15px;">碎碎念 · 可写拼图明信片</div>
+          <div class="product-desc" style="font-size:12px;line-height:1.8;">60片拼图明信片，正面可手写留言，打散后装入信封寄出，收件人亲手拼出完整心意。不是在卖拼图，是在卖「一种浪漫的表达方式」。</div>
+          <div class="product-price-row" style="margin-top:8px;">
+            <span class="supply-price" style="font-size:14px;">供货价 ¥4.9</span>
+            <span class="retail-price">建议售价¥12.9-19.9</span>
+          </div>
+          <div class="product-price-row" style="margin-top:4px;">
+            <span class="margin-badge" style="font-size:11px;padding:3px 10px;">名创毛利 62%-75%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-highlight">
+      <div class="data-highlight-text">
+        玩法核心：<strong>写下心里话 → 把拼图打散装进信封 → 寄给或当面递给对方 → 对方亲手拼出留言</strong>。<br>
+        不是在卖拼图，是在卖「一种浪漫的表达方式」。仪式感 + 互动性 = 强烈的分享欲，每位顾客都是自然传播节点。
+      </div>
+    </div>
+  </div>
+
+  <!-- 三、合作模式 -->
+  <div class="section" id="mode">
+    <div class="section-header">
+      <div class="section-num">03</div>
+      <div>
+        <div class="section-title">合作模式</div>
+        <div class="section-sub">两种方案供选择，推荐从「小批量买断」开始验证</div>
+      </div>
+    </div>
+
+    <div class="mode-grid">
+      <div class="mode-card recommended">
+        <div class="mode-badge">推荐方案</div>
+        <div class="mode-name">买断制 · 小批量试销</div>
+        <div class="mode-detail">
+          名创优品一次性采购，自主定价销售。<br>
+          <strong>起订量：2000件</strong><br>
+          <strong>首单总额：¥9,800</strong><br>
+          选定3-5家门店先行试销，跑通1-2个节假日大促节点，
+          用真实销售数据决策是否全国铺货。
+        </div>
+        <div class="mode-pros">
+          <span class="mode-pro-tag">低风险验证</span>
+          <span class="mode-pro-tag">快速上架</span>
+          <span class="mode-pro-tag">无需分账</span>
+          <span class="mode-pro-tag">可谈账期</span>
+        </div>
+      </div>
+      <div class="mode-card alternative">
+        <div class="mode-name">联名定制款</div>
+        <div class="mode-detail">
+          碎碎念与名创优品联名，开发「名创×碎碎念」专属款式（特殊配色/包装/图案）。<br>
+          <strong>起订量：5000件/款</strong><br>
+          联名款可作为节日限定，制造话题感和稀缺性，
+          同时提升双方品牌曝光。适合验证成功后的第二阶段。
+        </div>
+        <div class="mode-pros">
+          <span class="mode-pro-tag">高差异化</span>
+          <span class="mode-pro-tag">话题性强</span>
+          <span class="mode-pro-tag">适合大促节点</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="info-card">
+        <div class="info-card-title"><div class="info-card-dot"></div>我方能提供</div>
+        <ul class="info-list">
+          <li>自有工厂，OEM代工背景，产能稳定</li>
+          <li>交货周期：打样7天，量产20天</li>
+          <li>最低起订量：2000件</li>
+          <li>可定制包装/配色/印刷内容</li>
+          <li>提供陈列物料（台卡/海报/展示架方案）</li>
+          <li>首单可提供免费样品10套</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title"><div class="info-card-dot" style="background:#A8D5C2"></div>希望名创配合</div>
+        <ul class="info-list">
+          <li>确认首批试点门店数量（3-5家）</li>
+          <li>提供标准陈列位（礼品区/收银台旁）</li>
+          <li>节日大促期间纳入重点推荐品</li>
+          <li>提供30天销售数据用于复盘</li>
+          <li>如效果达标，优先续单并扩大铺货</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 四、价格体系 -->
+  <div class="section" id="pricing">
+    <div class="section-header">
+      <div class="section-num">04</div>
+      <div>
+        <div class="section-title">价格体系</div>
+        <div class="section-sub">供货价4.9元/件，保障名创优品60%+毛利空间</div>
+      </div>
+    </div>
+
+    <table class="price-table">
+      <thead>
+        <tr>
+          <th>SKU</th>
+          <th>供货价（单件）</th>
+          <th>建议零售价</th>
+          <th>名创毛利率</th>
+          <th>最低起订量</th>
+          <th>月销≥500件优惠价</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>碎碎念 · 可写拼图明信片</td>
+          <td class="price-hl">¥4.90</td>
+          <td>¥12.9-19.9</td>
+          <td class="price-green">62%-75%</td>
+          <td>2,000件</td>
+          <td class="price-hl">¥4.20</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="data-highlight">
+      <div class="data-highlight-text">
+        <strong>账期建议：</strong>首单可接受30天账期，后续长期合作可协商60天账期。
+        首单打款后7个工作日内提供样品确认，样品通过后20个工作日内完成交货。
+      </div>
+    </div>
+  </div>
+
+  <!-- 五、陈列方案 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">05</div>
+      <div>
+        <div class="section-title">陈列建议</div>
+        <div class="section-sub">最大化顾客停留时间与冲动购买率</div>
+      </div>
+    </div>
+
+    <div class="display-row">
+      <div class="display-visual">
+        <div style="font-size:11px;color:#9182A8;letter-spacing:2px;margin-bottom:12px;">陈列示意（礼品区）</div>
+        <div class="display-items">
+          <div class="display-item purple">🧩</div>
+          <div class="display-item pink">💌</div>
+        </div>
+        <div class="display-shelf"></div>
+        <div style="width:80%;height:4px;background:#E8E0EE;border-radius:2px;margin-bottom:4px;"></div>
+        <div class="display-caption">单品陈列+样品体验区，配互动台卡</div>
+      </div>
+      <div class="display-specs">
+        <div class="spec-row">
+          <div class="spec-icon">📍</div>
+          <div class="spec-text"><strong>推荐位置：</strong>礼品区正面陈列架或收银台附近，节日期间可设端架专区</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-icon">🖼</div>
+          <div class="spec-text"><strong>物料配套：</strong>我方免费提供展示台卡、A4海报、产品说明卡</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-icon">✋</div>
+          <div class="spec-text"><strong>样品体验：</strong>建议摆放1套开封样品，让顾客亲手摸到拼图质感</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-icon">📦</div>
+          <div class="spec-text"><strong>陈列面积：</strong>单品陈列约30cm宽即可，高度不超过40cm，极省空间</div>
+        </div>
+        <div class="spec-row">
+          <div class="spec-icon">📅</div>
+          <div class="spec-text"><strong>节日重点：</strong>情人节/520/七夕建议做端架+堆头，提前30天备货</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 六、合作优势 -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">06</div>
+      <div>
+        <div class="section-title">为什么选择碎碎念</div>
+        <div class="section-sub">工厂直供品牌，六大核心优势</div>
+      </div>
+    </div>
+
+    <div class="advantage-grid">
+      <div class="advantage-card">
+        <div class="advantage-icon-wrap">🏭</div>
+        <div class="advantage-title">工厂直供，成本可控</div>
+        <div class="advantage-desc">自有工厂，OEM代工背景，从设计到生产全链路自控。供货稳定，价格透明，无中间商加价。</div>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-icon-wrap">🎯</div>
+        <div class="advantage-title">零直接竞品</div>
+        <div class="advantage-desc">「可写拼图明信片」品类首创，搜索"拼图明信片"同款几乎为零。引入即享先发优势。</div>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-icon-wrap">📱</div>
+        <div class="advantage-title">强社交传播属性</div>
+        <div class="advantage-desc">「拼完的瞬间」天然适合拍照发圈，每位顾客都是自然传播节点，为门店带来二次引流。</div>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-icon-wrap">📅</div>
+        <div class="advantage-title">节日爆发力强</div>
+        <div class="advantage-desc">情人节/520/七夕/圣诞等节点，情感类礼物GMV暴涨300%+，碎碎念天然命中节日场景。</div>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-icon-wrap">✏️</div>
+        <div class="advantage-title">高度可定制</div>
+        <div class="advantage-desc">支持名创专属配色、包装设计、联名logo，可开发名创优品独家款，形成渠道壁垒。</div>
+      </div>
+      <div class="advantage-card">
+        <div class="advantage-icon-wrap">🔄</div>
+        <div class="advantage-title">低风险启动</div>
+        <div class="advantage-desc">建议先试点3-5家门店，用1-2个节日节点验证销售数据，效果达标再全国铺货，无需大规模押注。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 七、推进计划 -->
+  <div class="section" id="plan">
+    <div class="section-header">
+      <div class="section-num">07</div>
+      <div>
+        <div class="section-title">合作推进计划</div>
+        <div class="section-sub">从接洽到正式铺货，建议90天内完成首轮验证</div>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-phase">Week 1-2 · 洽谈期</div>
+        <div class="timeline-title">确认意向 + 样品寄送</div>
+        <div class="timeline-detail">双方确认合作意向，我方寄送10套样品供内部评估；确认供货价、起订量、账期等核心条款。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Week 3-4 · 签约期</div>
+        <div class="timeline-title">签订合同 + 下单生产</div>
+        <div class="timeline-detail">签订采购合同，约定首批2000件规模；我方启动生产，并同步确认陈列方案和物料需求。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Week 5-7 · 交货期</div>
+        <div class="timeline-title">完成交货 + 门店上架</div>
+        <div class="timeline-detail">20个工作日内完成交货；配合完成试点门店陈列布置，免费提供展示台卡和海报物料。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Week 8-12 · 验证期</div>
+        <div class="timeline-title">跑通节日节点 + 数据复盘</div>
+        <div class="timeline-detail">以七夕（8月初）或中秋（节日送礼场景）为首个验证节点；收集销售数据、动销率、顾客反馈，双方复盘并决策是否扩大铺货。</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-phase">Month 4+ · 规模化</div>
+        <div class="timeline-title">全国铺货 + 联名款开发</div>
+        <div class="timeline-detail">根据验证数据，制定全国铺货计划；同步启动名创×碎碎念联名款开发，节点前完成上架。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-section">
+    <div class="cta-left">
+      <div class="cta-eyebrow">Next Step</div>
+      <div class="cta-title">期待与名创优品团队进一步洽谈</div>
+      <div class="cta-detail">
+        我们可以先安排样品寄送，供贵方采购团队实际体验产品。<br>
+        如有意向，欢迎随时联系我们，期待共同打造情感礼物新爆款。
+      </div>
+    </div>
+    <div class="cta-right">
+      <div class="cta-contact-label">联系我们</div>
+      <div class="cta-contact-name">碎碎念品牌方</div>
+      <div class="cta-contact-info">
+        TEL: 133-0666-3131<br>
+        微信同号<br>
+        PUZZLE KING 旗下品牌
+      </div>
+    </div>
+  </div>
+
+  <div class="footnote">碎碎念 · PUZZLE KING 旗下品牌 · 2026 · 本提案内容保密</div>
+
+</div>
+</body>
+</html>
