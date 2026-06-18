@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>碎碎念 · 留言灵感卡</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f5f0eb;
+            color: #2c2c2c;
+            line-height: 1.8;
+        }
+
+        /* 封面页 */
+        .cover {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f0eb 0%, #ede4d8 100%);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .cover-logo {
+            font-size: 48px;
+            font-weight: 300;
+            color: #8b7355;
+            margin-bottom: 20px;
+            letter-spacing: 8px;
+        }
+
+        .cover-title {
+            font-size: 32px;
+            color: #2c2c2c;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .cover-subtitle {
+            font-size: 16px;
+            color: #8b7355;
+            margin-bottom: 40px;
+        }
+
+        .cover-desc {
+            max-width: 600px;
+            font-size: 15px;
+            color: #666;
+            line-height: 2;
+            margin-bottom: 50px;
+        }
+
+        .cover-note {
+            font-size: 13px;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* 使用说明 */
+        .instruction {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 60px 40px;
+            background: white;
+        }
+
+        .instruction h2 {
+            font-size: 24px;
+            color: #8b7355;
+            margin-bottom: 30px;
+            font-weight: 400;
+            text-align: center;
+        }
+
+        .instruction-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .step {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .step-icon {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+
+        .step-title {
+            font-size: 16px;
+            color: #2c2c2c;
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+
+        .step-desc {
+            font-size: 13px;
+            color: #999;
+            line-height: 1.6;
+        }
+
+        /* 分类导航 */
+        .category-nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .category-btn {
+            padding: 8px 20px;
+            border: 1px solid #8b7355;
+            background: transparent;
+            color: #8b7355;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: #8b7355;
+            color: white;
+        }
+
+        /* 灵感卡展示区 */
+        .cards-section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .category-title {
+            font-size: 28px;
+            color: #2c2c2c;
+            margin: 60px 0 30px;
+            font-weight: 300;
+            text-align: center;
+            position: relative;
+        }
+
+        .category-title::after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 2px;
+            background: #8b7355;
+            margin: 15px auto 0;
+        }
+
+        .category-desc {
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+            margin-bottom: 40px;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        /* 单张灵感卡 */
+        .inspiration-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .inspiration-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .card-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 48px;
+            color: #f5f0eb;
+            font-weight: 700;
+            line-height: 1;
+        }
+
+        .card-scene {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #f5f0eb;
+            color: #8b7355;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+
+        .card-content {
+            font-size: 16px;
+            line-height: 2;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+            min-height: 120px;
+        }
+
+        .card-hint {
+            font-size: 12px;
+            color: #999;
+            border-top: 1px solid #f5f0eb;
+            padding-top: 15px;
+            font-style: italic;
+        }
+
+        /* 打印版本 */
+        .print-version {
+            display: none;
+        }
+
+        .print-instruction {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .print-btn {
+            display: inline-block;
+            padding: 12px 40px;
+            background: #8b7355;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .print-btn:hover {
+            background: #6d5a42;
+        }
+
+        /* 实体卡设计稿 */
+        .physical-card {
+            background: white;
+            border: 2px solid #8b7355;
+            border-radius: 8px;
+            padding: 30px;
+            margin: 20px auto;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .physical-card::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px dashed #e0d5c5;
+            border-radius: 6px;
+            pointer-events: none;
+        }
+
+        .card-front {
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .card-front-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .card-front-title {
+            font-size: 20px;
+            color: #8b7355;
+            margin-bottom: 10px;
+        }
+
+        .card-front-hint {
+            font-size: 13px;
+            color: #999;
+        }
+
+        .card-back {
+            padding: 30px 20px;
+        }
+
+        .card-back-content {
+            font-size: 15px;
+            line-height: 1.8;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+        }
+
+        .card-back-note {
+            font-size: 11px;
+            color: #999;
+            text-align: center;
+            font-style: italic;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .cover-logo {
+                font-size: 36px;
+            }
+
+            .cover-title {
+                font-size: 24px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .category-nav {
+                padding: 10px 15px;
+            }
+
+            .category-btn {
+                font-size: 13px;
+                padding: 6px 15px;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background: white;
+            }
+
+            .cover,
+            .instruction,
+            .category-nav,
+            .print-btn,
+            .print-instruction {
+                display: none;
+            }
+
+            .print-version {
+                display: block;
+            }
+
+            .cards-section {
+                padding: 0;
+            }
+
+            .category-title {
+                page-break-before: always;
+            }
+
+            .inspiration-card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 封面页 -->
+    <div class="cover">
+        <div class="cover-logo">碎碎念</div>
+        <h1 class="cover-title">留言灵感卡</h1>
+        <p class="cover-subtitle">让每一句心里话，都有迹可循</p>
+        <div class="cover-desc">
+            有时候，最难的不是想说什么，而是怎么开头。<br>
+            这些灵感，只是帮你推开那扇门。<br>
+            门后的世界，是你的真心话。
+        </div>
+        <p class="cover-note">适合搭配「碎碎念·可写拼图明信片」使用</p>
+    </div>
+
+    <!-- 使用说明 -->
+    <div class="instruction">
+        <h2>怎么用这些灵感？</h2>
+        <div class="instruction-steps">
+            <div class="step">
+                <div class="step-icon">💌</div>
+                <div class="step-title">选场景</div>
+                <div class="step-desc">找到最符合你心情的那一类</div>
+            </div>
+            <div class="step">
+                <div class="step-icon">✍️</div>
+                <div class="step-title">挑句子</div>
+                <div class="step-desc">选一句最戳中你的话</div>
+            </div>
+            <div class="step">
+                <div class="step-icon">🧩</div>
+                <div class="step-title">写下来</div>
+                <div class="step-desc">抄到拼图上，或改成你自己的话</div>
+            </div>
+            <div class="step">
+                <div class="step-icon">💝</div>
+                <div class="step-title">寄出去</div>
+                <div class="step-desc">拆散、装信封、送给TA</div>
+            </div>
+        </div>
+        <p style="text-align: center; color: #999; font-size: 13px;">
+            💡 当然，最动人的永远是你的真心话
+        </p>
+    </div>
+
+    <!-- 分类导航 -->
+    <div class="category-nav">
+        <button class="category-btn active" onclick="scrollToCategory('daily')">日常关心</button>
+        <button class="category-btn" onclick="scrollToCategory('love')">异地恋·情感</button>
+        <button class="category-btn" onclick="scrollToCategory('celebration')">生日·节日</button>
+        <button class="category-btn" onclick="scrollToCategory('gratitude')">感谢·鼓励</button>
+        <button class="category-btn" onclick="scrollToCategory('apology')">道歉·和好</button>
+    </div>
+
+    <!-- 灵感卡展示区 -->
+    <div class="cards-section">
+        <!-- 第1类：日常关心 -->
+        <h2 class="category-title" id="daily">日常关心</h2>
+        <p class="category-desc">适合朋友之间、日常表达</p>
+        <div class="cards-grid">
+            <div class="inspiration-card">
+                <div class="card-number">01</div>
+                <div class="card-scene">日常 · 突然想到你</div>
+                <div class="card-content">
+                    今天忽然想到你，就写了这封信。<br>
+                    拼完它，你就知道我在想什么了。
+                </div>
+                <div class="card-hint">💡 适合：没有任何特殊日子，只是想TA的时候</div>
+            </div>
+
+            <div class="inspiration-card">
+                <div class="card-number">02</div>
+                <div class="card-scene">日常 · 距离</div>
+                <div class="card-content">
+                    距离不能让我们变远，<br>
+                    只能让每次见面都更珍贵。
+                </div>
+                <div class="card-hint">💡 适合：和朋友/恋人分隔两地时</div>
+            </div>
+
+            <div class="inspiration-card">
+                <div class="card-number">03</div>
+                <div class="card-scene">日常 · 表达</div>
+                <div class="card-content">
+                    有些话打字说太轻，<br>
+                    所以我把它们拼成了这封信。
+                </div>
+                <div class="card-hint">💡 适合：想表达但觉得微信太随意时</div>
+            </div>
+        </div>
+
+        <!-- 第2类：异地恋/情感表达 -->
+        <h2 class="category-title" id="love">异地恋 · 情感表达</h2>
+        <p class="category-desc">适合恋人之间、异地的陪伴</p>
+        <div class="cards-grid">
+            <div class="inspiration-card">
+                <div class="card-number">04</div>
+                <div class="card-scene">异地恋 · 陪伴</div>
+                <div class="card-content">
+                    虽然现在不能陪在你身边，<br>
+                    但我的每一片想念都在这封信里。
+                </div>
+                <div class="card-hint">💡 适合：异地恋中最想TA的时刻</div>
+            </div>
+
+            <div class="inspiration-card">
+                <div class="card-number">05</div>
+                <div class="card-scene">异地恋 · 心意</div>
+                <div class="card-content">
+                    拼图会散，但我对你的心意不会。<br>
+                    一字一句，都是认真的呢。
+                </div>
+                <div class="card-hint">💡 适合：想让TA感受到你的认真时</div>
+            </div>
+
+            <div class="inspiration-card">
+                <div class="card-number">06</div>
+                <div class="card-scene">异地恋 · 距离</div>
+                <div class="card-content">
+                    距离再远，也远不过<br>
+                    我想你的这份心情。
+                </div>
+                <div class="card-hint">💡 适合：异地恋坚持不下去想放弃时</div>
+            </div>
+        </div>
+
+        <!-- 第3类：生日/节日祝福 -->
+        <h2 class="category-title" id="celebration">生日 · 节日</h2>
+        <p class="category-desc">适合生日、纪念日、特别日子</p>
+        <div class="cards-grid">
+            <div class="inspiration-card">
+                <div class="card-number">07</div>
+                <div class="card-scene">生日 · 祝福</div>
+                <div class="card-content">
+                    生日快乐。<br>
+                    愿你的每一天都像拼图一样，<br>
+                    一块一块，拼出完整的幸福。
+                </div>
+                <div class="card-hint">💡 适合：生日祝福，希望TA幸福时</div>
+            </div>
+
+            <div class="inspiration-card">
+                <div class="card-number">08</div>
+                <div class="card-scene">纪念日 · 感谢</div>
+                <div class="card-content">
+                    这一年，谢谢你出现在我的生活里。<br>
+                    未来的日子，我们一起慢慢拼。
+                </div>
+                <div class="card-hint">💡 适合：周年纪念、感谢TA的陪伴时</div>
+            </div>
+        </div>
+
+        <!-- 第4类：感谢/鼓励 -->
+        <h2 class="category-title" id="gratitude">感谢 · 鼓励</h2>
+        <p class="category-desc">适合感谢朋友、鼓励打气</p>
+        <div class="cards-grid">
+            <div class="inspiration-card">
+                <div class="card-number">09</div>
+                <div class="card-scene">感谢 · 朋友</div>
+                <div class="card-content">
+                    谢谢你总是陪在我身边。<br>
+                    你可能不知道，你对我有多重要。
+                </div>
+                <div class="card-hint">💡 适合：想感谢朋友但说不出口时</div>
+            </div>
+
+            <div class="inspiration-card">
+                <div class="card-number">10</div>
+                <div class="card-scene">鼓励 · 打气</div>
+                <div class="card-content">
+                    最近辛苦了。<br>
+                    拼完这封信，记得给自己一个大大的拥抱。
+                </div>
+                <div class="card-hint">💡 适合：朋友/家人压力大、需要鼓励时</div>
+            </div>
+        </div>
+
+        <!-- 第5类：道歉/和好 -->
+        <h2 class="category-title" id="apology">道歉 · 和好</h2>
+        <p class="category-desc">适合吵架后、想和好</p>
+        <div class="cards-grid">
+            <div class="inspiration-card">
+                <div class="card-number">11</div>
+                <div class="card-scene">道歉 · 真诚</div>
+                <div class="card-content">
+                    对不起，我不会说什么漂亮话。<br>
+                    但我的心意，都在这封信里了。
+                </div>
+                <div class="card-hint">💡 适合：吵架后想道歉但不知道怎么开口</div>
+            </div>
+
+            <div class="inspiration-card">
+                <div class="card-number">12</div>
+                <div class="card-scene">和好 · 完整</div>
+                <div class="card-content">
+                    我们和好吧。<br>
+                    就像这拼图一样，少了任何一片都不完整。
+                </div>
+                <div class="card-hint">💡 适合：想和好、表达"我们不能分开"时</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 打印按钮 -->
+    <div class="print-instruction">
+        <button class="print-btn" onclick="window.print()">🖨️ 打印灵感卡</button>
+        <p style="margin-top: 15px; font-size: 12px; color: #999;">
+            打印后裁剪，就能得到实体灵感卡啦
+        </p>
+    </div>
+
+    <!-- 页脚 -->
+    <div style="text-align: center; padding: 40px; color: #999; font-size: 13px;">
+        <p>碎碎念 · 让每一句心里话，都被认真对待</p>
+        <p style="margin-top: 10px;">联系我们：133-0666-3131</p>
+    </div>
+
+    <script>
+        // 平滑滚动到分类
+        function scrollToCategory(id) {
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+
+            // 更新按钮状态
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+
+        // 监听滚动，自动高亮当前分类
+        window.addEventListener('scroll', function() {
+            const categories = ['daily', 'love', 'celebration', 'gratitude', 'apology'];
+            const navHeight = 70;
+
+            for (let i = categories.length - 1; i >= 0; i--) {
+                const element = document.getElementById(categories[i]);
+                if (element && element.getBoundingClientRect().top <= navHeight + 100) {
+                    document.querySelectorAll('.category-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    document.querySelectorAll('.category-btn')[i].classList.add('active');
+                    break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
