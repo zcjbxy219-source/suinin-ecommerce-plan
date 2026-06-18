@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>碎碎念 · 包裹卡设计稿</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: #f5f0eb;
+            color: #2c2c2c;
+            line-height: 1.8;
+            padding: 20px;
+        }
+
+        /* 页面标题 */
+        .page-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 30px;
+        }
+
+        .page-title {
+            font-size: 32px;
+            color: #8b7355;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: #999;
+        }
+
+        /* 卡片容器 */
+        .card-container {
+            max-width: 1000px;
+            margin: 0 auto 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        /* 单张卡片 */
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 50px 40px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: 20px;
+            bottom: 20px;
+            border: 1px dashed #e0d5c5;
+            border-radius: 8px;
+            pointer-events: none;
+        }
+
+        .card-label {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            padding: 5px 15px;
+            background: #f5f0eb;
+            color: #8b7355;
+            border-radius: 15px;
+            font-size: 12px;
+        }
+
+        /* 正面样式 */
+        .card-front {
+            text-align: center;
+        }
+
+        .front-logo {
+            font-size: 36px;
+            color: #8b7355;
+            margin-bottom: 30px;
+            letter-spacing: 6px;
+            font-weight: 300;
+        }
+
+        .front-title {
+            font-size: 20px;
+            color: #2c2c2c;
+            margin-bottom: 15px;
+            font-weight: 400;
+        }
+
+        .front-divider {
+            width: 60px;
+            height: 2px;
+            background: #8b7355;
+            margin: 20px auto;
+        }
+
+        .front-message {
+            font-size: 14px;
+            color: #666;
+            line-height: 2;
+            margin-bottom: 30px;
+        }
+
+        .front-qr-section {
+            margin: 30px 0;
+        }
+
+        .front-qr-placeholder {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px;
+            background: #f5f0eb;
+            border: 2px dashed #8b7355;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #8b7355;
+            font-size: 12px;
+        }
+
+        .front-qr-text {
+            font-size: 13px;
+            color: #8b7355;
+            margin-bottom: 5px;
+        }
+
+        .front-qr-hint {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .front-benefits {
+            margin-top: 20px;
+            text-align: left;
+            padding: 0 20px;
+        }
+
+        .benefit-item {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .benefit-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #8b7355;
+        }
+
+        /* 背面样式 */
+        .card-back {
+            text-align: left;
+        }
+
+        .back-section {
+            margin-bottom: 25px;
+        }
+
+        .back-section-title {
+            font-size: 16px;
+            color: #8b7355;
+            margin-bottom: 12px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-section-icon {
+            font-size: 18px;
+        }
+
+        .back-content {
+            font-size: 13px;
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .back-steps {
+            list-style: none;
+            padding: 0;
+        }
+
+        .back-steps li {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .back-steps li::before {
+            content: attr(data-step);
+            position: absolute;
+            left: 0;
+            color: #8b7355;
+            font-weight: 500;
+        }
+
+        .back-coupon {
+            background: #f5f0eb;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 15px 0;
+        }
+
+        .coupon-code {
+            font-size: 20px;
+            color: #8b7355;
+            font-weight: 500;
+            letter-spacing: 2px;
+            margin: 10px 0;
+        }
+
+        .coupon-hint {
+            font-size: 11px;
+            color: #999;
+        }
+
+        .back-footer {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #f5f0eb;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .back-footer-brand {
+            color: #8b7355;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+
+        /* 规格说明 */
+        .specs {
+            max-width: 1000px;
+            margin: 0 auto 40px;
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+        }
+
+        .specs-title {
+            font-size: 20px;
+            color: #2c2c2c;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table th,
+        .specs-table td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #f5f0eb;
+            font-size: 14px;
+        }
+
+        .specs-table th {
+            color: #8b7355;
+            font-weight: 500;
+            width: 120px;
+        }
+
+        .specs-table td {
+            color: #666;
+        }
+
+        /* 打印按钮 */
+        .print-section {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .print-btn {
+            display: inline-block;
+            padding: 15px 50px;
+            background: #8b7355;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 10px;
+        }
+
+        .print-btn:hover {
+            background: #6d5a42;
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .page-header,
+            .print-section,
+            .specs {
+                display: none;
+            }
+
+            .card-container {
+                grid-template-columns: 1fr;
+                gap: 0;
+                max-width: 100%;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #ddd;
+                page-break-inside: avoid;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .card-container {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .card {
+                aspect-ratio: auto;
+                padding: 40px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 页面标题 -->
+    <div class="page-header">
+        <h1 class="page-title">碎碎念 · 包裹卡设计稿</h1>
+        <p class="page-subtitle">单张双面卡 · 正反面设计</p>
+    </div>
+
+    <!-- 卡片展示 -->
+    <div class="card-container">
+        <!-- 正面 -->
+        <div class="card card-front">
+            <div class="card-label">正面</div>
+
+            <div>
+                <div class="front-logo">碎碎念</div>
+                <h2 class="front-title">感谢你选择用拼图表达心意</h2>
+                <div class="front-divider"></div>
+                <p class="front-message">
+                    每一片拼图，都是一句心里话。<br>
+                    感谢你让这份心意，变得具体。
+                </p>
+            </div>
+
+            <div class="front-qr-section">
+                <div class="front-qr-placeholder">
+                    [微信二维码]
+                </div>
+                <p class="front-qr-text">扫码加微信 · 领取专属福利</p>
+                <p class="front-qr-hint">或搜索微信号：suinin2024</p>
+            </div>
+
+            <div class="front-benefits">
+                <div class="benefit-item">拼图达人使用技巧</div>
+                <div class="benefit-item">不定期粉丝专属福利</div>
+                <div class="benefit-item">新品首发优惠通知</div>
+                <div class="benefit-item">1对1客服咨询服务</div>
+            </div>
+        </div>
+
+        <!-- 背面 -->
+        <div class="card card-back">
+            <div class="card-label">背面</div>
+
+            <div class="back-section">
+                <div class="back-section-title">
+                    <span class="back-section-icon">💡</span>
+                    怎么玩？
+                </div>
+                <ol class="back-steps">
+                    <li data-step="1.">在拼图上写下发自内心的话</li>
+                    <li data-step="2.">拆散所有碎片</li>
+                    <li data-step="3.">装进信封，寄给TA</li>
+                    <li data-step="4.">TA拼回碎片，读出你的心意</li>
+                </ol>
+            </div>
+
+            <div class="back-section">
+                <div class="back-section-title">
+                    <span class="back-section-icon">🎁</span>
+                    专属福利
+                </div>
+                <div class="back-coupon">
+                    <div class="coupon-hint">截图这封信，发给微信客服</div>
+                    <div class="coupon-code">立领 ¥5 优惠券</div>
+                    <div class="coupon-hint">下次购买即可使用</div>
+                </div>
+            </div>
+
+            <div class="back-section">
+                <div class="back-section-title">
+                    <span class="back-section-icon">📸</span>
+                    晒图有礼
+                </div>
+                <div class="back-content">
+                    收到后拼图过程拍照/视频<br>
+                    发小红书 @碎碎念<br>
+                    有机会获得免费拼图明信片一套
+                </div>
+            </div>
+
+            <div class="back-footer">
+                <div class="back-footer-brand">碎碎念</div>
+                <div>让每一句心里话</div>
+                <div>都被认真对待</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 规格说明 -->
+    <div class="specs">
+        <h3 class="specs-title">📋 印刷规格说明</h3>
+        <table class="specs-table">
+            <tr>
+                <th>卡片尺寸</th>
+                <td>A6 (105mm × 148mm) 或自定义 90mm × 130mm</td>
+            </tr>
+            <tr>
+                <th>材质建议</th>
+                <td>300g 白卡纸 + 哑膜（正面）</td>
+            </tr>
+            <tr>
+                <th>印刷工艺</th>
+                <td>正反双面彩色印刷</td>
+            </tr>
+            <tr>
+                <th>二维码</th>
+                <td>微信个人号二维码（建议用活码，可替换）</td>
+            </tr>
+            <tr>
+                <th>优惠码</th>
+                <td>建议用微信客服手动核销，或生成唯一优惠码</td>
+            </tr>
+            <tr>
+                <th>放置位置</th>
+                <td>随产品一起装入包裹（建议放在透明袋外侧，用户第一眼能看到）</td>
+            </tr>
+            <tr>
+                <th>成本估算</th>
+                <td>¥0.3-0.5/张（500张起印）</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 打印按钮 -->
+    <div class="print-section">
+        <button class="print-btn" onclick="window.print()">🖨️ 打印设计稿</button>
+        <button class="print-btn" onclick="downloadImage()">📥 下载图片</button>
+    </div>
+
+    <script>
+        function downloadImage() {
+            alert('建议使用浏览器打印功能，选择"保存为PDF"来获得最佳效果');
+        }
+    </script>
+</body>
+</html>
