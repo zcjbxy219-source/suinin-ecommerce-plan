@@ -357,6 +357,54 @@
     .section { page-break-inside: avoid; }
     .price-card { break-inside: avoid; }
   }
+
+  /* ===== 移动端适配 ===== */
+  @media (max-width: 768px) {
+    .section { padding: 48px 20px; }
+    .section-title { font-size: 22px; }
+    .cover { padding: 40px 24px; }
+    .cover-logo { font-size: 36px; letter-spacing: 4px; }
+    .cover-subtitle { font-size: 15px; }
+    .cover-tagline { font-size: 13px; }
+
+    /* 品牌故事：手机端改为单列 */
+    .story-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+    .story-card { padding: 24px 20px; }
+
+    /* 产品展示：手机端单列/双列 */
+    .product-showcase {
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    /* 合作优势：手机端单列 */
+    .advantage-grid { grid-template-columns: 1fr; gap: 16px; }
+    .advantage-item { padding: 24px 16px; }
+
+    /* 联系方式：手机端单列 */
+    .contact-grid { grid-template-columns: 1fr; gap: 24px; }
+
+    /* 价格体系：手机端单列 */
+    .price-grid { grid-template-columns: 1fr; }
+
+    /* 怎么玩：手机端 2x2 */
+    .steps-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 12px !important; }
+
+    /* 适用渠道：手机端 2列 */
+    .channels-grid { grid-template-columns: repeat(2, 1fr) !important; gap: 10px !important; }
+
+    /* 分类标签：紧凑排列 */
+    .category-tabs { gap: 6px; margin-bottom: 20px; }
+    .cat-tab { padding: 6px 14px; font-size: 13px; }
+  }
+
+  @media (max-width: 480px) {
+    .product-showcase { grid-template-columns: 1fr; }
+    .cover-logo { font-size: 30px; }
+  }
 </style>
 </head>
 <body>
@@ -444,7 +492,7 @@
 <section class="section">
   <h2 class="section-title">怎么玩</h2>
   <div class="section-divider"></div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:800px;margin:0 auto 40px;">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:800px;margin:0 auto 40px;" class="steps-grid">
     <div style="text-align:center;padding:28px 16px;background:#faf8f5;border-radius:12px;">
       <div style="font-size:32px;margin-bottom:12px;">✍️</div>
       <div style="font-size:14px;font-weight:600;color:#6d5a42;margin-bottom:6px;">写</div>
@@ -559,7 +607,7 @@
 <section class="section">
   <h2 class="section-title">适用销售渠道</h2>
   <div class="section-divider"></div>
-  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:900px;margin:0 auto;">
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:900px;margin:0 auto;" class="channels-grid">
     <div style="padding:20px;text-align:center;background:#faf8f5;border-radius:10px;font-size:14px;color:#6d5a42;font-weight:600;">🏪 精品文具店</div>
     <div style="padding:20px;text-align:center;background:#faf8f5;border-radius:10px;font-size:14px;color:#6d5a42;font-weight:600;">💐 花店/花艺</div>
     <div style="padding:20px;text-align:center;background:#faf8f5;border-radius:10px;font-size:14px;color:#6d5a42;font-weight:600;">🎀 名创/生活馆</div>
