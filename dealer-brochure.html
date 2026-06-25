@@ -315,6 +315,42 @@
     letter-spacing: 1px;
   }
 
+  /* ===== 分类标签 ===== */
+  .category-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+  .cat-tab {
+    padding: 8px 20px;
+    border: 1.5px solid #c4b496;
+    border-radius: 20px;
+    background: #fff;
+    color: #6d5a42;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+  }
+  .cat-tab:hover {
+    background: #f5f0eb;
+  }
+  .cat-tab.active {
+    background: #6d5a42;
+    color: #fff;
+    border-color: #6d5a42;
+  }
+  .product-card { transition: all 0.3s; }
+  .product-card.hidden { display: none; }
+  .cat-count {
+    font-size: 12px;
+    color: #a08c6e;
+    margin-left: 4px;
+  }
+  .cat-tab.active .cat-count { color: rgba(255,255,255,0.7); }
+
   /* ===== 打印 ===== */
   @media print {
     .cover { min-height: 100vh; page-break-after: always; }
@@ -382,7 +418,19 @@
 <section class="section section-alt">
   <h2 class="section-title">产品系列</h2>
   <div class="section-divider"></div>
-  <p style="text-align:center;color:#888;margin-bottom:36px;font-size:14px;">以下为碎碎念·心意拼图全系列产品实拍图</p>
+  <p style="text-align:center;color:#888;margin-bottom:24px;font-size:14px;">以下为碎碎念·心意拼图全系列产品实拍图，点击分类标签筛选</p>
+
+  <div class="category-tabs">
+    <button class="cat-tab active" data-cat="all">全部产品<span class="cat-count">（63款）</span></button>
+    <button class="cat-tab" data-cat="花神">十二花神<span class="cat-count">（12款）</span></button>
+    <button class="cat-tab" data-cat="生肖">十二生肖<span class="cat-count">（12款）</span></button>
+    <button class="cat-tab" data-cat="星座">十二星座<span class="cat-count">（12款）</span></button>
+    <button class="cat-tab" data-cat="花店">花店系列<span class="cat-count">（16款）</span></button>
+    <button class="cat-tab" data-cat="告白">告白系列<span class="cat-count">（7款）</span></button>
+    <button class="cat-tab" data-cat="生日">生日快乐<span class="cat-count">（5款）</span></button>
+    <button class="cat-tab" data-cat="城市">城市文创<span class="cat-count">（2款）</span></button>
+    <button class="cat-tab" data-cat="其它">其它<span class="cat-count">（2款）</span></button>
+  </div>
 
   <div class="product-showcase">
 
@@ -544,6 +592,43 @@
 </section>
 
 <script>
+// 产品分类映射
+const CATEGORY_MAP = {
+  // 十二花神：款式1-12
+  1:['花神','花店'], 2:['花神','花店'], 3:['花神','花店'], 4:['花神','花店'],
+  5:['花神','花店'], 6:['花神','花店'], 7:['花神','花店'], 8:['花神','花店'],
+  9:['花神','花店'], 10:['花神','花店'], 11:['花神','花店'], 12:['花神','花店'],
+  // 花店系列：款式1-16（不含1-12已定义的，补充13-16）
+  // 13-16 只有花店标签
+  // 十二生肖：款式17-28
+  17:['生肖'], 18:['生肖'], 19:['生肖'], 20:['生肖'],
+  21:['生肖'], 22:['生肖'], 23:['生肖'], 24:['生肖'],
+  25:['生肖'], 26:['生肖'], 27:['生肖'], 28:['生肖'],
+  // 生日快乐：款式29
+  29:['生日'],
+  // 其它：款式30,31
+  30:['其它'], 31:['其它'],
+  // 城市文创：款式32
+  32:['城市'],
+  // 十二星座：款式33-44
+  33:['星座'], 34:['星座'], 35:['星座'], 36:['星座'],
+  37:['星座'], 38:['星座'], 39:['星座'], 40:['星座'],
+  41:['星座'], 42:['星座'], 43:['星座'], 44:['星座'],
+  // 告白系列：款式45,46,48,49,50,51,52
+  45:['告白'], 46:['告白'], 48:['告白'], 49:['告白'],
+  50:['告白'], 51:['告白'], 52:['告白'],
+  // 城市文创：款式47
+  47:['城市'],
+  // 生日快乐：款式53,54,55,56
+  53:['生日'], 54:['生日'], 55:['生日'], 56:['生日'],
+};
+
+// 确保花店系列 13-16 也有标签
+for (let i = 13; i <= 16; i++) {
+  if (!CATEGORY_MAP[i]) CATEGORY_MAP[i] = [];
+  CATEGORY_MAP[i].push('花店');
+}
+
 // 动态加载产品图片
 (async function() {
   const container = document.querySelector('.product-showcase');
@@ -556,22 +641,21 @@
       id: i,
       name: `心意拼图 · 款式 ${i}`,
       imgFront: `product-images-web/心意拼图净尺寸_P_${i}.JPG`,
-      imgBack: `product-images-web/心意拼图净尺寸背面图_P_${i}.JPG`
+      imgBack: `product-images-web/心意拼图净尺寸背面图_P_${i}.JPG`,
+      cats: CATEGORY_MAP[i] || []
     });
   }
 
-  // 按系列分组展示（假设每类主题约7-10款）
-  // 由于不确定具体分类，按图片序号展示前20款作为示例
-  const showCount = Math.min(products.length, 63);
-  
   // 清空加载提示
+  if (tip) tip.remove();
   container.innerHTML = '';
 
-  // 按每页12个展示，先展示全部正面图
-  for (let i = 0; i < showCount; i++) {
+  // 生成所有产品卡片
+  for (let i = 0; i < products.length; i++) {
     const p = products[i];
     const card = document.createElement('div');
     card.className = 'product-card';
+    card.dataset.cats = p.cats.join(',');
     card.innerHTML = `
       <img class="product-img" 
            src="${p.imgFront}" 
@@ -589,6 +673,33 @@
     `;
     container.appendChild(card);
   }
+
+  // 分类筛选功能
+  const tabs = document.querySelectorAll('.cat-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const cat = tab.dataset.cat;
+      
+      // 更新标签样式
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      
+      // 筛选产品
+      const cards = container.querySelectorAll('.product-card');
+      cards.forEach(card => {
+        if (cat === 'all') {
+          card.classList.remove('hidden');
+        } else {
+          const cats = card.dataset.cats.split(',').filter(Boolean);
+          if (cats.includes(cat)) {
+            card.classList.remove('hidden');
+          } else {
+            card.classList.add('hidden');
+          }
+        }
+      });
+    });
+  });
 })();
 </script>
 
