@@ -468,14 +468,14 @@
   <div class="section-divider"></div>
   <p style="text-align:center;color:#888;margin-bottom:24px;font-size:14px;">以下为碎碎念·心意拼图全系列产品实拍图，点击分类标签筛选</p>
 
-  <div class="category-tabs">
-    <button class="cat-tab active" data-cat="all">全部产品<span class="cat-count">（63款）</span></button>
-    <button class="cat-tab" data-cat="花神">十二花神<span class="cat-count">（12款）</span></button>
-    <button class="cat-tab" data-cat="生肖">十二生肖<span class="cat-count">（12款）</span></button>
+    <div class="category-tabs">
+    <button class="cat-tab active" data-cat="all">全部产品<span class="cat-count">（51款）</span></button>
+    <button class="cat-tab" data-cat="花神">十二花神<span class="cat-count">（11款）</span></button>
+    <button class="cat-tab" data-cat="生肖">十二生肖<span class="cat-count">（10款）</span></button>
     <button class="cat-tab" data-cat="星座">十二星座<span class="cat-count">（12款）</span></button>
     <button class="cat-tab" data-cat="花店">花店系列<span class="cat-count">（16款）</span></button>
     <button class="cat-tab" data-cat="告白">告白系列<span class="cat-count">（7款）</span></button>
-    <button class="cat-tab" data-cat="生日">生日快乐<span class="cat-count">（5款）</span></button>
+    <button class="cat-tab" data-cat="生日">生日快乐<span class="cat-count">（2款）</span></button>
     <button class="cat-tab" data-cat="城市">城市文创<span class="cat-count">（2款）</span></button>
     <button class="cat-tab" data-cat="其它">其它<span class="cat-count">（2款）</span></button>
   </div>
@@ -640,73 +640,81 @@
 </section>
 
 <script>
-// 产品分类映射
-const CATEGORY_MAP = {
-  // 十二花神：款式1-12
-  1:['花神','花店'], 2:['花神','花店'], 3:['花神','花店'], 4:['花神','花店'],
-  5:['花神','花店'], 6:['花神','花店'], 7:['花神','花店'], 8:['花神','花店'],
-  9:['花神','花店'], 10:['花神','花店'], 11:['花神','花店'], 12:['花神','花店'],
-  // 花店系列：款式1-16（不含1-12已定义的，补充13-16）
-  // 13-16 只有花店标签
-  // 十二生肖：款式17-28
-  17:['生肖'], 18:['生肖'], 19:['生肖'], 20:['生肖'],
-  21:['生肖'], 22:['生肖'], 23:['生肖'], 24:['生肖'],
-  25:['生肖'], 26:['生肖'], 27:['生肖'], 28:['生肖'],
-  // 生日快乐：款式29
-  29:['生日'],
-  // 其它：款式30,31
-  30:['其它'], 31:['其它'],
-  // 城市文创：款式32
-  32:['城市'],
-  // 十二星座：款式33-44
-  33:['星座'], 34:['星座'], 35:['星座'], 36:['星座'],
-  37:['星座'], 38:['星座'], 39:['星座'], 40:['星座'],
-  41:['星座'], 42:['星座'], 43:['星座'], 44:['星座'],
-  // 告白系列：款式45,46,48,49,50,51,52
-  45:['告白'], 46:['告白'], 48:['告白'], 49:['告白'],
-  50:['告白'], 51:['告白'], 52:['告白'],
-  // 城市文创：款式47
-  47:['城市'],
-  // 生日快乐：款式53,54,55,56
-  53:['生日'], 54:['生日'], 55:['生日'], 56:['生日'],
-};
+const PRODUCTS = [
+  { name: '正月桃花', img: '正月桃花.JPG', cats: [] },
+  { name: '二月杏花', img: '二月杏花.JPG', cats: ['花神', '花店'] },
+  { name: '三月桃花', img: '三月桃花.JPG', cats: ['花神', '花店'] },
+  { name: '四月牡丹', img: '四月牡丹.JPG', cats: ['花神', '花店'] },
+  { name: '五月石榴', img: '五月石榴.JPG', cats: ['花神', '花店'] },
+  { name: '六月荷花', img: '六月荷花.JPG', cats: ['花神', '花店'] },
+  { name: '七月蜀葵', img: '七月蜀葵.JPG', cats: ['花神', '花店'] },
+  { name: '八月桂花', img: '八月桂花.JPG', cats: ['花神', '花店'] },
+  { name: '九月菊花', img: '九月菊花.JPG', cats: ['花神', '花店'] },
+  { name: '十月芙蓉', img: '十月芙蓉.JPG', cats: ['花神', '花店'] },
+  { name: '十一月山茶', img: '十一月山茶.JPG', cats: ['花神', '花店'] },
+  { name: '十二月水仙', img: '十二月水仙.JPG', cats: ['花神', '花店'] },
+  { name: '粉色花束', img: '粉色花束.JPG', cats: ['花店'] },
+  { name: '蓝色花束', img: '蓝色花束.JPG', cats: ['花店'] },
+  { name: '蓝白花束', img: '蓝白花束.JPG', cats: ['花店'] },
+  { name: '花蓝', img: '花蓝.JPG', cats: ['花店'] },
+  { name: '鼠', img: '鼠.JPG', cats: ['生肖'] },
+  { name: '蛇', img: '蛇.JPG', cats: ['生肖'] },
+  { name: '兔', img: '兔.JPG', cats: ['生肖'] },
+  { name: '牛', img: '牛.JPG', cats: ['生肖'] },
+  { name: '猪', img: '猪.JPG', cats: [] },
+  { name: '龙', img: '龙.JPG', cats: ['生肖'] },
+  { name: '马', img: '马.JPG', cats: ['生肖'] },
+  { name: '羊', img: '羊.JPG', cats: [] },
+  { name: '猴', img: '猴.JPG', cats: ['生肖'] },
+  { name: '鸡', img: '鸡.JPG', cats: ['生肖'] },
+  { name: '狗', img: '狗.JPG', cats: ['生肖'] },
+  { name: '虎', img: '虎.JPG', cats: ['生肖'] },
+  { name: '生日快乐歌', img: '生日快乐歌.JPG', cats: ['生日'] },
+  { name: '世上只有妈妈好', img: '世上只有妈妈好.JPG', cats: ['其它'] },
+  { name: '送别', img: '送别.JPG', cats: ['其它'] },
+  { name: '宁波美食', img: '宁波美食.JPG', cats: ['城市'] },
+  { name: '双子座', img: '双子座.JPG', cats: ['星座'] },
+  { name: '狮子座', img: '狮子座.JPG', cats: ['星座'] },
+  { name: '处女座', img: '处女座.JPG', cats: ['星座'] },
+  { name: '巨蟹座', img: '巨蟹座.JPG', cats: ['星座'] },
+  { name: '天平座', img: '天平座.JPG', cats: ['星座'] },
+  { name: '山羊座', img: '山羊座.JPG', cats: ['星座'] },
+  { name: '魔蝎座', img: '魔蝎座.JPG', cats: ['星座'] },
+  { name: '公牛座', img: '公牛座.JPG', cats: ['星座'] },
+  { name: '射手座', img: '射手座.JPG', cats: ['星座'] },
+  { name: '摩羯座', img: '摩羯座.JPG', cats: ['星座'] },
+  { name: '水瓶座', img: '水瓶座.JPG', cats: ['星座'] },
+  { name: '双鱼座', img: '双鱼座.JPG', cats: ['星座'] },
+  { name: '爱无国界', img: '爱无国界.JPG', cats: ['告白'] },
+  { name: '婚礼群像', img: '婚礼群像.JPG', cats: ['告白'] },
+  { name: '宁波老地图', img: '宁波老地图.JPG', cats: ['城市'] },
+  { name: '用心告白', img: '用心告白.JPG', cats: [] },
+  { name: '浪漫表白', img: '浪漫表白.JPG', cats: ['告白'] },
+  { name: '我心浪漫', img: '我心浪漫.JPG', cats: ['告白'] },
+  { name: '鲜花告白', img: '鲜花告白.JPG', cats: ['告白'] },
+  { name: '永远一起', img: '永远一起.JPG', cats: [] },
+  { name: '花朵蛋糕', img: '花朵蛋糕.JPG', cats: ['花店'] },
+  { name: '对白', img: '对白.JPG', cats: ['告白'] },
+  { name: '生日快乐', img: '生日快乐.JPG', cats: ['生日'] },
+  { name: '浪漫礼物', img: '浪漫礼物.JPG', cats: ['告白'] },
+];
 
-// 确保花店系列 13-16 也有标签
-for (let i = 13; i <= 16; i++) {
-  if (!CATEGORY_MAP[i]) CATEGORY_MAP[i] = [];
-  CATEGORY_MAP[i].push('花店');
-}
-
-// 动态加载产品图片
-(async function() {
+// 动态加载产品卡片
+(function() {
   const container = document.querySelector('.product-showcase');
-  const tip = document.getElementById('loading-tip');
-  
-  // 产品图片列表（正面图，P_1 到 P_63）
-  const products = [];
-  for (let i = 1; i <= 63; i++) {
-    products.push({
-      id: i,
-      name: `心意拼图 · 款式 ${i}`,
-      imgFront: `product-images-web/心意拼图净尺寸_P_${i}.JPG`,
-      imgBack: `product-images-web/心意拼图净尺寸背面图_P_${i}.JPG`,
-      cats: CATEGORY_MAP[i] || []
-    });
-  }
+  if (!container) return;
 
-  // 清空加载提示
-  if (tip) tip.remove();
+  // 清空容器
   container.innerHTML = '';
 
   // 生成所有产品卡片
-  for (let i = 0; i < products.length; i++) {
-    const p = products[i];
+  PRODUCTS.forEach(p => {
     const card = document.createElement('div');
     card.className = 'product-card';
     card.dataset.cats = p.cats.join(',');
     card.innerHTML = `
-      <img class="product-img" 
-           src="${p.imgFront}" 
+      <img class="product-img"
+           src="product-images-web/${p.img}"
            alt="${p.name}"
            loading="lazy"
            onerror="this.style.background='#f0ece6';this.alt='图片加载中'">
@@ -720,19 +728,15 @@ for (let i = 13; i <= 16; i++) {
       </div>
     `;
     container.appendChild(card);
-  }
+  });
 
   // 分类筛选功能
   const tabs = document.querySelectorAll('.cat-tab');
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
       const cat = tab.dataset.cat;
-      
-      // 更新标签样式
       tabs.forEach(t => t.classList.remove('active'));
       tab.classList.add('active');
-      
-      // 筛选产品
       const cards = container.querySelectorAll('.product-card');
       cards.forEach(card => {
         if (cat === 'all') {
